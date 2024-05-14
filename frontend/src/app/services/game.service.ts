@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { isPlatformBrowser } from '@angular/common';
-import { Inject, PLATFORM_ID } from '@angular/core';
 import { WebSocketEvent } from '../../../../types/websocket';
-import { GameOptions } from '../../../../types/general';
-import axios from 'axios';
 import CONSTANTS from '../../assets/CONSTANTS';
 import { io, Socket } from 'socket.io-client';
 
@@ -23,41 +18,40 @@ export class GameService {
     | 'game-host'
     | 'game-player' = 'home';
 
-  // private socket: WebSocketSubject<WebSocketEvent> | null = null;
   public socket: Socket | null = null;
 
-  private isBrowser: boolean = isPlatformBrowser(this.platformId);
+  // private isBrowser: boolean = isPlatformBrowser(this.platformId);
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    if (this.isBrowser) {
-      // console.log('connection...');
-      // this.socket = io(CONSTANTS.WEBSOCKET_URL);
-      // socket.on('connect', () => {
-      //   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-      // });
-      // this.socket = webSocket({
-      //   url: CONSTANTS.WEBSOCKET_URL,
-      //   deserializer: (msg) => msg.data,
-      //   openObserver: {
-      //     next: () => {
-      //       console.log('[Frontend] Connessione WebSocket aperta.');
-      //     },
-      //   },
-      //   closeObserver: {
-      //     next: () => {
-      //       console.log('[Frontend] Connessione WebSocket chiusa.');
-      //     },
-      //   },
-      // });
-      // this.socket.subscribe();
-      // this.socket.subscribe(
-      //   (msg) => console.log('[Frontend] Messaggio ricevuto:', msg),
-      //   (err) =>
-      //     console.log('[Frontend] Errore nella connessione WebSocket:', err),
-      //   () => console.log('[Frontend] Connessione WebSocket completata.')
-      // );
-    }
-  }
+  // constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  //   if (this.isBrowser) {
+  // console.log('connection...');
+  // this.socket = io(CONSTANTS.WEBSOCKET_URL);
+  // socket.on('connect', () => {
+  //   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+  // });
+  // this.socket = webSocket({
+  //   url: CONSTANTS.WEBSOCKET_URL,
+  //   deserializer: (msg) => msg.data,
+  //   openObserver: {
+  //     next: () => {
+  //       console.log('[Frontend] Connessione WebSocket aperta.');
+  //     },
+  //   },
+  //   closeObserver: {
+  //     next: () => {
+  //       console.log('[Frontend] Connessione WebSocket chiusa.');
+  //     },
+  //   },
+  // });
+  // this.socket.subscribe();
+  // this.socket.subscribe(
+  //   (msg) => console.log('[Frontend] Messaggio ricevuto:', msg),
+  //   (err) =>
+  //     console.log('[Frontend] Errore nella connessione WebSocket:', err),
+  //   () => console.log('[Frontend] Connessione WebSocket completata.')
+  // );
+  // }
+  // }
 
   connectWebSocket = () => {
     this.socket = io(CONSTANTS.WEBSOCKET_URL);

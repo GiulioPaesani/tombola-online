@@ -14,15 +14,17 @@ const initWebSocket = () => {
 	io.on('connection', socket => {
 		sockets.push(socket);
 
-		// socket.on('playerJoin', async playerInfo => {
-		// 	const socketId = playerInfo.playerId;
+		socket.on('disconnect', async () => {
+			const game = await games.findOneAndUpdate({ 'socketIds.socketId': socket.id }, { $pull: { socketIds: { socketId: socket.id } } });
 
-		// const game = await games.findOne({ socketIds: socketId });
+			if (game) {
+				socket.leave(game.gameId);
 
-		// if (game) {
-		// 	io.to(game.gameId).emit('playerJoin', playerInfo);
-		// }
-		// });
+				io.to(game.gameId).emit('playerLeave', {
+					socketId: socket.id
+				});
+			}
+		});
 	});
 };
 

@@ -20,10 +20,16 @@ export class LobbyPlayerComponent {
         gameId: this.gameService.gameId,
       })
       .then((response) => {
-        this.players.push(...response.data);
+        this.players = response.data;
 
         this.gameService.socket?.on('playerJoin', (playerInfo) => {
           this.players.push(playerInfo);
+        });
+
+        this.gameService.socket?.on('playerLeave', (playerInfo) => {
+          this.players = this.players.filter(
+            (player) => player.socketId !== playerInfo.socketId
+          );
         });
       });
   }

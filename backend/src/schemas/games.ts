@@ -4,7 +4,6 @@ import { Player } from '../../../types/general';
 export type Game = {
 	gameId: string;
 	gameCode: string;
-	hostSocketId: string;
 	winCases: {
 		ambo: boolean;
 		terno: boolean;
@@ -30,7 +29,6 @@ const gameSchema = new Schema<Game>({
 		required: true,
 		unique: true
 	},
-	hostSocketId: SchemaTypes.String,
 	winCases: {
 		ambo: SchemaTypes.Boolean,
 		terno: SchemaTypes.Boolean,

@@ -4,34 +4,29 @@ import { io, sockets } from '../utils/handler/initWebSocket';
 
 const route: Route = {
 	method: 'POST',
-	path: 'add-player-to-game',
+	path: 'kick-player',
 	handler: async (req, res) => {
 		const gameId = req.body.gameId;
 		const socketId = req.body.socketId;
-		const username = req.body.username;
 
 		const socket = sockets.find(x => x.id === socketId);
 		if (socket) {
-			socket.join(gameId);
-
 			await games.updateOne(
 				{ gameId },
 				{
-					$push: {
+					$pull: {
 						socketIds: {
-							socketId,
-							username,
-							avatarUrl: ''
+							socketId
 						}
 					}
 				}
 			);
 
-			io.to(gameId).emit('playerJoin', {
-				socketId,
-				username,
-				avatarUrl: ''
+			io.to(gameId).emit('playerKick', {
+				socketId
 			});
+
+			socket.leave(gameId);
 
 			res.sendStatus(200);
 		} else {

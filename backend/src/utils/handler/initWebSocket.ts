@@ -18,7 +18,7 @@ const initWebSocket = () => {
 			const game = await games.findOneAndUpdate({ 'socketIds.socketId': socket.id }, { $pull: { socketIds: { socketId: socket.id } } });
 
 			if (game) {
-				if (game.hostSocketId !== socket.id) {
+				if (game.socketIds[0]?.socketId !== socket.id) {
 					socket.leave(game.gameId);
 
 					io.to(game.gameId).emit('playerLeave', {

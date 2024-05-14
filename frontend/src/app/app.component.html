@@ -1,5 +1,3 @@
-<h6>{{gameService.state}}</h6>
-
 <div [ngSwitch]="gameService.state">
   <div *ngSwitchCase="'home'"><app-home></app-home></div>
   <div *ngSwitchCase="'lobby-host'"><app-lobby-host></app-lobby-host></div>

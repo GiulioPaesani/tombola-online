@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { WebSocketEvent } from '../../../../types/websocket';
 import CONSTANTS from '../../assets/CONSTANTS';
 import { io, Socket } from 'socket.io-client';
 
@@ -61,21 +60,13 @@ export class GameService {
     });
 
     this.socket.on('hostDisconnect', () => {
-      this.state = 'home';
-      this.gameCode = '';
-      this.gameId = '';
+      this.restartGame();
     });
   };
 
-  sendMessage = (event: WebSocketEvent) => {
-    if (!this.socket) return;
-
-    // this.socket.next(event);
-  };
-
-  getMessage = () => {
-    if (!this.socket) return;
-
-    // return this.socket.asObservable();
+  restartGame = () => {
+    this.state = 'home';
+    this.gameCode = '';
+    this.gameId = '';
   };
 }

@@ -4,8 +4,9 @@
 
   <div>
     <h2>Players list:</h2>
-    <ul>
-      <li *ngFor="let player of players">{{player.username}} - ID: {{player.socketId}}</li>
-    </ul>
+    <div>
+      <div *ngFor="let player of players; index as i">{{player.username}} - ID: {{player.socketId}} <button
+          class="text-bold border-2" *ngIf="i !== 0" (click)="kickPlayer(player.socketId)">Kick</button></div>
+    </div>
   </div>
 </div>

@@ -31,6 +31,12 @@ export class LobbyHostComponent {
             (player) => player.socketId !== playerInfo.socketId
           );
         });
+
+        this.gameService.socket?.on('playerKick', (playerInfo) => {
+          this.players = this.players.filter(
+            (player) => player.socketId !== playerInfo.socketId
+          );
+        });
       });
   }
 
@@ -42,5 +48,12 @@ export class LobbyHostComponent {
       .then((respose) => {
         this.gameService.gameCode = respose.data.gameCode;
       });
+  };
+
+  kickPlayer = async (socketId: string) => {
+    await axios.post(`${CONSTANTS.API_BASE_URL}/kick-player`, {
+      gameId: this.gameService.gameId,
+      socketId,
+    });
   };
 }

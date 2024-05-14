@@ -31,6 +31,16 @@ export class LobbyPlayerComponent {
             (player) => player.socketId !== playerInfo.socketId
           );
         });
+
+        this.gameService.socket?.on('playerKick', (playerInfo) => {
+          this.players = this.players.filter(
+            (player) => player.socketId !== playerInfo.socketId
+          );
+
+          if (playerInfo.socketId === this.gameService.socket?.id) {
+            this.gameService.restartGame();
+          }
+        });
       });
   }
 }

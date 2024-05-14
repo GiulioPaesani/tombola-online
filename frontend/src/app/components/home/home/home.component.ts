@@ -36,14 +36,11 @@ export class HomeComponent {
           this.gameService.connectWebSocket();
 
           this.gameService.socket?.on('connect', async () => {
-            await axios.post(
-              `${CONSTANTS.API_BASE_URL}/add-player-to-game?playerType=player`,
-              {
-                gameId: gameId,
-                socketId: this.gameService.socket?.id,
-                username: playerUsername,
-              }
-            );
+            await axios.post(`${CONSTANTS.API_BASE_URL}/add-player-to-game`, {
+              gameId: gameId,
+              socketId: this.gameService.socket?.id,
+              username: playerUsername,
+            });
 
             this.gameService.gameId = gameId;
             this.gameService.state = 'lobby-player';

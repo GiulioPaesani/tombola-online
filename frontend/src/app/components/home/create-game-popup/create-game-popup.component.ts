@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
+import axios from 'axios';
+import CONSTANTS from '../../../../assets/CONSTANTS';
 
 @Component({
   selector: 'app-create-game-popup',
   standalone: true,
   imports: [],
   templateUrl: './create-game-popup.component.html',
-  styleUrl: './create-game-popup.component.css',
 })
 export class CreateGamePopupComponent {
-  createGameResponse = '';
-
   constructor(public gameService: GameService) {}
 
-  onClickCreateGame() {
+  createGame = async () => {
     const winCases = {
       ambo: (document.getElementById('ambo') as HTMLInputElement).checked,
       terno: (document.getElementById('terno') as HTMLInputElement).checked,
@@ -37,11 +36,29 @@ export class CreateGamePopupComponent {
         (document.getElementById('maxCardsPerPlayer') as HTMLInputElement).value
       ) ?? 1;
 
-    this.gameService.createGame({
-      winCases,
-      maxPlayers,
-      minCards,
-      maxCards,
-    });
-  }
+    await axios
+      .post(`${CONSTANTS.API_BASE_URL}/create-game`, {
+        winCases,
+        maxPlayers,
+        minCards,
+        maxCards,
+      })
+      .then((respose) => {
+        this.gameService.connectWebSocket();
+
+        this.gameService.socket?.on('connect', async () => {
+          await axios
+            .post(`${CONSTANTS.API_BASE_URL}/add-player-to-game`, {
+              gameId: respose.data.gameId,
+              socketId: this.gameService.socket?.id,
+              username: `Username`,
+            })
+            .then(() => {
+              this.gameService.gameId = respose.data.gameId;
+              this.gameService.gameCode = respose.data.gameCode;
+              this.gameService.state = 'lobby-host';
+            });
+        });
+      });
+  };
 }

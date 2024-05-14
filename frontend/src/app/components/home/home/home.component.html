@@ -9,5 +9,6 @@
 <div class="mx-auto flex w-fit flex-col my-8">
   <h2 class="text-xl font-medium text-center">Gioca in party</h2>
   <button class="py-2 px-4 bg-slate-400 text-lg my-2" (click)="openCreateGamePopup()">Crea partita</button>
-  <button class="py-2 px-4 bg-slate-400 text-lg my-2">Entra in una partita</button>
+  <input type="text" placeholder="Codice partita" class="border-2" id="gameCode" />
+  <button class="py-2 px-4 bg-slate-400 text-lg my-2" (click)="joinGame()">Entra in una partita</button>
 </div>

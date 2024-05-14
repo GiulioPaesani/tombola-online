@@ -2,14 +2,19 @@ import { Component } from '@angular/core';
 import { GameService } from './services/game.service';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home/home.component';
-import { MasterLobbyComponent } from './components/master-lobby/master-lobby/master-lobby.component';
+import { LobbyHostComponent } from './components/lobby-host/lobby-host/lobby-host.component';
+import { LobbyPlayerComponent } from './components/lobby-player/lobby-player/lobby-player.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HomeComponent, MasterLobbyComponent],
+  imports: [
+    CommonModule,
+    HomeComponent,
+    LobbyHostComponent,
+    LobbyPlayerComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
 })
 export class AppComponent {
   constructor(public gameService: GameService) {}

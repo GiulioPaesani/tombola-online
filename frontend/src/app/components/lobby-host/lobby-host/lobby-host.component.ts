@@ -1,24 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
+import { Player } from '../../../../../../types/general';
 
 @Component({
-  selector: 'app-master-lobby',
+  selector: 'app-lobby-host',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './master-lobby.component.html',
-  styleUrl: './master-lobby.component.css',
+  templateUrl: './lobby-host.component.html',
 })
-export class MasterLobbyComponent {
-  players: string[] = [];
+export class LobbyHostComponent {
+  players: Player[] = [];
 
   constructor(public gameService: GameService) {
-    // this.gameService.getMessage()?.subscribe((message) => {
-    //   this.players.push(message);
-    //   console.log('[frontend] messaggio ricevuto:', message);
-    // });
+    axios
+      .post(`${CONSTANTS.API_BASE_URL}/players`, {
+        gameId: this.gameService.gameId,
+      })
+      .then((response) => {
+        this.players.push(...response.data);
+
+        this.gameService.socket?.on('playerJoin', (playerInfo) => {
+          this.players.push(playerInfo);
+        });
+      });
   }
 
   regenerateGameCode = async () => {

@@ -1,4 +1,5 @@
 import { Schema, SchemaTypes, model } from 'mongoose';
+import { Player } from '../../../types/general';
 
 export type Game = {
 	gameId: string;
@@ -13,6 +14,7 @@ export type Game = {
 	maxPlayers: number;
 	minCards: number;
 	maxCards: number;
+	socketIds: Player[];
 };
 
 const gameSchema = new Schema<Game>({
@@ -36,7 +38,14 @@ const gameSchema = new Schema<Game>({
 	},
 	maxPlayers: SchemaTypes.Number,
 	minCards: SchemaTypes.Number,
-	maxCards: SchemaTypes.Number
+	maxCards: SchemaTypes.Number,
+	socketIds: [
+		{
+			socketId: SchemaTypes.String,
+			username: SchemaTypes.String,
+			avatarUrl: SchemaTypes.String
+		}
+	]
 });
 
 gameSchema.index({ gameId: 1 });

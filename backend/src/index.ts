@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import WebSocket from 'ws';
+import getAllFiles from './utils/getAllFile';
+import path from 'path';
+import { Route } from './types';
 
 const app = express();
 
@@ -11,22 +14,41 @@ app.use(
 	})
 );
 
-app.listen(5000, () => {
+app.listen(5000, async () => {
 	console.log('Backend start on port 5000');
+
+	const routes = await getAllFiles(path.join(__dirname, 'api/'));
+
+	for (const index in routes) {
+		const { name, directory, ...content } = routes[index];
+
+		const { method, handler } = content as Route;
+
+		const route = app.route(`/${name}`);
+
+		switch (method) {
+			case 'GET':
+				route.get(handler);
+				break;
+			case 'POST':
+				route.post((req, res) => handler(req, res));
+				break;
+		}
+	}
 });
 
-app.post('/test', (req, res) => {
-	res.send(`Funziona! Questa è la risposta del backend`);
-});
+// app.post('create-game', (req, res) => res.send('Ciao1'));
 
-const wss = new WebSocket.Server({ port: 8080 });
+// app.route('/create-game').post((req, res) => res.send('ciuao'));
 
-wss.on('connection', function connection(ws) {
-	console.log('[Backend] Nuova connessione al WebSocket!');
+// const wss = new WebSocket.Server({ port: 8080 });
 
-	ws.on('message', function incoming(message) {
-		console.log('[Backend] Messaggio ricevuto:', message.toString());
+// wss.on('connection', function connection(ws) {
+// 	console.log('[Backend] Nuova connessione al WebSocket!');
 
-		ws.send('Messaggio dal BACKEND');
-	});
-});
+// 	ws.on('message', function incoming(message) {
+// 		console.log('[Backend] Messaggio ricevuto:', message.toString());
+
+// 		ws.send('Messaggio dal BACKEND');
+// 	});
+// });

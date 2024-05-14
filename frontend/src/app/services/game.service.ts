@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import CONSTANTS from '../../assets/CONSTANTS';
 import { io, Socket } from 'socket.io-client';
+import { Toast } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -16,41 +17,9 @@ export class GameService {
     | 'lobby-player'
     | 'game-host'
     | 'game-player' = 'home';
+  toasts: Toast[] = [];
 
   public socket: Socket | null = null;
-
-  // private isBrowser: boolean = isPlatformBrowser(this.platformId);
-
-  // constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-  //   if (this.isBrowser) {
-  // console.log('connection...');
-  // this.socket = io(CONSTANTS.WEBSOCKET_URL);
-  // socket.on('connect', () => {
-  //   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-  // });
-  // this.socket = webSocket({
-  //   url: CONSTANTS.WEBSOCKET_URL,
-  //   deserializer: (msg) => msg.data,
-  //   openObserver: {
-  //     next: () => {
-  //       console.log('[Frontend] Connessione WebSocket aperta.');
-  //     },
-  //   },
-  //   closeObserver: {
-  //     next: () => {
-  //       console.log('[Frontend] Connessione WebSocket chiusa.');
-  //     },
-  //   },
-  // });
-  // this.socket.subscribe();
-  // this.socket.subscribe(
-  //   (msg) => console.log('[Frontend] Messaggio ricevuto:', msg),
-  //   (err) =>
-  //     console.log('[Frontend] Errore nella connessione WebSocket:', err),
-  //   () => console.log('[Frontend] Connessione WebSocket completata.')
-  // );
-  // }
-  // }
 
   connectWebSocket = () => {
     this.socket = io(CONSTANTS.WEBSOCKET_URL);
@@ -60,6 +29,10 @@ export class GameService {
     });
 
     this.socket.on('hostDisconnect', () => {
+      this.showToast({
+        type: 'error',
+        text: `L'host della partita si è disconnesso`,
+      });
       this.restartGame();
     });
   };
@@ -68,5 +41,17 @@ export class GameService {
     this.state = 'home';
     this.gameCode = '';
     this.gameId = '';
+  };
+
+  showToast = (toast: Omit<Toast, 'toastId'>) => {
+    const toastId = new Date().getTime().toString();
+    this.toasts.push({
+      toastId,
+      ...toast,
+    });
+
+    setTimeout(() => {
+      this.toasts = this.toasts.filter((toast) => toast.toastId !== toastId);
+    }, 3000);
   };
 }

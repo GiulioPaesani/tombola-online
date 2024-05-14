@@ -38,6 +38,11 @@ export class LobbyPlayerComponent {
           );
 
           if (playerInfo.socketId === this.gameService.socket?.id) {
+            this.gameService.showToast({
+              type: 'error',
+              text: `Sei stato espulso dall'host della partita`,
+            });
+
             this.gameService.restartGame();
           }
         });

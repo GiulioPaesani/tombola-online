@@ -1,0 +1,6 @@
+<div class="absolute top-4 left-8 w-full">
+  <div class="py-4 px-8 w-fit my-4" *ngFor="let toast of gameService.toasts"
+    [ngStyle]="{backgroundColor: toast.type === 'success' ? 'green' : toast.type === 'error' ? 'red' : 'orange'}">
+    {{toast.text}}
+  </div>
+</div>

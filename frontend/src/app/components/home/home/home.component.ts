@@ -46,7 +46,10 @@ export class HomeComponent {
             this.gameService.state = 'lobby-player';
           });
         } else {
-          //! Gestione codice non corretto
+          this.gameService.showToast({
+            type: 'error',
+            text: `Codice della partita non valido`,
+          });
         }
       });
   };

@@ -18,11 +18,17 @@ const initWebSocket = () => {
 			const game = await games.findOneAndUpdate({ 'socketIds.socketId': socket.id }, { $pull: { socketIds: { socketId: socket.id } } });
 
 			if (game) {
-				socket.leave(game.gameId);
+				if (game.hostSocketId !== socket.id) {
+					socket.leave(game.gameId);
 
-				io.to(game.gameId).emit('playerLeave', {
-					socketId: socket.id
-				});
+					io.to(game.gameId).emit('playerLeave', {
+						socketId: socket.id
+					});
+				} else {
+					io.to(game.gameId).emit('hostDisconnect');
+
+					io.in(game.gameId).disconnectSockets();
+				}
 			}
 		});
 	});

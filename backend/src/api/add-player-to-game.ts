@@ -6,9 +6,10 @@ const route: Route = {
 	method: 'POST',
 	path: 'add-player-to-game',
 	handler: async (req, res) => {
+		const gameId = req.body.gameId;
 		const socketId = req.body.socketId;
 		const username = req.body.username;
-		const gameId = req.body.gameId;
+		const playerType = req.query.playerType;
 
 		const socket = sockets.find(x => x.id === socketId);
 		if (socket) {
@@ -26,6 +27,9 @@ const route: Route = {
 					}
 				}
 			);
+			if (playerType === 'host') {
+				await games.updateOne({ gameId }, { hostSocketId: socketId });
+			}
 
 			io.to(gameId).emit('playerJoin', {
 				socketId,

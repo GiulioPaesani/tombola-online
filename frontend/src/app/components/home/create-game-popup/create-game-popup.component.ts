@@ -52,11 +52,14 @@ export class CreateGamePopupComponent {
 
         this.gameService.socket?.on('connect', async () => {
           await axios
-            .post(`${CONSTANTS.API_BASE_URL}/add-player-to-game`, {
-              gameId: respose.data.gameId,
-              socketId: this.gameService.socket?.id,
-              username: hostUsername,
-            })
+            .post(
+              `${CONSTANTS.API_BASE_URL}/add-player-to-game?playerType=host`,
+              {
+                gameId: respose.data.gameId,
+                socketId: this.gameService.socket?.id,
+                username: hostUsername,
+              }
+            )
             .then(() => {
               this.gameService.gameId = respose.data.gameId;
               this.gameService.gameCode = respose.data.gameCode;

@@ -59,6 +59,12 @@ export class GameService {
     this.socket.on('connect', () => {
       console.log('[Frontend] Connesso al socket', this.socket?.id);
     });
+
+    this.socket.on('hostDisconnect', () => {
+      this.state = 'home';
+      this.gameCode = '';
+      this.gameId = '';
+    });
   };
 
   sendMessage = (event: WebSocketEvent) => {

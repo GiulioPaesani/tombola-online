@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';

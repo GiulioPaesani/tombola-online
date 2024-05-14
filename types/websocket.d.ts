@@ -1,8 +1,4 @@
-export type Event = PlayerJoinEvent & PlayerLeaveEvent;
-
-export type GameOptions = {
-	gameId: string;
-};
+export type WebSocketEvent = PlayerJoinEvent | PlayerLeaveEvent;
 
 type PlayerJoinEvent = {
 	event: 'playerJoin';

@@ -1,8 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import axios from 'axios';
-import { GameOptions } from '../../../types';
-import { WebSocketService } from '../../../services/websocket.service';
+import { Component } from '@angular/core';
+import { GameService } from '../../../services/game.service';
 
 @Component({
   selector: 'app-create-game-popup',
@@ -14,9 +11,37 @@ import { WebSocketService } from '../../../services/websocket.service';
 export class CreateGamePopupComponent {
   createGameResponse = '';
 
-  constructor(public webSocketService: WebSocketService) {}
+  constructor(public gameService: GameService) {}
 
   onClickCreateGame() {
-    this.webSocketService.createGame({});
+    const winCases = {
+      ambo: (document.getElementById('ambo') as HTMLInputElement).checked,
+      terno: (document.getElementById('terno') as HTMLInputElement).checked,
+      cinquina: (document.getElementById('cinquina') as HTMLInputElement)
+        .checked,
+      decina: (document.getElementById('decina') as HTMLInputElement).checked,
+      tombola: (document.getElementById('tombola') as HTMLInputElement).checked,
+    };
+
+    const maxPlayers =
+      parseInt(
+        (document.getElementById('maxPlayers') as HTMLInputElement).value
+      ) ?? 0;
+
+    const minCards =
+      parseInt(
+        (document.getElementById('minCardsPerPlayer') as HTMLInputElement).value
+      ) ?? 1;
+    const maxCards =
+      parseInt(
+        (document.getElementById('maxCardsPerPlayer') as HTMLInputElement).value
+      ) ?? 1;
+
+    this.gameService.createGame({
+      winCases,
+      maxPlayers,
+      minCards,
+      maxCards,
+    });
   }
 }

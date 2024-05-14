@@ -1,4 +1,4 @@
-<div [ngSwitch]="webSocketService.state">
+<div [ngSwitch]="gameService.state">
   <div *ngSwitchCase="'home'"><app-home></app-home></div>
   <div *ngSwitchCase="'lobby-host'"><app-master-lobby></app-master-lobby></div>
 </div>

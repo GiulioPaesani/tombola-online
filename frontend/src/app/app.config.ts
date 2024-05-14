@@ -3,12 +3,8 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { WebSocketService } from './services/websocket.service';
+import { GameService } from './services/game.service';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideRouter(routes),
-    provideClientHydration(),
-    WebSocketService,
-  ],
+  providers: [provideRouter(routes), provideClientHydration(), GameService],
 };

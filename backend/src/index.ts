@@ -28,13 +28,13 @@ app.listen(5000, async () => {
 	for (const index in routes) {
 		const { name, directory, ...content } = routes[index];
 
-		const { method, handler } = content as Route;
+		const { method, path, handler } = content as Route;
 
-		const route = app.route(`/${name}`);
+		const route = app.route(`/${path}`);
 
 		switch (method) {
 			case 'GET':
-				route.get(handler);
+				route.get((req, res) => handler(req, res));
 				break;
 			case 'POST':
 				route.post((req, res) => handler(req, res));
@@ -42,15 +42,6 @@ app.listen(5000, async () => {
 		}
 	}
 });
-
-// const httpServer = createServer();
-// const io = new Server(httpServer);
-
-// io.on('connection', socket => {
-// 	console.log('Nuova connessione', socket);
-// });
-
-// httpServer.listen(3000);
 
 const wss = new WebSocket.Server({ port: 3000 });
 

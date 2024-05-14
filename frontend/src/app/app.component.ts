@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WebSocketService } from './services/websocket.service';
+import { GameService } from './services/game.service';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home/home.component';
 import { MasterLobbyComponent } from './components/master-lobby/master-lobby/master-lobby.component';
@@ -12,5 +12,5 @@ import { MasterLobbyComponent } from './components/master-lobby/master-lobby/mas
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  constructor(public webSocketService: WebSocketService) {}
+  constructor(public gameService: GameService) {}
 }

@@ -28,6 +28,8 @@ const initWebSocket = () => {
 					io.to(game.gameId).emit('hostDisconnect');
 
 					io.in(game.gameId).disconnectSockets();
+
+					await games.deleteOne({ gameId: game.gameId });
 				}
 			}
 		});

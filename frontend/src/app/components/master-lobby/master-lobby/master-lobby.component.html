@@ -1,0 +1,10 @@
+<div class="p-16">
+  <p class="text-lg bg-slate-400 py-2 px-4">Codice: {{gameCode}}</p>
+  <button (click)="webSocketService.state = 'home'">Return to home</button>
+  <div>
+    <h2>Players list</h2>
+    <ul>
+      <li *ngFor="let player of players">{{player}}</li>
+    </ul>
+  </div>
+</div>

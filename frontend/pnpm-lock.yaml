@@ -42,7 +42,7 @@ dependencies:
     specifier: ^4.18.2
     version: 4.19.2
   rxjs:
-    specifier: ~7.8.1
+    specifier: ^7.8.1
     version: 7.8.1
   tslib:
     specifier: ^2.3.0

@@ -1,9 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import WebSocket from 'ws';
-import getAllFiles from './utils/getAllFile';
+import getAllFiles from './utils/handler/getAllFile';
 import path from 'path';
 import { Route } from './types';
+import connectToDB from './utils/handler/connectToDB';
+import dotenv from 'dotenv';
+import WebSocket from 'ws';
+
+dotenv.config();
 
 const app = express();
 
@@ -16,6 +20,8 @@ app.use(
 
 app.listen(5000, async () => {
 	console.log('Backend start on port 5000');
+
+	await connectToDB();
 
 	const routes = await getAllFiles(path.join(__dirname, 'api/'));
 
@@ -37,18 +43,31 @@ app.listen(5000, async () => {
 	}
 });
 
-// app.post('create-game', (req, res) => res.send('Ciao1'));
+// const httpServer = createServer();
+// const io = new Server(httpServer);
 
-// app.route('/create-game').post((req, res) => res.send('ciuao'));
-
-// const wss = new WebSocket.Server({ port: 8080 });
-
-// wss.on('connection', function connection(ws) {
-// 	console.log('[Backend] Nuova connessione al WebSocket!');
-
-// 	ws.on('message', function incoming(message) {
-// 		console.log('[Backend] Messaggio ricevuto:', message.toString());
-
-// 		ws.send('Messaggio dal BACKEND');
-// 	});
+// io.on('connection', socket => {
+// 	console.log('Nuova connessione', socket);
 // });
+
+// httpServer.listen(3000);
+
+const wss = new WebSocket.Server({ port: 3000 });
+
+const gameRooms: Record<string, string[]> = {};
+
+wss.on('connection', function connection(ws) {
+	// console.log('[Backend] Nuova connessione al WebSocket!');
+	// ws.send('benvenuto!');
+	// ws.on('message', function incoming(message) {
+	// 	console.log('[Backend] Messaggio ricevuto:', message.toString());
+	// });
+	// let i = 1;
+	// setInterval(() => {
+	// 	ws.send(`Messaggio ${i}`);
+	// 	i++;
+	// }, 1000);
+	// ws.on('close', x => {
+	// 	console.log('[Backend] Connessione chiusa', x);
+	// });
+});

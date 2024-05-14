@@ -36,6 +36,10 @@ export class CreateGamePopupComponent {
         (document.getElementById('maxCardsPerPlayer') as HTMLInputElement).value
       ) ?? 1;
 
+    const hostUsername = (
+      document.getElementById('hostUsername') as HTMLInputElement
+    ).value;
+
     await axios
       .post(`${CONSTANTS.API_BASE_URL}/create-game`, {
         winCases,
@@ -51,7 +55,7 @@ export class CreateGamePopupComponent {
             .post(`${CONSTANTS.API_BASE_URL}/add-player-to-game`, {
               gameId: respose.data.gameId,
               socketId: this.gameService.socket?.id,
-              username: `Username`,
+              username: hostUsername,
             })
             .then(() => {
               this.gameService.gameId = respose.data.gameId;

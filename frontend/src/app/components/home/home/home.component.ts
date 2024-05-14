@@ -24,6 +24,10 @@ export class HomeComponent {
     const gameCode = (document.getElementById('gameCode') as HTMLInputElement)
       .value;
 
+    const playerUsername = (
+      document.getElementById('playerUsername') as HTMLInputElement
+    ).value;
+
     await axios
       .post(`${CONSTANTS.API_BASE_URL}/is-game-code-correct`, { gameCode })
       .then((respose) => {
@@ -35,7 +39,7 @@ export class HomeComponent {
             await axios.post(`${CONSTANTS.API_BASE_URL}/add-player-to-game`, {
               gameId: gameId,
               socketId: this.gameService.socket?.id,
-              username: `Username`,
+              username: playerUsername,
             });
 
             this.gameService.gameId = gameId;

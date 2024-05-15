@@ -1,3 +1,4 @@
+import { EventType } from '../../../types';
 import games from '../schemas/games';
 import { Route } from '../types';
 import { io, sockets } from '../utils/handler/initWebSocket';
@@ -11,7 +12,7 @@ const route: Route = {
 
 		const socket = sockets.find(x => x.id === socketId);
 		if (socket) {
-			await games.updateOne(
+			const game = await games.findOneAndUpdate(
 				{ gameId },
 				{
 					$pull: {
@@ -19,10 +20,16 @@ const route: Route = {
 							socketId
 						}
 					}
+				},
+				{
+					new: true
 				}
 			);
 
-			io.to(gameId).emit('playerKick', {
+			if (!game) return res.sendStatus(404);
+
+			io.to(gameId).emit(EventType.PlayersUpdate, game.socketIds, {
+				event: 'PlayerKick',
 				socketId
 			});
 

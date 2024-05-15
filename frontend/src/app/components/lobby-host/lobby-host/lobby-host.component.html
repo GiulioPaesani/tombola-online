@@ -14,4 +14,4 @@
   </div>
 </div>
 
-<button (click)="startGame()">START GAME!</button>
+<button (click)="startGame()" [disabled]="!readyToStart">START GAME!</button>

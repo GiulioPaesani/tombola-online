@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
-import { Player } from '../../../../../../types/general';
+import { EventType, Player } from '../../../../../../types';
 
 @Component({
   selector: 'app-lobby-player',
@@ -33,24 +33,24 @@ export class LobbyPlayerComponent {
             (x, index) => (this.gameService.gameOptions?.minCards ?? 1) + index
           );
 
-        this.gameService.socket?.on('playersUpdate', (socketIds) => {
-          this.players = socketIds;
-        });
+        this.gameService.socket?.on(
+          EventType.PlayersUpdate,
+          (socketIds, { event, socketId }) => {
+            this.players = socketIds;
 
-        this.gameService.socket?.on('playerKick', (playerInfo) => {
-          this.players = this.players.filter(
-            (player) => player.socketId !== playerInfo.socketId
-          );
+            if (
+              event === 'PlayerKick' &&
+              socketId === this.gameService.socket?.id
+            ) {
+              this.gameService.showToast({
+                type: 'error',
+                text: `Sei stato espulso dall'host della partita`,
+              });
 
-          if (playerInfo.socketId === this.gameService.socket?.id) {
-            this.gameService.showToast({
-              type: 'error',
-              text: `Sei stato espulso dall'host della partita`,
-            });
-
-            this.gameService.restartGame();
+              this.gameService.restartGame();
+            }
           }
-        });
+        );
       });
   }
 

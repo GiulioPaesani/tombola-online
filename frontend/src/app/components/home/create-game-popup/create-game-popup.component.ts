@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
+import { EventType } from '../../../../../../types';
 
 @Component({
   selector: 'app-create-game-popup',
@@ -50,7 +51,7 @@ export class CreateGamePopupComponent {
       .then((respose) => {
         this.gameService.connectWebSocket();
 
-        this.gameService.socket?.on('connect', async () => {
+        this.gameService.socket?.on(EventType.Connect, async () => {
           await axios
             .post(`${CONSTANTS.API_BASE_URL}/add-player-to-game`, {
               gameId: respose.data.gameId,
@@ -66,7 +67,7 @@ export class CreateGamePopupComponent {
                 minCards,
                 maxCards,
               };
-              this.gameService.state = 'lobby-host';
+              this.gameService.view = 'lobby-host';
             });
         });
       });

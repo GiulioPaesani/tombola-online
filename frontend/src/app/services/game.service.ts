@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import CONSTANTS from '../../assets/CONSTANTS';
 import { io, Socket } from 'socket.io-client';
 import { Toast } from '../types';
-import { GameOptions } from '../../../../types/general';
+import { GameOptions, EventType } from '../../../../types';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { GameOptions } from '../../../../types/general';
 export class GameService {
   gameId = '';
   gameCode = '';
-  state:
+  view:
     | 'home'
     | 'create'
     | 'join'
@@ -21,16 +21,12 @@ export class GameService {
   toasts: Toast[] = [];
   gameOptions: GameOptions | null = null;
 
-  public socket: Socket | null = null;
+  socket: Socket | null = null;
 
   connectWebSocket = () => {
     this.socket = io(CONSTANTS.WEBSOCKET_URL);
 
-    this.socket.on('connect', () => {
-      console.log('[Frontend] Connesso al socket', this.socket?.id);
-    });
-
-    this.socket.on('hostDisconnect', () => {
+    this.socket.on(EventType.HostDisconnected, () => {
       this.showToast({
         type: 'error',
         text: `L'host della partita si è disconnesso`,
@@ -40,7 +36,7 @@ export class GameService {
   };
 
   restartGame = () => {
-    this.state = 'home';
+    this.view = 'home';
     this.gameCode = '';
     this.gameId = '';
     this.gameOptions = null;
@@ -48,6 +44,7 @@ export class GameService {
 
   showToast = (toast: Omit<Toast, 'toastId'>) => {
     const toastId = new Date().getTime().toString();
+
     this.toasts.push({
       toastId,
       ...toast,

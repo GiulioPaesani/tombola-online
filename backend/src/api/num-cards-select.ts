@@ -1,3 +1,4 @@
+import { EventType } from '../../../types';
 import games from '../schemas/games';
 import { Route } from '../types';
 import { io, sockets } from '../utils/handler/initWebSocket';
@@ -23,7 +24,12 @@ const route: Route = {
 				}
 			);
 
-			io.to(gameId).emit('playersUpdate', game?.socketIds);
+			if (!game) return res.sendStatus(404);
+
+			io.to(gameId).emit(EventType.PlayersUpdate, game?.socketIds, {
+				event: 'PlayerCardsSelect',
+				socketId
+			});
 
 			res.sendStatus(200);
 		} else {

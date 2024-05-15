@@ -9,10 +9,12 @@ const route: Route = {
 		const gameId = req.body.gameId;
 		const newGameCode = await generateGameCode();
 
-		await games.updateOne({ gameId }, { gameCode: newGameCode });
+		const game = await games.findOneAndUpdate({ gameId }, { gameCode: newGameCode }, { new: true });
 
-		res.status(200).send({
-			gameCode: newGameCode
+		if (!game) return res.sendStatus(404);
+
+		res.send({
+			gameCode: game.gameCode
 		});
 	}
 };

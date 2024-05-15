@@ -10,7 +10,7 @@ const route: Route = {
 		const game = await games.findOne({ gameId });
 
 		if (game) {
-			res.status(200).send(game.socketIds);
+			res.send(game.socketIds);
 		} else {
 			res.sendStatus(404);
 		}

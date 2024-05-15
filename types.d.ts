@@ -1,3 +1,9 @@
+export const enum EventType {
+	Connect = 'connect',
+	HostDisconnected = 'HostDisconnected',
+	PlayersUpdate = 'playersUpdate'
+}
+
 export type GameOptions = {
 	winCases: {
 		ambo: boolean;

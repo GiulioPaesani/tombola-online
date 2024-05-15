@@ -1,7 +1,7 @@
 import games from '../schemas/games';
 import { Route } from '../types';
 import generateGameCode from '../utils/generateGameCode';
-import { GameOptions } from '../../../types/general';
+import { GameOptions } from '../../../types';
 import { v4 as uuidv4 } from 'uuid';
 
 const route: Route = {
@@ -13,13 +13,15 @@ const route: Route = {
 
 		const gameOptions = req.body as GameOptions;
 
+		//! Controllo game options
+
 		await games.create({
 			gameId,
 			gameCode,
 			...gameOptions
 		});
 
-		res.status(200).send({
+		res.send({
 			gameId,
 			gameCode
 		});

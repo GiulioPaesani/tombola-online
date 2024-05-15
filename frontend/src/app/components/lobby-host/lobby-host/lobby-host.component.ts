@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
-import { Player } from '../../../../../../types/general';
+import { EventType, Player } from '../../../../../../types';
 
 @Component({
   selector: 'app-lobby-host',
@@ -13,6 +13,7 @@ import { Player } from '../../../../../../types/general';
 })
 export class LobbyHostComponent {
   players: Player[] = [];
+  readyToStart = false;
 
   constructor(public gameService: GameService) {
     axios
@@ -22,14 +23,12 @@ export class LobbyHostComponent {
       .then((response) => {
         this.players = response.data;
 
-        this.gameService.socket?.on('playersUpdate', (socketIds) => {
+        this.gameService.socket?.on(EventType.PlayersUpdate, (socketIds) => {
           this.players = socketIds;
-        });
 
-        this.gameService.socket?.on('playerKick', (playerInfo) => {
-          this.players = this.players.filter(
-            (player) => player.socketId !== playerInfo.socketId
-          );
+          this.readyToStart =
+            this.players.length > 1 &&
+            this.players.slice(1).every((x) => x.numCards);
         });
       });
   }

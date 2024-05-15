@@ -9,7 +9,7 @@ const route: Route = {
 
 		const game = await games.findOne({ gameCode });
 
-		if (!game) return res.send('Invalid code');
+		if (!game) return res.send('Invalid code'); //? Farlo con lo status
 
 		const { gameId, state, winCases, maxPlayers, minCards, maxCards, socketIds } = game;
 

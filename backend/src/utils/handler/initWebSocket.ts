@@ -1,5 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import games from '../../schemas/games';
+import { EventType } from '../../../../types';
 
 export let io: Server;
 export const sockets: Socket[] = [];
@@ -23,10 +24,14 @@ const initWebSocket = () => {
 
 					io.to(game.gameId).emit(
 						'playersUpdate',
-						game?.socketIds.filter(x => x.socketId !== socket.id)
+						game?.socketIds.filter(x => x.socketId !== socket.id),
+						{
+							event: 'PlayerLeave',
+							socketId: socket.id
+						}
 					);
 				} else {
-					io.to(game.gameId).emit('hostDisconnect');
+					io.to(game.gameId).emit(EventType.HostDisconnected);
 
 					io.in(game.gameId).disconnectSockets();
 

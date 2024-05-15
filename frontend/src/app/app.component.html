@@ -1,6 +1,6 @@
 <app-toast></app-toast>
 
-<div [ngSwitch]="gameService.state">
+<div [ngSwitch]="gameService.view">
   <div *ngSwitchCase="'home'"><app-home></app-home></div>
   <div *ngSwitchCase="'lobby-host'"><app-lobby-host></app-lobby-host></div>
   <div *ngSwitchCase="'lobby-player'"><app-lobby-player></app-lobby-player></div>

@@ -2,7 +2,8 @@ export const enum EventType {
 	Connect = 'connect',
 	HostDisconnected = 'HostDisconnected',
 	PlayersUpdate = 'playersUpdate',
-	StartGame = 'startGame'
+	StartGame = 'startGame',
+	ExtractedNumber = 'extractedNumber'
 }
 
 export type GameOptions = {

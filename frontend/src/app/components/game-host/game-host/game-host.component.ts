@@ -35,4 +35,21 @@ export class GameHostComponent {
       socketId,
     });
   };
+
+  extractNumber = async () => {
+    await axios
+      .post(`${CONSTANTS.API_BASE_URL}/extract-number`, {
+        gameId: this.gameService.gameId,
+      })
+      .then((response) => {
+        const randomNumber = parseInt(response.data);
+
+        this.gameService.extractedNumbers.push(randomNumber);
+
+        this.gameService.showToast({
+          type: 'success',
+          text: randomNumber.toString(),
+        });
+      });
+  };
 }

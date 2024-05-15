@@ -3,7 +3,12 @@ import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
-import { Card, FormattedCard, Player } from '../../../../../../types';
+import {
+  Card,
+  EventType,
+  FormattedCard,
+  Player,
+} from '../../../../../../types';
 
 @Component({
   selector: 'app-game-player',
@@ -33,10 +38,29 @@ export class GamePlayerComponent {
         socketId: this.gameService.socket?.id,
       })
       .then((response) => {
-        console.log(response.data);
         this.cards = response.data.cards;
         this.formattedCards = response.data.formattedCards;
       });
+
+    this.gameService.socket?.on(
+      EventType.ExtractedNumber,
+      (randomNumber: number) => {
+        this.gameService.showToast({
+          type: 'success',
+          text: randomNumber.toString(),
+        });
+
+        this.gameService.extractedNumbers.push(randomNumber);
+
+        if (this.automaticInsert) {
+          for (let i = 0; i < this.cards.length; i++) {
+            if (randomNumber.toString() in this.cards[i]) {
+              this.cards[i][randomNumber] = true;
+            }
+          }
+        }
+      }
+    );
   }
 
   toggleGameOptions = () => {

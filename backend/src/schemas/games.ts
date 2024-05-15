@@ -48,7 +48,8 @@ const gameSchema = new Schema<Game>({
 		{
 			socketId: SchemaTypes.String,
 			username: SchemaTypes.String,
-			avatarUrl: SchemaTypes.String
+			avatarUrl: SchemaTypes.String,
+			numCards: SchemaTypes.Number
 		}
 	]
 });

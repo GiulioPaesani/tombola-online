@@ -15,4 +15,5 @@ export type Player = {
 	socketId: string;
 	username: string;
 	avatarUrl: string;
+	numCards: number | null;
 };

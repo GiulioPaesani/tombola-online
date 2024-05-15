@@ -6,8 +6,12 @@
     <h2 class="text-bold">Players list:</h2>
     <span>{{players.length}}/{{this.gameService.gameOptions?.maxPlayers || 'Infiniti'}}</span>
     <div>
-      <div *ngFor="let player of players; index as i">{{player.username}} - ID: {{player.socketId}} <button
-          class="text-bold border-2" *ngIf="i !== 0" (click)="kickPlayer(player.socketId)">Kick</button></div>
+      <div *ngFor="let player of players; index as i">{{player.username}} - <span *ngIf="i !== 0"> Cartelle:
+          {{player.numCards ?? 'Non ancora deciso'}}</span>
+        <button class="text-bold border-2" *ngIf="i !== 0" (click)="kickPlayer(player.socketId)">Kick</button>
+      </div>
     </div>
   </div>
 </div>
+
+<button (click)="startGame()">START GAME!</button>

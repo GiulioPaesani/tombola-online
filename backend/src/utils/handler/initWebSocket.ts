@@ -21,9 +21,10 @@ const initWebSocket = () => {
 				if (game.socketIds[0]?.socketId !== socket.id) {
 					socket.leave(game.gameId);
 
-					io.to(game.gameId).emit('playerLeave', {
-						socketId: socket.id
-					});
+					io.to(game.gameId).emit(
+						'playersUpdate',
+						game?.socketIds.filter(x => x.socketId !== socket.id)
+					);
 				} else {
 					io.to(game.gameId).emit('hostDisconnect');
 

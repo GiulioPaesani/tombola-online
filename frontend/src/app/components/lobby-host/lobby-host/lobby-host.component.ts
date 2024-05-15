@@ -22,14 +22,8 @@ export class LobbyHostComponent {
       .then((response) => {
         this.players = response.data;
 
-        this.gameService.socket?.on('playerJoin', (playerInfo) => {
-          this.players.push(playerInfo);
-        });
-
-        this.gameService.socket?.on('playerLeave', (playerInfo) => {
-          this.players = this.players.filter(
-            (player) => player.socketId !== playerInfo.socketId
-          );
+        this.gameService.socket?.on('playersUpdate', (socketIds) => {
+          this.players = socketIds;
         });
 
         this.gameService.socket?.on('playerKick', (playerInfo) => {
@@ -56,4 +50,6 @@ export class LobbyHostComponent {
       socketId,
     });
   };
+
+  startGame = async () => {};
 }

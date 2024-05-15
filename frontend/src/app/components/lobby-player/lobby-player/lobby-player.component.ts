@@ -13,6 +13,7 @@ import { Player } from '../../../../../../types/general';
 })
 export class LobbyPlayerComponent {
   players: Player[] = [];
+  numCardsToSelect: number[] = [];
 
   constructor(public gameService: GameService) {
     axios
@@ -22,14 +23,18 @@ export class LobbyPlayerComponent {
       .then((response) => {
         this.players = response.data;
 
-        this.gameService.socket?.on('playerJoin', (playerInfo) => {
-          this.players.push(playerInfo);
-        });
-
-        this.gameService.socket?.on('playerLeave', (playerInfo) => {
-          this.players = this.players.filter(
-            (player) => player.socketId !== playerInfo.socketId
+        this.numCardsToSelect = new Array(
+          (this.gameService.gameOptions?.maxCards ?? 1) -
+            (this.gameService.gameOptions?.minCards ?? 1) +
+            1
+        )
+          .fill(0)
+          .map(
+            (x, index) => (this.gameService.gameOptions?.minCards ?? 1) + index
           );
+
+        this.gameService.socket?.on('playersUpdate', (socketIds) => {
+          this.players = socketIds;
         });
 
         this.gameService.socket?.on('playerKick', (playerInfo) => {
@@ -48,4 +53,14 @@ export class LobbyPlayerComponent {
         });
       });
   }
+
+  numCardsSelect = async (numCards: number) => {
+    await axios.post(
+      `${CONSTANTS.API_BASE_URL}/num-cards-select/?numCards=${numCards}`,
+      {
+        gameId: this.gameService.gameId,
+        socketId: this.gameService.socket?.id,
+      }
+    );
+  };
 }

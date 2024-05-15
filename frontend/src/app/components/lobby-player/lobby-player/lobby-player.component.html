@@ -3,7 +3,16 @@
     <h2>Players list:</h2>
     <span>{{players.length}}/{{this.gameService.gameOptions?.maxPlayers|| 'Infiniti'}}</span>
     <ul>
-      <li *ngFor="let player of players">{{player.username}} - ID: {{player.socketId}}</li>
+      <li *ngFor="let player of players; index as i">{{player.username}} - <span *ngIf="i !== 0"> Cartelle:
+          {{player.numCards ?? 'Non ancora deciso'}}</span>
+      </li>
     </ul>
+
+
+    <div *ngIf="this.gameService.gameOptions?.minCards !== this.gameService.gameOptions?.maxCards">
+      <h2>Segli quante cartelle vuoi</h2>
+
+      <button *ngFor="let num of numCardsToSelect" class="border-2 m-2" (click)="numCardsSelect(num)">{{num}}</button>
+    </div>
   </div>
 </div>

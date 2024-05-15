@@ -4,32 +4,19 @@ import { io, sockets } from '../utils/handler/initWebSocket';
 
 const route: Route = {
 	method: 'POST',
-	path: 'add-player-to-game',
+	path: 'num-cards-select',
 	handler: async (req, res) => {
 		const gameId = req.body.gameId;
 		const socketId = req.body.socketId;
-		const username = req.body.username;
+		const numCards = req.query.numCards;
 
 		const socket = sockets.find(x => x.id === socketId);
+
 		if (socket) {
-			socket.join(gameId);
-
-			let game = await games.findOne({ gameId });
-			if (!game) return res.sendStatus(404);
-
-			const { minCards, maxCards } = game;
-
-			game = await games.findOneAndUpdate(
-				{ gameId },
+			const game = await games.findOneAndUpdate(
+				{ gameId, 'socketIds.socketId': socketId },
 				{
-					$push: {
-						socketIds: {
-							socketId,
-							username,
-							avatarUrl: '',
-							numCards: minCards === maxCards ? minCards : null
-						}
-					}
+					'socketIds.$.numCards': numCards
 				},
 				{
 					new: true

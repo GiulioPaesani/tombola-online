@@ -50,7 +50,8 @@ const gameSchema = new Schema<Game>({
 			socketId: SchemaTypes.String,
 			username: SchemaTypes.String,
 			avatarUrl: SchemaTypes.String,
-			numCards: SchemaTypes.Number
+			numCards: SchemaTypes.Number,
+			cards: [SchemaTypes.Mixed]
 		}
 	],
 	extractedNumbers: [SchemaTypes.Number]

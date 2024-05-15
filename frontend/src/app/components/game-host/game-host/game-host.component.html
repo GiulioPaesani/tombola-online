@@ -11,3 +11,10 @@
     </div>
   </div>
 </div>
+
+
+<div class="p-16 grid grid-cols-10 gap-4">
+  <div *ngFor="let number of allBoardNumbers" class="border-2 text-center"
+    [ngStyle]="{backgroundColor: this.gameService.extractedNumbers.includes(number) ? 'green' : 'orange'}">{{number}}
+  </div>
+</div>

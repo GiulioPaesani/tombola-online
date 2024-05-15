@@ -20,6 +20,7 @@ export class GameService {
     | 'game-player' = 'home';
   toasts: Toast[] = [];
   gameOptions: GameOptions | null = null;
+  extractedNumbers: number[] = [];
 
   socket: Socket | null = null;
 
@@ -45,6 +46,7 @@ export class GameService {
     this.gameCode = '';
     this.gameId = '';
     this.gameOptions = null;
+    this.extractedNumbers = [];
   };
 
   showToast = (toast: Omit<Toast, 'toastId'>) => {

@@ -13,6 +13,7 @@ import { EventType, Player } from '../../../../../../types';
 })
 export class GameHostComponent {
   players: Player[] = [];
+  allBoardNumbers = new Array(90).fill(0).map((x, index) => index + 1);
 
   constructor(public gameService: GameService) {
     axios

@@ -7,9 +7,15 @@
           {{player.numCards ?? 'Non ancora deciso'}}</span>
       </li>
     </ul>
+  </div>
+</div>
 
-
-
-
+<div class="p-16">
+  <div *ngFor="let formattedCard of formattedCards; index as i" class="border-4 text-center my-4 w-fit">
+    <div *ngFor="let row of formattedCard" class="flex gap-4">
+      <div *ngFor="let number of row" class="w-10 border-2"
+        [ngStyle]="{backgroundColor: cards[i][number] ? 'green' : 'orange'}">
+        {{number === 0 ? '' : number}}</div>
+    </div>
   </div>
 </div>

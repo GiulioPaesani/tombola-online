@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
-import { EventType, Player } from '../../../../../../types';
+import { Card, FormattedCard, Player } from '../../../../../../types';
 
 @Component({
   selector: 'app-game-player',
@@ -13,15 +13,27 @@ import { EventType, Player } from '../../../../../../types';
 })
 export class GamePlayerComponent {
   players: Player[] = [];
+  cards: Card[] = [];
+  formattedCards: FormattedCard[] = [];
 
   constructor(public gameService: GameService) {
-    console.log('ciao');
     axios
       .post(`${CONSTANTS.API_BASE_URL}/players`, {
         gameId: this.gameService.gameId,
       })
       .then((response) => {
         this.players = response.data;
+      });
+
+    axios
+      .post(`${CONSTANTS.API_BASE_URL}/cards`, {
+        gameId: this.gameService.gameId,
+        socketId: this.gameService.socket?.id,
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.cards = response.data.cards;
+        this.formattedCards = response.data.formattedCards;
       });
   }
 }

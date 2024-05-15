@@ -18,7 +18,9 @@ export type GameOptions = {
 	maxCards: number;
 };
 
-type Card = Record<number, boolean>;
+export type Card = Record<number, boolean>;
+
+export type FormattedCard = number[][];
 
 export type Player = {
 	socketId: string;

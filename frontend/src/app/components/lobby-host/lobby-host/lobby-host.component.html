@@ -3,7 +3,8 @@
   <button (click)="regenerateGameCode()" class="text-bold border-black border-2">Rigenera codice</button>
 
   <div>
-    <h2>Players list:</h2>
+    <h2 class="text-bold">Players list:</h2>
+    <span>{{players.length}}/{{this.gameService.gameOptions?.maxPlayers || 'Infiniti'}}</span>
     <div>
       <div *ngFor="let player of players; index as i">{{player.username}} - ID: {{player.socketId}} <button
           class="text-bold border-2" *ngIf="i !== 0" (click)="kickPlayer(player.socketId)">Kick</button></div>

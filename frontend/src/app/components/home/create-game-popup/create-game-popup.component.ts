@@ -60,6 +60,12 @@ export class CreateGamePopupComponent {
             .then(() => {
               this.gameService.gameId = respose.data.gameId;
               this.gameService.gameCode = respose.data.gameCode;
+              this.gameService.gameOptions = {
+                winCases,
+                maxPlayers,
+                minCards,
+                maxCards,
+              };
               this.gameService.state = 'lobby-host';
             });
         });

@@ -31,24 +31,34 @@ export class HomeComponent {
     await axios
       .post(`${CONSTANTS.API_BASE_URL}/is-game-code-correct`, { gameCode })
       .then((respose) => {
-        const gameId = respose.data.gameId;
-        if (gameId) {
+        if (respose.data === 'Invalid code') {
+          this.gameService.showToast({
+            type: 'error',
+            text: `Codice della partita non valido`,
+          });
+        } else if (respose.data === 'Max players reached') {
+          this.gameService.showToast({
+            type: 'error',
+            text: `Giocatori massimi raggiunti`,
+          });
+        } else {
           this.gameService.connectWebSocket();
 
           this.gameService.socket?.on('connect', async () => {
             await axios.post(`${CONSTANTS.API_BASE_URL}/add-player-to-game`, {
-              gameId: gameId,
+              gameId: respose.data.gameId,
               socketId: this.gameService.socket?.id,
               username: playerUsername,
             });
 
-            this.gameService.gameId = gameId;
+            this.gameService.gameId = respose.data.gameId;
+            this.gameService.gameOptions = {
+              winCases: respose.data.winCases,
+              maxPlayers: respose.data.maxPlayers,
+              minCards: respose.data.minCards,
+              maxCards: respose.data.maxCards,
+            };
             this.gameService.state = 'lobby-player';
-          });
-        } else {
-          this.gameService.showToast({
-            type: 'error',
-            text: `Codice della partita non valido`,
           });
         }
       });

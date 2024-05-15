@@ -9,8 +9,18 @@ const route: Route = {
 
 		const game = await games.findOne({ gameCode });
 
-		res.status(200).send({
-			gameId: game?.gameId ?? null
+		if (!game) return res.send('Invalid code');
+
+		const { gameId, winCases, maxPlayers, minCards, maxCards, socketIds } = game;
+
+		if (maxPlayers !== 0 && socketIds.length >= maxPlayers) return res.send('Max players reached');
+
+		res.send({
+			gameId,
+			winCases,
+			maxPlayers,
+			minCards,
+			maxCards
 		});
 	}
 };

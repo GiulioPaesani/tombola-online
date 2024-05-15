@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import CONSTANTS from '../../assets/CONSTANTS';
 import { io, Socket } from 'socket.io-client';
 import { Toast } from '../types';
+import { GameOptions } from '../../../../types/general';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class GameService {
     | 'game-host'
     | 'game-player' = 'home';
   toasts: Toast[] = [];
+  gameOptions: GameOptions | null = null;
 
   public socket: Socket | null = null;
 
@@ -41,6 +43,7 @@ export class GameService {
     this.state = 'home';
     this.gameCode = '';
     this.gameId = '';
+    this.gameOptions = null;
   };
 
   showToast = (toast: Omit<Toast, 'toastId'>) => {

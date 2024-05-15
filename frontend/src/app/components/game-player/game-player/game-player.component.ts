@@ -15,6 +15,8 @@ export class GamePlayerComponent {
   players: Player[] = [];
   cards: Card[] = [];
   formattedCards: FormattedCard[] = [];
+  automaticInsert = false;
+  numbersCheck = true;
 
   constructor(public gameService: GameService) {
     axios
@@ -36,4 +38,19 @@ export class GamePlayerComponent {
         this.formattedCards = response.data.formattedCards;
       });
   }
+
+  toggleGameOptions = () => {
+    this.automaticInsert = (
+      document.getElementById('automaticInsert') as HTMLInputElement
+    ).checked;
+    this.numbersCheck = (
+      document.getElementById('numbersCheck') as HTMLInputElement
+    ).checked;
+  };
+
+  toggleNumber = (cardIndex: number, number: number) => {
+    if (number === 0) return;
+
+    this.cards[cardIndex][number] = !this.cards[cardIndex][number];
+  };
 }

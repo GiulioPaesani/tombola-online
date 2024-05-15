@@ -33,6 +33,11 @@ export class GameService {
       });
       this.restartGame();
     });
+
+    this.socket.on(EventType.StartGame, () => {
+      if (this.view === 'lobby-host') this.view = 'game-host';
+      else this.view = 'game-player';
+    });
   };
 
   restartGame = () => {

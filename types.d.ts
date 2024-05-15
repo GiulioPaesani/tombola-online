@@ -18,9 +18,12 @@ export type GameOptions = {
 	maxCards: number;
 };
 
+type Card = Record<number, boolean>;
+
 export type Player = {
 	socketId: string;
 	username: string;
 	avatarUrl: string;
 	numCards: number | null;
+	cards: Card[];
 };

@@ -16,6 +16,7 @@ export type Game = {
 	minCards: number;
 	maxCards: number;
 	socketIds: Player[];
+	extractedNumbers: number[];
 };
 
 const gameSchema = new Schema<Game>({
@@ -51,7 +52,8 @@ const gameSchema = new Schema<Game>({
 			avatarUrl: SchemaTypes.String,
 			numCards: SchemaTypes.Number
 		}
-	]
+	],
+	extractedNumbers: [SchemaTypes.Number]
 });
 
 gameSchema.index({ gameId: 1 });

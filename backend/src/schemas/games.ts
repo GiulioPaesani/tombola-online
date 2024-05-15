@@ -4,6 +4,7 @@ import { Player } from '../../../types/general';
 export type Game = {
 	gameId: string;
 	gameCode: string;
+	state: 'lobby' | 'game';
 	winCases: {
 		ambo: boolean;
 		terno: boolean;
@@ -28,6 +29,10 @@ const gameSchema = new Schema<Game>({
 		type: SchemaTypes.String,
 		required: true,
 		unique: true
+	},
+	state: {
+		type: SchemaTypes.String,
+		default: 'lobby'
 	},
 	winCases: {
 		ambo: SchemaTypes.Boolean,

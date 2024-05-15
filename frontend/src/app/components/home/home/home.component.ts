@@ -38,8 +38,13 @@ export class HomeComponent {
           });
         } else if (respose.data === 'Max players reached') {
           this.gameService.showToast({
-            type: 'error',
+            type: 'warning',
             text: `Giocatori massimi raggiunti`,
+          });
+        } else if (respose.data === 'Game in progress') {
+          this.gameService.showToast({
+            type: 'warning',
+            text: `Partita già in corso`,
           });
         } else {
           this.gameService.connectWebSocket();

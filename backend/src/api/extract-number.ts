@@ -1,6 +1,7 @@
-import { EventType } from '../../../types';
+import { EventType, Wins } from '../../../types';
 import games from '../schemas/games';
 import { Route } from '../types';
+import { checkAmbo, checkCinquina, checkDecina, checkQuaterna, checkTerno, checkTombola } from '../utils/checkWin';
 import { io } from '../utils/handler/initWebSocket';
 
 const route: Route = {
@@ -13,16 +14,79 @@ const route: Route = {
 
 		if (!game) return res.sendStatus(404);
 
-		const notExtractedNumbers = new Array(100)
+		const { extractedNumbers, socketIds, winCases } = game;
+
+		const notExtractedNumbers = new Array(90)
 			.fill(0)
 			.map((x, index) => index + 1)
-			.filter(number => !game.extractedNumbers.includes(number));
+			.filter(number => !extractedNumbers.includes(number));
+
+		if (!notExtractedNumbers.length) res.send(null);
 
 		const randomNumber = notExtractedNumbers[Math.floor(Math.random() * notExtractedNumbers.length)];
 
+		const nextWinCase = Object.keys(winCases).find(winCase => winCases[winCase as keyof typeof winCases]);
+		if (!nextWinCase) return;
+
+		const wins: Wins = {
+			type: nextWinCase,
+			winners: []
+		};
+
+		const querys: Record<string, boolean> = {};
+
+		for (const index in socketIds) {
+			const player = socketIds[index];
+			const { cards, formattedCards } = player;
+
+			for (const index2 in formattedCards) {
+				const card = cards[index2];
+
+				if (!(randomNumber in card)) continue;
+
+				card[randomNumber] = true;
+				querys[`socketIds.${index}.cards.${index2}.${randomNumber}`] = true;
+
+				const formattedCard = formattedCards[index2];
+
+				switch (nextWinCase) {
+					case 'ambo':
+						wins.winners.push(...checkAmbo(card, formattedCard, player));
+						break;
+					case 'terno':
+						wins.winners.push(...checkTerno(card, formattedCard, player));
+						break;
+					case 'quaterna':
+						wins.winners.push(...checkQuaterna(card, formattedCard, player));
+						break;
+					case 'cinquina':
+						wins.winners.push(...checkCinquina(card, formattedCard, player));
+						break;
+					case 'decina':
+						wins.winners.push(...checkDecina(card, formattedCard, player));
+						break;
+					case 'tombola':
+						wins.winners.push(...checkTombola(card, formattedCard, player));
+						break;
+				}
+			}
+		}
+
+		if (wins.winners.length) {
+			querys[`winCases.${wins.type}`] = false;
+
+			io.to(gameId).emit(EventType.Wins, wins);
+		}
+
+		await games.updateOne({ gameId }, { $push: { extractedNumbers: randomNumber }, $set: querys });
+
 		io.to(gameId).emit(EventType.ExtractedNumber, randomNumber);
 
-		res.send(randomNumber.toString());
+		game.extractedNumbers.push(randomNumber);
+
+		res.send({
+			randomNumber
+		});
 	}
 };
 

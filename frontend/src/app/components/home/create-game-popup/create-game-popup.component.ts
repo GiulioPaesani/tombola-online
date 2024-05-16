@@ -17,6 +17,8 @@ export class CreateGamePopupComponent {
     const winCases = {
       ambo: (document.getElementById('ambo') as HTMLInputElement).checked,
       terno: (document.getElementById('terno') as HTMLInputElement).checked,
+      quaterna: (document.getElementById('quaterna') as HTMLInputElement)
+        .checked,
       cinquina: (document.getElementById('cinquina') as HTMLInputElement)
         .checked,
       decina: (document.getElementById('decina') as HTMLInputElement).checked,

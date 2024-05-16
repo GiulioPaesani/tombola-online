@@ -3,13 +3,15 @@ export const enum EventType {
 	HostDisconnected = 'HostDisconnected',
 	PlayersUpdate = 'playersUpdate',
 	StartGame = 'startGame',
-	ExtractedNumber = 'extractedNumber'
+	ExtractedNumber = 'extractedNumber',
+	Wins = 'wins'
 }
 
 export type GameOptions = {
 	winCases: {
 		ambo: boolean;
 		terno: boolean;
+		quaterna: boolean;
 		cinquina: boolean;
 		decina: boolean;
 		tombola: boolean;
@@ -29,4 +31,10 @@ export type Player = {
 	avatarUrl: string;
 	numCards: number | null;
 	cards: Card[];
+	formattedCards: FormattedCard[];
+};
+
+export type Wins = {
+	type: string;
+	winners: Player[];
 };

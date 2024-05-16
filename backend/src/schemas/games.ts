@@ -8,6 +8,7 @@ export type Game = {
 	winCases: {
 		ambo: boolean;
 		terno: boolean;
+		quaterna: boolean;
 		cinquina: boolean;
 		decina: boolean;
 		tombola: boolean;
@@ -38,6 +39,7 @@ const gameSchema = new Schema<Game>({
 	winCases: {
 		ambo: SchemaTypes.Boolean,
 		terno: SchemaTypes.Boolean,
+		quaterna: SchemaTypes.Boolean,
 		cinquina: SchemaTypes.Boolean,
 		decina: SchemaTypes.Boolean,
 		tombola: SchemaTypes.Boolean
@@ -51,7 +53,8 @@ const gameSchema = new Schema<Game>({
 			username: SchemaTypes.String,
 			avatarUrl: SchemaTypes.String,
 			numCards: SchemaTypes.Number,
-			cards: [SchemaTypes.Mixed]
+			cards: [SchemaTypes.Mixed],
+			formattedCards: [SchemaTypes.Mixed]
 		}
 	],
 	extractedNumbers: [SchemaTypes.Number]

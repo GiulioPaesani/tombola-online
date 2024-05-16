@@ -8,6 +8,7 @@ import {
   EventType,
   FormattedCard,
   Player,
+  Wins,
 } from '../../../../../../types';
 
 @Component({
@@ -61,6 +62,15 @@ export class GamePlayerComponent {
         }
       }
     );
+
+    this.gameService.socket?.on(EventType.Wins, (wins: Wins) => {
+      this.gameService.showToast({
+        type: 'success',
+        text: `${wins.winners
+          .map((player) => player.username)
+          .join(', ')} ha/hanno fatto ${wins.type}!!!`,
+      });
+    });
   }
 
   toggleGameOptions = () => {

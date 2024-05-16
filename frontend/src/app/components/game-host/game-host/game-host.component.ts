@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
-import { EventType, Player } from '../../../../../../types';
+import { EventType, Player, Wins } from '../../../../../../types';
 
 @Component({
   selector: 'app-game-host',
@@ -27,6 +27,15 @@ export class GameHostComponent {
           this.players = socketIds;
         });
       });
+
+    this.gameService.socket?.on(EventType.Wins, (wins: Wins) => {
+      this.gameService.showToast({
+        type: 'success',
+        text: `${wins.winners
+          .map((player) => player.username)
+          .join(', ')} ha/hanno fatto ${wins.type}!!!`,
+      });
+    });
   }
 
   kickPlayer = async (socketId: string) => {
@@ -42,7 +51,9 @@ export class GameHostComponent {
         gameId: this.gameService.gameId,
       })
       .then((response) => {
-        const randomNumber = parseInt(response.data);
+        if (!response.data) return;
+
+        const randomNumber = parseInt(response.data.randomNumber);
 
         this.gameService.extractedNumbers.push(randomNumber);
 

@@ -1,6 +1,7 @@
 import { EventType } from '../../../types';
 import games from '../schemas/games';
 import { Route } from '../types';
+import formatCard from '../utils/formatCard';
 import generateCard from '../utils/generateCard';
 import { io } from '../utils/handler/initWebSocket';
 
@@ -15,11 +16,16 @@ const route: Route = {
 
 		const { socketIds } = game;
 
-		for (const index in socketIds) {
+		for (let index = 1; index < socketIds.length; index++) {
 			socketIds[index].cards = [];
 
 			for (let i = 0; i < (socketIds[index].numCards ?? 1); i++) {
 				socketIds[index].cards.push(generateCard());
+			}
+
+			socketIds[index].formattedCards = [];
+			for (let i = 0; i < socketIds[index].cards.length; i++) {
+				socketIds[index].formattedCards.push(formatCard(socketIds[index].cards[i]));
 			}
 		}
 

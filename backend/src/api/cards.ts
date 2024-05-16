@@ -14,14 +14,11 @@ const route: Route = {
 		let game = await games.findOne({ gameId });
 		if (!game) return res.sendStatus(404);
 
-		const cards = game.socketIds.find(socket => socket.socketId === socketId)?.cards;
+		const player = game.socketIds.find(socket => socket.socketId === socketId);
 
-		if (!cards) return res.sendStatus(404);
+		if (!player) return res.sendStatus(404);
 
-		const formattedCards = [];
-		for (let i = 0; i < cards.length; i++) {
-			formattedCards.push(formatCard(cards[i]));
-		}
+		const { cards, formattedCards } = player;
 
 		res.send({
 			cards,

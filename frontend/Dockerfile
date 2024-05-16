@@ -11,3 +11,5 @@ RUN pnpm install
 RUN pnpm build
 
 CMD ["pnpm", "serve:ssr:frontend"]
+
+EXPOSE 4000

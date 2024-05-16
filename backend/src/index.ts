@@ -9,7 +9,7 @@ import initWebSocket from './utils/handler/initWebSocket';
 
 dotenv.config();
 
-export const FRONT_END_URL = process.env.ENVIRONMENT === 'production' ? 'http://host.docker.internal:4000' : 'http://localhost:4200';
+export const FRONT_END_URL = process.env.ENVIRONMENT === 'production' ? 'http://localhost:4000' : 'http://localhost:4200';
 
 const app = express();
 

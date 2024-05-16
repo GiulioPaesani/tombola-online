@@ -11,3 +11,5 @@ RUN pnpm install
 RUN pnpm build
 
 CMD ["pnpm", "start"]
+
+EXPOSE 5000

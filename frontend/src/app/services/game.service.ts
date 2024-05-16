@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import CONSTANTS from '../../assets/CONSTANTS';
 import { io, Socket } from 'socket.io-client';
 import { Toast } from '../types';
-import { GameOptions, EventType } from '../../../../types';
+import { GameOptions, EventType } from '../types';
 
 @Injectable({
   providedIn: 'root',

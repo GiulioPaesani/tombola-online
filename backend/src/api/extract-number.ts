@@ -1,6 +1,5 @@
-import { EventType, Wins } from '../../../types';
 import games from '../schemas/games';
-import { Route } from '../types';
+import { Route, EventType, Wins } from '../types';
 import { checkAmbo, checkCinquina, checkDecina, checkQuaterna, checkTerno, checkTombola } from '../utils/checkWin';
 import { io } from '../utils/handler/initWebSocket';
 

@@ -1,4 +1,4 @@
-import { Card, FormattedCard, Player } from '../../../types';
+import { Card, FormattedCard, Player } from '../types';
 
 export const checkAmbo = (card: Card, formattedCard: FormattedCard, player: Player) => {
 	for (let i = 0; i < formattedCard.length; i++) {

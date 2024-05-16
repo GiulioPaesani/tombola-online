@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
-import { EventType, Player } from '../../../../../../types';
+import { EventType, Player } from '../../../types';
 
 @Component({
   selector: 'app-lobby-player',

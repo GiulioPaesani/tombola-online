@@ -1,4 +1,4 @@
-import { Card, FormattedCard } from '../../../types';
+import { Card, FormattedCard } from '../types';
 
 const indexOfMinRow = (formattedCard: FormattedCard) => {
 	let minIndex = 0;

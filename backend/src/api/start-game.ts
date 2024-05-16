@@ -1,6 +1,5 @@
-import { EventType } from '../../../types';
 import games from '../schemas/games';
-import { Route } from '../types';
+import { Route, EventType } from '../types';
 import formatCard from '../utils/formatCard';
 import generateCard from '../utils/generateCard';
 import { io } from '../utils/handler/initWebSocket';

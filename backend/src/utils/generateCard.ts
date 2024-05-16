@@ -1,4 +1,4 @@
-import { Card } from '../../../types';
+import { Card } from '../types';
 
 const stessaDecina = (num1: number, num2: number) => {
 	return Math.floor(num1 / 10) === Math.floor(num2 / 10) || (Math.floor(num1 / 10) === 8 && Math.floor(num2 / 10) === 9);

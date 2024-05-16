@@ -1,5 +1,5 @@
 import { Schema, SchemaTypes, model } from 'mongoose';
-import { Player } from '../../../types';
+import { Player } from '../types';
 
 export type Game = {
 	gameId: string;

@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import games from '../../schemas/games';
-import { EventType } from '../../../../types';
+import { EventType } from '../../types';
 
 export let io: Server;
 export const sockets: Socket[] = [];

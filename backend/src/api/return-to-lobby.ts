@@ -1,6 +1,5 @@
-import { EventType } from '../../../types';
 import games from '../schemas/games';
-import { Route } from '../types';
+import { Route, EventType } from '../types';
 import { io } from '../utils/handler/initWebSocket';
 
 const route: Route = {

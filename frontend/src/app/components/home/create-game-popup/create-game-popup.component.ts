@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
-import { EventType } from '../../../../../../types';
+import { EventType } from '../../../types';
 
 @Component({
   selector: 'app-create-game-popup',

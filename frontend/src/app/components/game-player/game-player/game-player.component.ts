@@ -3,13 +3,7 @@ import { Component } from '@angular/core';
 import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
-import {
-  Card,
-  EventType,
-  FormattedCard,
-  Player,
-  Wins,
-} from '../../../../../../types';
+import { Card, EventType, FormattedCard, Player, Wins } from '../../../types';
 
 @Component({
   selector: 'app-game-player',

@@ -4,7 +4,7 @@ import { CreateGamePopupComponent } from '../create-game-popup/create-game-popup
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
 import { GameService } from '../../../services/game.service';
-import { EventType } from '../../../../../../types';
+import { EventType } from '../../../types';
 
 @Component({
   selector: 'app-home',

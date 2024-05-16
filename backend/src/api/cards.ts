@@ -1,8 +1,5 @@
-import { EventType } from '../../../types';
 import games from '../schemas/games';
 import { Route } from '../types';
-import formatCard from '../utils/formatCard';
-import { io, sockets } from '../utils/handler/initWebSocket';
 
 const route: Route = {
 	method: 'POST',

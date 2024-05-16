@@ -14,7 +14,7 @@ const route: Route = {
 
 		if (!game) return res.sendStatus(404);
 
-		const { extractedNumbers, socketIds, winCases } = game;
+		const { extractedNumbers, socketIds, winCases, casesAlreadyWon } = game;
 
 		const notExtractedNumbers = new Array(90)
 			.fill(0)
@@ -25,7 +25,9 @@ const route: Route = {
 
 		const randomNumber = notExtractedNumbers[Math.floor(Math.random() * notExtractedNumbers.length)];
 
-		const nextWinCase = Object.keys(winCases).find(winCase => winCases[winCase as keyof typeof winCases]);
+		const nextWinCase = Object.keys(winCases)
+			.filter(x => !casesAlreadyWon.includes(x))
+			.find(winCase => winCases[winCase as keyof typeof winCases]);
 		if (!nextWinCase) return;
 
 		const wins: Wins = {
@@ -73,7 +75,7 @@ const route: Route = {
 		}
 
 		if (wins.winners.length) {
-			querys[`winCases.${wins.type}`] = false;
+			await games.updateOne({ gameId }, { $push: { casesAlreadyWon: wins.type } });
 
 			io.to(gameId).emit(EventType.Wins, wins);
 		}

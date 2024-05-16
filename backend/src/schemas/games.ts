@@ -13,6 +13,7 @@ export type Game = {
 		decina: boolean;
 		tombola: boolean;
 	};
+	casesAlreadyWon: string[];
 	maxPlayers: number;
 	minCards: number;
 	maxCards: number;
@@ -44,6 +45,7 @@ const gameSchema = new Schema<Game>({
 		decina: SchemaTypes.Boolean,
 		tombola: SchemaTypes.Boolean
 	},
+	casesAlreadyWon: [SchemaTypes.String],
 	maxPlayers: SchemaTypes.Number,
 	minCards: SchemaTypes.Number,
 	maxCards: SchemaTypes.Number,

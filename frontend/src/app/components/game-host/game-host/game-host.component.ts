@@ -14,6 +14,7 @@ import { EventType, Player, Wins } from '../../../../../../types';
 export class GameHostComponent {
   players: Player[] = [];
   allBoardNumbers = new Array(90).fill(0).map((x, index) => index + 1);
+  gameEnded = false;
 
   constructor(public gameService: GameService) {
     axios
@@ -35,6 +36,14 @@ export class GameHostComponent {
           .map((player) => player.username)
           .join(', ')} ha/hanno fatto ${wins.type}!!!`,
       });
+
+      if (wins.type === 'tombola') this.gameEnded = true;
+    });
+
+    this.gameService.socket?.on(EventType.ReturnToLobby, () => {
+      this.gameEnded = false;
+      this.gameService.extractedNumbers = [];
+      this.gameService.view = 'lobby-host';
     });
   }
 
@@ -62,5 +71,11 @@ export class GameHostComponent {
           text: randomNumber.toString(),
         });
       });
+  };
+
+  returnToLobby = async () => {
+    await axios.post(`${CONSTANTS.API_BASE_URL}/return-to-lobby`, {
+      gameId: this.gameService.gameId,
+    });
   };
 }

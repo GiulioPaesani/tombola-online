@@ -4,7 +4,8 @@ export const enum EventType {
 	PlayersUpdate = 'playersUpdate',
 	StartGame = 'startGame',
 	ExtractedNumber = 'extractedNumber',
-	Wins = 'wins'
+	Wins = 'wins',
+	ReturnToLobby = 'returnToLobby'
 }
 
 export type GameOptions = {

@@ -21,7 +21,7 @@ export class GamePlayerComponent {
   players: Player[] = [];
   cards: Card[] = [];
   formattedCards: FormattedCard[] = [];
-  automaticInsert = false;
+  automaticInsert = true;
   numbersCheck = true;
 
   constructor(public gameService: GameService) {
@@ -70,6 +70,11 @@ export class GamePlayerComponent {
           .map((player) => player.username)
           .join(', ')} ha/hanno fatto ${wins.type}!!!`,
       });
+    });
+
+    this.gameService.socket?.on(EventType.ReturnToLobby, () => {
+      this.gameService.extractedNumbers = [];
+      this.gameService.view = 'lobby-player';
     });
   }
 

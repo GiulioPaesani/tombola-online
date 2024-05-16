@@ -15,6 +15,9 @@
 <button class="text-2xl text-bold border-2 ml-[200px]" (click)="extractNumber()"
   [disabled]="this.gameService.extractedNumbers.length >= 90">Estrai numero</button>
 
+<button class="text-2xl text-bold border-2 ml-[200px]" (click)="returnToLobby()">Ritorna alla
+  lobby</button>
+
 <div class="p-16 grid grid-cols-10 gap-4">
   <div *ngFor="let number of allBoardNumbers" class="border-2 text-center"
     [ngStyle]="{backgroundColor: this.gameService.extractedNumbers.includes(number) ? 'green' : 'orange'}">{{number}}

@@ -10,7 +10,7 @@ const initWebSocket = () => {
 	io = new Server(3000);
 
 	io.on('connect', socket => {
-		console.log('nuova connessione', socket.id);
+		console.log('connesso2', socket?.id);
 		sockets.push(socket);
 
 		socket.on('disconnect', async () => {

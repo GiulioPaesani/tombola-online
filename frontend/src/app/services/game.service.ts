@@ -25,7 +25,11 @@ export class GameService {
   socket: Socket | null = null;
 
   connectWebSocket = () => {
-    this.socket = io(CONSTANTS.WEBSOCKET_URL);
+    this.socket = io(CONSTANTS.WEBSOCKET_URL, {
+      transports: ['websocket'],
+    });
+
+this.socket.on('connect', () => console.log('connesso', this.socket));
 
     this.socket.on(EventType.HostDisconnected, () => {
       this.showToast({

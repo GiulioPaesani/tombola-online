@@ -10,6 +10,8 @@ const route: Route = {
 		const socketId = req.body.socketId;
 		const username = req.body.username;
 
+console.log(gameId, socketId, sockets.map(x => x.id))
+
 		const socket = sockets.find(x => x.id === socketId);
 		if (socket) {
 			socket.join(gameId);

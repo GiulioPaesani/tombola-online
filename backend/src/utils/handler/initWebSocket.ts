@@ -7,13 +7,10 @@ export let io: Server;
 export const sockets: Socket[] = [];
 
 const initWebSocket = () => {
-	io = new Server(3000, {
-		cors: {
-			origin: FRONT_END_URL
-		}
-	});
+	io = new Server(3000);
 
-	io.on('connection', socket => {
+	io.on('connect', socket => {
+		console.log('nuova connessione', socket.id);
 		sockets.push(socket);
 
 		socket.on('disconnect', async () => {

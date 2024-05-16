@@ -16,8 +16,9 @@ const app = express();
 app.use(express.json());
 app.use(
 	cors({
-		origin: FRONT_END_URL
-	})
+	origin: '*',
+methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+})
 );
 
 app.listen(5000, async () => {

@@ -1,6 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import games from '../../schemas/games';
 import { EventType } from '../../types';
+import { FRONT_END_URL } from '../..';
 
 export let io: Server;
 export const sockets: Socket[] = [];
@@ -8,7 +9,7 @@ export const sockets: Socket[] = [];
 const initWebSocket = () => {
 	io = new Server(3000, {
 		cors: {
-			origin: 'http://localhost:4200'
+			origin: FRONT_END_URL
 		}
 	});
 

@@ -9,12 +9,14 @@ import initWebSocket from './utils/handler/initWebSocket';
 
 dotenv.config();
 
+export const FRONT_END_URL = process.env.ENVIRONMENT === 'production' ? 'http://frontend:4000' : 'http://localhost:4200';
+
 const app = express();
 
 app.use(express.json());
 app.use(
 	cors({
-		origin: 'http://localhost:4000'
+		origin: FRONT_END_URL
 	})
 );
 

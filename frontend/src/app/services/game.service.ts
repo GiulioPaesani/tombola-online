@@ -29,12 +29,6 @@ export class GameService {
       transports: ['websocket'],
     });
 
-    this.socket.on('connect', () => {
-      console.log('connesso1', this.socket?.id);
-
-      // this.socket?.emit('connection', this.socket);
-    });
-
     this.socket.on(EventType.HostDisconnected, () => {
       this.showToast({
         type: 'error',

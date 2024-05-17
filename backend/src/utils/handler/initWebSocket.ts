@@ -1,7 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import games from '../../schemas/games';
 import { EventType } from '../../types';
-import { FRONT_END_URL } from '../..';
 
 export let io: Server;
 export const sockets: Socket[] = [];
@@ -10,7 +9,6 @@ const initWebSocket = () => {
 	io = new Server(3000);
 
 	io.on('connect', socket => {
-		console.log('connesso2', socket?.id);
 		sockets.push(socket);
 
 		socket.on('disconnect', async () => {

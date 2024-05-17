@@ -22,6 +22,9 @@ export class LobbyHostComponent {
       })
       .then((response) => {
         this.players = response.data;
+        this.readyToStart =
+            this.players.length > 1 &&
+            this.players.slice(1).every((x) => x.numCards);
 
         this.gameService.socket?.on(EventType.PlayersUpdate, (socketIds) => {
           this.players = socketIds;

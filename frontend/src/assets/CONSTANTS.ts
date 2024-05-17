@@ -6,7 +6,7 @@ const CONSTANTS = isDevMode()
       API_BASE_URL: 'http://localhost:5000',
     }
   : {
-      WEBSOCKET_URL: 'ws://localhost:3000',
+      WEBSOCKET_URL: 'wss://wss.tombola-online.it',
       API_BASE_URL: 'https://api.tombola-online.it',
     };
 

@@ -5,7 +5,7 @@ import { io } from '../utils/handler/initWebSocket';
 
 const returnToLobby = Router();
 
-returnToLobby.post('/add-player-to-game', async (req, res) => {
+returnToLobby.post('/return-to-lobby', async (req, res) => {
 	const gameId = req.body.gameId;
 
 	let game = await games.findOneAndUpdate(

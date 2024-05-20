@@ -12,12 +12,19 @@ createGame.post('/create-game', async (req, res) => {
 
 	const gameOptions = req.body as GameOptions;
 
-	//! Controllo game options
+	const { winCases, maxPlayers, minCards, maxCards } = gameOptions;
+
+	if (!winCases.tombola) return res.sendStatus(400);
+	if (maxPlayers <= 0 || maxPlayers >= 500) return res.sendStatus(400);
+	if (minCards <= 0 || maxCards <= 0 || minCards > maxCards) return res.sendStatus(400);
 
 	await games.create({
 		gameId,
 		gameCode,
-		...gameOptions
+		winCases,
+		maxPlayers,
+		minCards,
+		maxCards
 	});
 
 	res.send({

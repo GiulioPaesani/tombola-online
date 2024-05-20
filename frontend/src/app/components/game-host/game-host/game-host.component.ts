@@ -18,9 +18,7 @@ export class GameHostComponent {
 
   constructor(public gameService: GameService) {
     axios
-      .post(`${CONSTANTS.API_BASE_URL}/players`, {
-        gameId: this.gameService.gameId,
-      })
+      .get(`${CONSTANTS.API_BASE_URL}/players/${this.gameService.gameId}`)
       .then((response) => {
         this.players = response.data;
 

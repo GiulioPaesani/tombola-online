@@ -9,7 +9,6 @@ rigenerateGameCode.post('/rigenerate-game-code', async (req, res) => {
 	const newGameCode = await generateGameCode();
 
 	const game = await games.findOneAndUpdate({ gameId }, { gameCode: newGameCode }, { new: true });
-
 	if (!game) return res.sendStatus(404);
 
 	res.send({

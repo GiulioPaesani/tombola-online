@@ -17,9 +17,7 @@ export class LobbyPlayerComponent {
 
   constructor(public gameService: GameService) {
     axios
-      .post(`${CONSTANTS.API_BASE_URL}/players`, {
-        gameId: this.gameService.gameId,
-      })
+      .get(`${CONSTANTS.API_BASE_URL}/players/${this.gameService.gameId}`)
       .then((response) => {
         this.players = response.data;
 
@@ -55,12 +53,10 @@ export class LobbyPlayerComponent {
   }
 
   numCardsSelect = async (numCards: number) => {
-    await axios.post(
-      `${CONSTANTS.API_BASE_URL}/num-cards-select/?numCards=${numCards}`,
-      {
-        gameId: this.gameService.gameId,
-        socketId: this.gameService.socket?.id,
-      }
-    );
+    await axios.post(`${CONSTANTS.API_BASE_URL}/select-num-cards`, {
+      gameId: this.gameService.gameId,
+      socketId: this.gameService.socket?.id,
+      numCards,
+    });
   };
 }

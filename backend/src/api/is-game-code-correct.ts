@@ -7,7 +7,6 @@ isGameCodeCorrect.post('/is-game-code-correct', async (req, res) => {
 	const gameCode = req.body.gameCode;
 
 	const game = await games.findOne({ gameCode });
-
 	if (!game) return res.send('Invalid code'); //? Farlo con lo status
 
 	const { gameId, state, winCases, maxPlayers, minCards, maxCards, socketIds } = game;

@@ -10,7 +10,6 @@ extractNumber.post('/extract-number', async (req, res) => {
 	const gameId = req.body.gameId;
 
 	const game = await games.findOne({ gameId });
-
 	if (!game) return res.sendStatus(404);
 
 	const { extractedNumbers, socketIds, winCases, casesAlreadyWon } = game;

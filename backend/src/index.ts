@@ -9,7 +9,7 @@ import createGame from './api/create-game';
 import extractNumber from './api/extract-number';
 import isGameCodeCorrect from './api/is-game-code-correct';
 import kickPlayer from './api/kick-player';
-import numCardsSelect from './api/num-cards-select';
+import selectNumCards from './api/selectNumCards';
 import players from './api/players';
 import returnToLobby from './api/return-to-lobby';
 import rigenerateGameCode from './api/rigenerate-game-code';
@@ -20,9 +20,15 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+// app.use(
+// 	cors({
+// 		origin: '*',
+// 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
+// 	})
+// );
 app.use(
 	cors({
-		origin: '*',
+		origin: ['http://localhost:4200', 'https://tombola-online.it', 'https://www.tombola-online.it'],
 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 	})
 );
@@ -33,7 +39,7 @@ app.use('/', createGame);
 app.use('/', extractNumber);
 app.use('/', isGameCodeCorrect);
 app.use('/', kickPlayer);
-app.use('/', numCardsSelect);
+app.use('/', selectNumCards);
 app.use('/', players);
 app.use('/', returnToLobby);
 app.use('/', rigenerateGameCode);

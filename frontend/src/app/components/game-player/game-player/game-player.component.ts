@@ -20,18 +20,15 @@ export class GamePlayerComponent {
 
   constructor(public gameService: GameService) {
     axios
-      .post(`${CONSTANTS.API_BASE_URL}/players`, {
-        gameId: this.gameService.gameId,
-      })
+      .get(`${CONSTANTS.API_BASE_URL}/players/${this.gameService.gameId}`)
       .then((response) => {
         this.players = response.data;
       });
 
     axios
-      .post(`${CONSTANTS.API_BASE_URL}/cards`, {
-        gameId: this.gameService.gameId,
-        socketId: this.gameService.socket?.id,
-      })
+      .get(
+        `${CONSTANTS.API_BASE_URL}/cards/${this.gameService.gameId}/${this.gameService.socket?.id}`
+      )
       .then((response) => {
         this.cards = response.data.cards;
         this.formattedCards = response.data.formattedCards;

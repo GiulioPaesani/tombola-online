@@ -1,30 +1,29 @@
+import { Router } from 'express';
 import games from '../schemas/games';
-import { Route, GameOptions } from '../types';
+import { GameOptions } from '../types';
 import generateGameCode from '../utils/generateGameCode';
 import { v4 as uuidv4 } from 'uuid';
 
-const route: Route = {
-	method: 'POST',
-	path: 'create-game',
-	handler: async (req, res) => {
-		const gameCode = await generateGameCode();
-		const gameId = uuidv4();
+const createGame = Router();
 
-		const gameOptions = req.body as GameOptions;
+createGame.post('/create-game', async (req, res) => {
+	const gameCode = await generateGameCode();
+	const gameId = uuidv4();
 
-		//! Controllo game options
+	const gameOptions = req.body as GameOptions;
 
-		await games.create({
-			gameId,
-			gameCode,
-			...gameOptions
-		});
+	//! Controllo game options
 
-		res.send({
-			gameId,
-			gameCode
-		});
-	}
-};
+	await games.create({
+		gameId,
+		gameCode,
+		...gameOptions
+	});
 
-export default route;
+	res.send({
+		gameId,
+		gameCode
+	});
+});
+
+export default createGame;

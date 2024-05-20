@@ -1,22 +1,20 @@
+import { Router } from 'express';
 import games from '../schemas/games';
-import { Route } from '../types';
 import generateGameCode from '../utils/generateGameCode';
 
-const route: Route = {
-	method: 'POST',
-	path: 'rigenerate-game-code',
-	handler: async (req, res) => {
-		const gameId = req.body.gameId;
-		const newGameCode = await generateGameCode();
+const rigenerateGameCode = Router();
 
-		const game = await games.findOneAndUpdate({ gameId }, { gameCode: newGameCode }, { new: true });
+rigenerateGameCode.post('/rigenerate-game-code', async (req, res) => {
+	const gameId = req.body.gameId;
+	const newGameCode = await generateGameCode();
 
-		if (!game) return res.sendStatus(404);
+	const game = await games.findOneAndUpdate({ gameId }, { gameCode: newGameCode }, { new: true });
 
-		res.send({
-			gameCode: game.gameCode
-		});
-	}
-};
+	if (!game) return res.sendStatus(404);
 
-export default route;
+	res.send({
+		gameCode: game.gameCode
+	});
+});
+
+export default rigenerateGameCode;

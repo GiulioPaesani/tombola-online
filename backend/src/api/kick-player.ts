@@ -1,44 +1,43 @@
+import { Router } from 'express';
 import games from '../schemas/games';
-import { Route, EventType } from '../types';
+import { EventType } from '../types';
 import { io, sockets } from '../utils/handler/initWebSocket';
 
-const route: Route = {
-	method: 'POST',
-	path: 'kick-player',
-	handler: async (req, res) => {
-		const gameId = req.body.gameId;
-		const socketId = req.body.socketId;
+const kickPlayer = Router();
 
-		const socket = sockets.find(x => x.id === socketId);
-		if (socket) {
-			const game = await games.findOneAndUpdate(
-				{ gameId },
-				{
-					$pull: {
-						socketIds: {
-							socketId
-						}
+kickPlayer.post('/kick-player', async (req, res) => {
+	const gameId = req.body.gameId;
+	const socketId = req.body.socketId;
+
+	const socket = sockets.find(x => x.id === socketId);
+	if (socket) {
+		const game = await games.findOneAndUpdate(
+			{ gameId },
+			{
+				$pull: {
+					socketIds: {
+						socketId
 					}
-				},
-				{
-					new: true
 				}
-			);
+			},
+			{
+				new: true
+			}
+		);
 
-			if (!game) return res.sendStatus(404);
+		if (!game) return res.sendStatus(404);
 
-			io.to(gameId).emit(EventType.PlayersUpdate, game.socketIds, {
-				event: 'PlayerKick',
-				socketId
-			});
+		io.to(gameId).emit(EventType.PlayersUpdate, game.socketIds, {
+			event: 'PlayerKick',
+			socketId
+		});
 
-			socket.leave(gameId);
+		socket.leave(gameId);
 
-			res.sendStatus(200);
-		} else {
-			res.sendStatus(404);
-		}
+		res.sendStatus(200);
+	} else {
+		res.sendStatus(404);
 	}
-};
+});
 
-export default route;
+export default kickPlayer;

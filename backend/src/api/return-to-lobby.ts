@@ -1,23 +1,22 @@
+import { Router } from 'express';
 import games from '../schemas/games';
-import { Route, EventType } from '../types';
+import { EventType } from '../types';
 import { io } from '../utils/handler/initWebSocket';
 
-const route: Route = {
-	method: 'POST',
-	path: 'return-to-lobby',
-	handler: async (req, res) => {
-		const gameId = req.body.gameId;
+const returnToLobby = Router();
 
-		let game = await games.findOneAndUpdate(
-			{ gameId },
-			{ state: 'lobby', extractedNumbers: [], casesAlreadyWon: [], 'socketIds.$[].cards': [], 'socketIds.$[].formattedCards': [] }
-		);
-		if (!game) return res.sendStatus(404);
+returnToLobby.post('/add-player-to-game', async (req, res) => {
+	const gameId = req.body.gameId;
 
-		io.to(gameId).emit(EventType.ReturnToLobby);
+	let game = await games.findOneAndUpdate(
+		{ gameId },
+		{ state: 'lobby', extractedNumbers: [], casesAlreadyWon: [], 'socketIds.$[].cards': [], 'socketIds.$[].formattedCards': [] }
+	);
+	if (!game) return res.sendStatus(404);
 
-		res.sendStatus(200);
-	}
-};
+	io.to(gameId).emit(EventType.ReturnToLobby);
 
-export default route;
+	res.sendStatus(200);
+});
+
+export default returnToLobby;

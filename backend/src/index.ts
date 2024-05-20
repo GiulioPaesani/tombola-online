@@ -1,48 +1,47 @@
 import express from 'express';
 import cors from 'cors';
-import getAllFiles from './utils/handler/getAllFile';
-import path from 'path';
-import { Route } from './types';
 import connectToDB from './utils/handler/connectToDB';
 import dotenv from 'dotenv';
 import initWebSocket from './utils/handler/initWebSocket';
+import addPlayerToGame from './api/add-player-to-game';
+import cards from './api/cards';
+import createGame from './api/create-game';
+import extractNumber from './api/extract-number';
+import isGameCodeCorrect from './api/is-game-code-correct';
+import kickPlayer from './api/kick-player';
+import numCardsSelect from './api/num-cards-select';
+import players from './api/players';
+import returnToLobby from './api/return-to-lobby';
+import rigenerateGameCode from './api/rigenerate-game-code';
+import startGame from './api/start-game';
 
 dotenv.config();
-
-export const FRONT_END_URL = process.env.ENVIRONMENT === 'production' ? 'http://localhost:4000' : 'http://localhost:4200';
 
 const app = express();
 
 app.use(express.json());
 app.use(
 	cors({
-	origin: '*',
-methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-})
+		origin: '*',
+		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
+	})
 );
+
+app.use('/', addPlayerToGame);
+app.use('/', cards);
+app.use('/', createGame);
+app.use('/', extractNumber);
+app.use('/', isGameCodeCorrect);
+app.use('/', kickPlayer);
+app.use('/', numCardsSelect);
+app.use('/', players);
+app.use('/', returnToLobby);
+app.use('/', rigenerateGameCode);
+app.use('/', startGame);
 
 app.listen(5000, async () => {
 	console.log('Backend start on port 5000');
 
 	await connectToDB();
 	initWebSocket();
-
-	const routes = await getAllFiles(path.join(__dirname, 'api/'));
-
-	for (const index in routes) {
-		const { name, directory, ...content } = routes[index];
-
-		const { method, path, handler } = content as Route;
-
-		const route = app.route(`/${path}`);
-
-		switch (method) {
-			case 'GET':
-				route.get((req, res) => handler(req, res));
-				break;
-			case 'POST':
-				route.post((req, res) => handler(req, res));
-				break;
-		}
-	}
 });

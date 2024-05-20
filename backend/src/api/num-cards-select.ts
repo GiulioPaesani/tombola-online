@@ -1,40 +1,39 @@
+import { Router } from 'express';
 import games from '../schemas/games';
-import { Route, EventType } from '../types';
+import { EventType } from '../types';
 import { io, sockets } from '../utils/handler/initWebSocket';
 
-const route: Route = {
-	method: 'POST',
-	path: 'num-cards-select',
-	handler: async (req, res) => {
-		const gameId = req.body.gameId;
-		const socketId = req.body.socketId;
-		const numCards = req.query.numCards;
+const numCardsSelect = Router();
 
-		const socket = sockets.find(x => x.id === socketId);
+numCardsSelect.post('/num-cards-select', async (req, res) => {
+	const gameId = req.body.gameId;
+	const socketId = req.body.socketId;
+	const numCards = req.query.numCards;
 
-		if (socket) {
-			const game = await games.findOneAndUpdate(
-				{ gameId, 'socketIds.socketId': socketId },
-				{
-					'socketIds.$.numCards': numCards
-				},
-				{
-					new: true
-				}
-			);
+	const socket = sockets.find(x => x.id === socketId);
 
-			if (!game) return res.sendStatus(404);
+	if (socket) {
+		const game = await games.findOneAndUpdate(
+			{ gameId, 'socketIds.socketId': socketId },
+			{
+				'socketIds.$.numCards': numCards
+			},
+			{
+				new: true
+			}
+		);
 
-			io.to(gameId).emit(EventType.PlayersUpdate, game?.socketIds, {
-				event: 'PlayerCardsSelect',
-				socketId
-			});
+		if (!game) return res.sendStatus(404);
 
-			res.sendStatus(200);
-		} else {
-			res.sendStatus(404);
-		}
+		io.to(gameId).emit(EventType.PlayersUpdate, game?.socketIds, {
+			event: 'PlayerCardsSelect',
+			socketId
+		});
+
+		res.sendStatus(200);
+	} else {
+		res.sendStatus(404);
 	}
-};
+});
 
-export default route;
+export default numCardsSelect;

@@ -1,51 +1,50 @@
+import { Router } from 'express';
 import games from '../schemas/games';
-import { Route, EventType } from '../types';
+import { EventType } from '../types';
 import { io, sockets } from '../utils/handler/initWebSocket';
 
-const route: Route = {
-	method: 'POST',
-	path: 'add-player-to-game',
-	handler: async (req, res) => {
-		const gameId = req.body.gameId;
-		const socketId = req.body.socketId;
-		const username = req.body.username;
+const addPlayerToGame = Router();
 
-		const socket = sockets.find(x => x.id === socketId);
-		if (socket) {
-			socket.join(gameId);
+addPlayerToGame.post('/add-player-to-game', async (req, res) => {
+	const gameId = req.body.gameId;
+	const socketId = req.body.socketId;
+	const username = req.body.username;
 
-			let game = await games.findOne({ gameId });
-			if (!game) return res.sendStatus(404);
+	const socket = sockets.find(x => x.id === socketId);
+	if (socket) {
+		socket.join(gameId);
 
-			const { minCards, maxCards } = game;
+		let game = await games.findOne({ gameId });
+		if (!game) return res.sendStatus(404);
 
-			game = await games.findOneAndUpdate(
-				{ gameId },
-				{
-					$push: {
-						socketIds: {
-							socketId,
-							username,
-							avatarUrl: '',
-							numCards: minCards === maxCards ? minCards : null
-						}
+		const { minCards, maxCards } = game;
+
+		game = await games.findOneAndUpdate(
+			{ gameId },
+			{
+				$push: {
+					socketIds: {
+						socketId,
+						username,
+						avatarUrl: '',
+						numCards: minCards === maxCards ? minCards : null
 					}
-				},
-				{
-					new: true
 				}
-			);
+			},
+			{
+				new: true
+			}
+		);
 
-			io.to(gameId).emit(EventType.PlayersUpdate, game?.socketIds, {
-				event: 'PlayerJoin',
-				socketId
-			});
+		io.to(gameId).emit(EventType.PlayersUpdate, game?.socketIds, {
+			event: 'PlayerJoin',
+			socketId
+		});
 
-			res.sendStatus(200);
-		} else {
-			res.sendStatus(404);
-		}
+		res.sendStatus(200);
+	} else {
+		res.sendStatus(404);
 	}
-};
+});
 
-export default route;
+export default addPlayerToGame;

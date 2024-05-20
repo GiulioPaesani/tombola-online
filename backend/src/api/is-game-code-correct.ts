@@ -1,30 +1,28 @@
+import { Router } from 'express';
 import games from '../schemas/games';
-import { Route } from '../types';
 
-const route: Route = {
-	method: 'POST',
-	path: 'is-game-code-correct',
-	handler: async (req, res) => {
-		const gameCode = req.body.gameCode;
+const isGameCodeCorrect = Router();
 
-		const game = await games.findOne({ gameCode });
+isGameCodeCorrect.post('/is-game-code-correct', async (req, res) => {
+	const gameCode = req.body.gameCode;
 
-		if (!game) return res.send('Invalid code'); //? Farlo con lo status
+	const game = await games.findOne({ gameCode });
 
-		const { gameId, state, winCases, maxPlayers, minCards, maxCards, socketIds } = game;
+	if (!game) return res.send('Invalid code'); //? Farlo con lo status
 
-		if (state !== 'lobby') return res.send('Game in progress');
+	const { gameId, state, winCases, maxPlayers, minCards, maxCards, socketIds } = game;
 
-		if (maxPlayers !== 0 && socketIds.length >= maxPlayers) return res.send('Max players reached');
+	if (state !== 'lobby') return res.send('Game in progress');
 
-		res.send({
-			gameId,
-			winCases,
-			maxPlayers,
-			minCards,
-			maxCards
-		});
-	}
-};
+	if (maxPlayers !== 0 && socketIds.length >= maxPlayers) return res.send('Max players reached');
 
-export default route;
+	res.send({
+		gameId,
+		winCases,
+		maxPlayers,
+		minCards,
+		maxCards
+	});
+});
+
+export default isGameCodeCorrect;

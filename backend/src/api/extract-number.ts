@@ -1,94 +1,93 @@
+import { Router } from 'express';
 import games from '../schemas/games';
-import { Route, EventType, Wins } from '../types';
+import { EventType, Wins } from '../types';
 import { checkAmbo, checkCinquina, checkDecina, checkQuaterna, checkTerno, checkTombola } from '../utils/checkWin';
 import { io } from '../utils/handler/initWebSocket';
 
-const route: Route = {
-	method: 'POST',
-	path: 'extract-number',
-	handler: async (req, res) => {
-		const gameId = req.body.gameId;
+const extractNumber = Router();
 
-		const game = await games.findOne({ gameId });
+extractNumber.post('/extract-number', async (req, res) => {
+	const gameId = req.body.gameId;
 
-		if (!game) return res.sendStatus(404);
+	const game = await games.findOne({ gameId });
 
-		const { extractedNumbers, socketIds, winCases, casesAlreadyWon } = game;
+	if (!game) return res.sendStatus(404);
 
-		const notExtractedNumbers = new Array(90)
-			.fill(0)
-			.map((x, index) => index + 1)
-			.filter(number => !extractedNumbers.includes(number));
+	const { extractedNumbers, socketIds, winCases, casesAlreadyWon } = game;
 
-		if (!notExtractedNumbers.length) res.send(null);
+	const notExtractedNumbers = new Array(90)
+		.fill(0)
+		.map((x, index) => index + 1)
+		.filter(number => !extractedNumbers.includes(number));
 
-		const randomNumber = notExtractedNumbers[Math.floor(Math.random() * notExtractedNumbers.length)];
+	if (!notExtractedNumbers.length) res.send(null);
 
-		const nextWinCase = Object.keys(winCases)
-			.filter(x => !casesAlreadyWon.includes(x))
-			.find(winCase => winCases[winCase as keyof typeof winCases]);
-		if (!nextWinCase) return;
+	const randomNumber = notExtractedNumbers[Math.floor(Math.random() * notExtractedNumbers.length)];
 
-		const wins: Wins = {
-			type: nextWinCase,
-			winners: []
-		};
+	const nextWinCase = Object.keys(winCases)
+		.filter(x => !casesAlreadyWon.includes(x))
+		.find(winCase => winCases[winCase as keyof typeof winCases]);
+	if (!nextWinCase) return;
 
-		const querys: Record<string, boolean> = {};
+	const wins: Wins = {
+		type: nextWinCase,
+		winners: []
+	};
 
-		for (const index in socketIds) {
-			const player = socketIds[index];
-			const { cards, formattedCards } = player;
+	const querys: Record<string, boolean> = {};
 
-			for (const index2 in formattedCards) {
-				const card = cards[index2];
+	for (const index in socketIds) {
+		const player = socketIds[index];
+		const { cards, formattedCards } = player;
 
-				if (!(randomNumber in card)) continue;
+		for (const index2 in formattedCards) {
+			const card = cards[index2];
 
-				card[randomNumber] = true;
-				querys[`socketIds.${index}.cards.${index2}.${randomNumber}`] = true;
+			if (!(randomNumber in card)) continue;
 
-				const formattedCard = formattedCards[index2];
+			card[randomNumber] = true;
+			querys[`socketIds.${index}.cards.${index2}.${randomNumber}`] = true;
 
-				switch (nextWinCase) {
-					case 'ambo':
-						wins.winners.push(...checkAmbo(card, formattedCard, player));
-						break;
-					case 'terno':
-						wins.winners.push(...checkTerno(card, formattedCard, player));
-						break;
-					case 'quaterna':
-						wins.winners.push(...checkQuaterna(card, formattedCard, player));
-						break;
-					case 'cinquina':
-						wins.winners.push(...checkCinquina(card, formattedCard, player));
-						break;
-					case 'decina':
-						wins.winners.push(...checkDecina(card, formattedCard, player));
-						break;
-					case 'tombola':
-						wins.winners.push(...checkTombola(card, formattedCard, player));
-						break;
-				}
+			const formattedCard = formattedCards[index2];
+
+			switch (nextWinCase) {
+				case 'ambo':
+					wins.winners.push(...checkAmbo(card, formattedCard, player));
+					break;
+				case 'terno':
+					wins.winners.push(...checkTerno(card, formattedCard, player));
+					break;
+				case 'quaterna':
+					wins.winners.push(...checkQuaterna(card, formattedCard, player));
+					break;
+				case 'cinquina':
+					wins.winners.push(...checkCinquina(card, formattedCard, player));
+					break;
+				case 'decina':
+					wins.winners.push(...checkDecina(card, formattedCard, player));
+					break;
+				case 'tombola':
+					wins.winners.push(...checkTombola(card, formattedCard, player));
+					break;
 			}
 		}
-
-		if (wins.winners.length) {
-			await games.updateOne({ gameId }, { $push: { casesAlreadyWon: wins.type } });
-
-			io.to(gameId).emit(EventType.Wins, wins);
-		}
-
-		await games.updateOne({ gameId }, { $push: { extractedNumbers: randomNumber }, $set: querys });
-
-		io.to(gameId).emit(EventType.ExtractedNumber, randomNumber);
-
-		game.extractedNumbers.push(randomNumber);
-
-		res.send({
-			randomNumber
-		});
 	}
-};
 
-export default route;
+	if (wins.winners.length) {
+		await games.updateOne({ gameId }, { $push: { casesAlreadyWon: wins.type } });
+
+		io.to(gameId).emit(EventType.Wins, wins);
+	}
+
+	await games.updateOne({ gameId }, { $push: { extractedNumbers: randomNumber }, $set: querys });
+
+	io.to(gameId).emit(EventType.ExtractedNumber, randomNumber);
+
+	game.extractedNumbers.push(randomNumber);
+
+	res.send({
+		randomNumber
+	});
+});
+
+export default extractNumber;

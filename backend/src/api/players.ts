@@ -1,20 +1,18 @@
+import { Router } from 'express';
 import games from '../schemas/games';
-import { Route } from '../types';
 
-const route: Route = {
-	method: 'POST',
-	path: 'players',
-	handler: async (req, res) => {
-		const gameId = req.body.gameId;
+const players = Router();
 
-		const game = await games.findOne({ gameId });
+players.post('/players', async (req, res) => {
+	const gameId = req.body.gameId;
 
-		if (game) {
-			res.send(game.socketIds);
-		} else {
-			res.sendStatus(404);
-		}
+	const game = await games.findOne({ gameId });
+
+	if (game) {
+		res.send(game.socketIds);
+	} else {
+		res.sendStatus(404);
 	}
-};
+});
 
-export default route;
+export default players;

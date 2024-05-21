@@ -1,2 +1,5 @@
-<h4 class="text-secondary-500 text-center text-2xl">{{text}}
+<h4 class=" text-center text-2xl" [ngClass]="{
+'text-secondary-500': color === 'white',
+'text-primary-950': color === 'red',
+}">{{text}}
 </h4>

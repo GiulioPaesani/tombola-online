@@ -1,4 +1,6 @@
 <app-create-game-popup *ngIf="isCreateGamePopupVisible"></app-create-game-popup>
+<app-join-popup [isVisible]="isJoinPopupVisible" [gameCode]="gameCode"></app-join-popup>
+
 
 <app-title size="big"></app-title>
 <app-subtitle></app-subtitle>
@@ -7,14 +9,14 @@
   <app-label text="Gioca in party"></app-label>
   <app-button class="mt-4" label="CREA PARTITA" (click)="openCreateGamePopup()"></app-button>
   <div class="min-w-80 sm:w-96 flex mt-6">
-    <app-input id="gameCode" placeholder="CODICE PARTITA" [inputValue]="inputGameCode"></app-input>
-    <app-button class="ml-auto" icon="enter.svg" [fixedWidth]='false' (click)="joinGame()"></app-button>
+    <app-input placeholder="CODICE PARTITA" [inputValue]="inputGameCode" [maxLength]="5"></app-input>
+    <app-button class="ml-auto" icon="enter.svg" [fixedWidth]='false' (click)="openJoinPopup()"></app-button>
   </div>
 </div>
 
-<div class="mt-28">
+<!-- <div class="mt-28">
   <app-label text="Gioca offline"></app-label>
-</div>
+</div> -->
 
 <!--
 <div class="mx-auto flex w-fit flex-col my-8">

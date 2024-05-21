@@ -6,10 +6,12 @@
     'text-xl sm:text-2xl': size === 'big',
     'text-base sm:text-lg': size === 'small',
     'py-4': size === 'big',
-    'py-3': size === 'small',
+    'py-3': size === 'small' && !icon,
+    'py-2': size === 'small' && icon,
     'px-10': size === 'big' && !icon,
-    'px-4': icon,
+    'px-4': size === 'big' && icon,
     'px-8': size === 'small' && !icon,
+    'px-2': size === 'small' && icon,
     'min-w-80 sm:w-96': fixedWidth
   }">
   <img [src]="'../../../assets/icons/'+ icon" *ngIf="icon" class="size-6">

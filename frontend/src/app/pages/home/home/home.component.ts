@@ -10,6 +10,8 @@ import { SubtitleComponent } from '../../../components/subtitle/subtitle.compone
 import { LabelComponent } from '../../../components/label/label.component';
 import { ButtonComponent } from '../../../components/button/button.component';
 import { InputComponent } from '../../../components/input/input.component';
+import { JoinPopupComponent } from '../../../components/joinPopup/joinPopup.component';
+import e from 'express';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +23,7 @@ import { InputComponent } from '../../../components/input/input.component';
     LabelComponent,
     ButtonComponent,
     InputComponent,
+    JoinPopupComponent,
     CommonModule,
   ],
   templateUrl: './home.component.html',
@@ -28,12 +31,12 @@ import { InputComponent } from '../../../components/input/input.component';
 export class HomeComponent {
   gameCode = '';
 
+  isJoinPopupVisible = true;
   isCreateGamePopupVisible = false;
 
   constructor(public gameService: GameService) {}
 
   inputGameCode = (event: Event) => {
-    console.log((event.target as HTMLInputElement).value);
     this.gameCode = (event.target as HTMLInputElement).value;
   };
 
@@ -41,11 +44,7 @@ export class HomeComponent {
     this.isCreateGamePopupVisible = true;
   };
 
-  joinGame = async () => {
-    const playerUsername =
-      (document.getElementById('playerUsername') as HTMLInputElement)?.value ??
-      '';
-
+  openJoinPopup = async () => {
     await axios
       .post(`${CONSTANTS.API_BASE_URL}/is-game-code-correct`, {
         gameCode: this.gameCode,
@@ -67,24 +66,7 @@ export class HomeComponent {
             text: `Partita già in corso`,
           });
         } else {
-          this.gameService.connectWebSocket();
-
-          this.gameService.socket?.on(EventType.Connect, async () => {
-            await axios.post(`${CONSTANTS.API_BASE_URL}/add-player-to-game`, {
-              gameId: respose.data.gameId,
-              socketId: this.gameService.socket?.id,
-              username: playerUsername,
-            });
-
-            this.gameService.gameId = respose.data.gameId;
-            this.gameService.gameOptions = {
-              winCases: respose.data.winCases,
-              maxPlayers: respose.data.maxPlayers,
-              minCards: respose.data.minCards,
-              maxCards: respose.data.maxCards,
-            };
-            this.gameService.view = 'lobby-player';
-          });
+          this.isJoinPopupVisible = true;
         }
       });
   };

@@ -20,12 +20,6 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-// app.use(
-// 	cors({
-// 		origin: '*',
-// 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-// 	})
-// );
 app.use(
 	cors({
 		origin: ['http://localhost:4200', 'https://tombola-online.it', 'https://www.tombola-online.it'],

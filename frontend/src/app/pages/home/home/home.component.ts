@@ -5,32 +5,51 @@ import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
 import { GameService } from '../../../services/game.service';
 import { EventType } from '../../../types';
+import { TitleComponent } from '../../../components/title/title.component';
+import { SubtitleComponent } from '../../../components/subtitle/subtitle.component';
+import { LabelComponent } from '../../../components/label/label.component';
+import { ButtonComponent } from '../../../components/button/button.component';
+import { InputComponent } from '../../../components/input/input.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CreateGamePopupComponent, CommonModule],
+  imports: [
+    CreateGamePopupComponent,
+    TitleComponent,
+    SubtitleComponent,
+    LabelComponent,
+    ButtonComponent,
+    InputComponent,
+    CommonModule,
+  ],
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
+  gameCode = '';
+
   isCreateGamePopupVisible = false;
 
   constructor(public gameService: GameService) {}
+
+  inputGameCode = (event: Event) => {
+    console.log((event.target as HTMLInputElement).value);
+    this.gameCode = (event.target as HTMLInputElement).value;
+  };
 
   openCreateGamePopup = () => {
     this.isCreateGamePopupVisible = true;
   };
 
   joinGame = async () => {
-    const gameCode = (document.getElementById('gameCode') as HTMLInputElement)
-      .value;
-
-    const playerUsername = (
-      document.getElementById('playerUsername') as HTMLInputElement
-    ).value;
+    const playerUsername =
+      (document.getElementById('playerUsername') as HTMLInputElement)?.value ??
+      '';
 
     await axios
-      .post(`${CONSTANTS.API_BASE_URL}/is-game-code-correct`, { gameCode })
+      .post(`${CONSTANTS.API_BASE_URL}/is-game-code-correct`, {
+        gameCode: this.gameCode,
+      })
       .then((respose) => {
         if (respose.data === 'Invalid code') {
           this.gameService.showToast({

@@ -1,0 +1,33 @@
+<app-create-game-popup *ngIf="isCreateGamePopupVisible"></app-create-game-popup>
+
+<app-title size="big"></app-title>
+<app-subtitle></app-subtitle>
+
+<div class="mt-28 flex flex-col items-center">
+  <app-label text="Gioca in party"></app-label>
+  <app-button class="mt-4" label="CREA PARTITA" (click)="openCreateGamePopup()"></app-button>
+  <div class="min-w-80 sm:w-96 flex mt-6">
+    <app-input id="gameCode" placeholder="CODICE PARTITA" [inputValue]="inputGameCode"></app-input>
+    <app-button class="ml-auto" icon="enter.svg" [fixedWidth]='false' (click)="joinGame()"></app-button>
+  </div>
+</div>
+
+<div class="mt-28">
+  <app-label text="Gioca offline"></app-label>
+</div>
+
+<!--
+<div class="mx-auto flex w-fit flex-col my-8">
+  <h2 class="text-xl font-medium text-center">Gioca senza party</h2>
+  <button class="py-2 px-4 bg-slate-400 text-lg my-2">Tabellone</button>
+  <button class="py-2 px-4 bg-slate-400 text-lg my-2">Cartelle</button>
+</div>
+
+<div class="mx-auto flex w-fit flex-col my-8">
+  <h2 class="text-xl font-medium text-center">Gioca in party</h2>
+  <button class="py-2 px-4 bg-slate-400 text-lg my-2" (click)="openCreateGamePopup()">Crea partita</button>
+  <!-- <input type="text" placeholder="Codice partita" class="border-2" id="gameCode" />
+<input type="text" placeholder="Username" class="border-2" id="playerUsername" />
+<button class="py-2 px-4 bg-slate-400 text-lg my-2" (click)="joinGame()">Entra in una partita</button>
+Far cliccare anche quando premo INVIO
+</div> -->

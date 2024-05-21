@@ -31,7 +31,7 @@ import e from 'express';
 export class HomeComponent {
   gameCode = '';
 
-  isJoinPopupVisible = true;
+  isJoinPopupVisible = false;
   isCreateGamePopupVisible = false;
 
   constructor(public gameService: GameService) {}

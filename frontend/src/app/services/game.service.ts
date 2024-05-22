@@ -17,7 +17,7 @@ export class GameService {
     | 'lobby-host'
     | 'lobby-player'
     | 'game-host'
-    | 'game-player' = 'home';
+    | 'game-player' = 'lobby-host';
   toasts: Toast[] = [];
   gameOptions: GameOptions | null = null;
   extractedNumbers: number[] = [];

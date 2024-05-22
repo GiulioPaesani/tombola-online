@@ -5,18 +5,19 @@ import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
 import { EventType, Player } from '../../../types';
 import { PlayersListComponent } from '../../../components/playersList/playersList.component';
+import { TitleComponent } from '../../../components/title/title.component';
 
 @Component({
   selector: 'app-lobby-host',
   standalone: true,
-  imports: [CommonModule, PlayersListComponent],
+  imports: [CommonModule, PlayersListComponent, TitleComponent],
   templateUrl: './lobby-host.component.html',
 })
 export class LobbyHostComponent {
   players: Player[] = [
     {
       socketId: '',
-      username: 'Username',
+      username: 'Usernames',
       avatarNum: 1,
       numCards: 2,
       cards: [],
@@ -24,7 +25,7 @@ export class LobbyHostComponent {
     },
     {
       socketId: '',
-      username: 'Username 2',
+      username: 'Username 2 sksbndkfjg skd fjgsdfgdjf lgskdjfnl',
       avatarNum: 4,
       numCards: 2,
       cards: [],
@@ -38,6 +39,150 @@ export class LobbyHostComponent {
       cards: [],
       formattedCards: [],
     },
+    {
+      socketId: '',
+      username: 'Usernames',
+      avatarNum: 1,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    {
+      socketId: '',
+      username: 'Username 2 sksbndkfjg skd fjgsdfgdjf lgskdjfnl',
+      avatarNum: 4,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    {
+      socketId: '',
+      username: 'Username 2',
+      avatarNum: 2,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    {
+      socketId: '',
+      username: 'Usernames',
+      avatarNum: 1,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    {
+      socketId: '',
+      username: 'Username 2 sksbndkfjg skd fjgsdfgdjf lgskdjfnl',
+      avatarNum: 4,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    {
+      socketId: '',
+      username: 'Username 2',
+      avatarNum: 2,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    {
+      socketId: '',
+      username: 'Usernames',
+      avatarNum: 1,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    {
+      socketId: '',
+      username: 'Username 2 sksbndkfjg skd fjgsdfgdjf lgskdjfnl',
+      avatarNum: 4,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    // {
+    //   socketId: '',
+    //   username: 'Username 2',
+    //   avatarNum: 2,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
+    // {
+    //   socketId: '',
+    //   username: 'Usernames',
+    //   avatarNum: 1,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
+    // {
+    //   socketId: '',
+    //   username: 'Username 2 sksbndkfjg skd fjgsdfgdjf lgskdjfnl',
+    //   avatarNum: 4,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
+    // {
+    //   socketId: '',
+    //   username: 'Username 2',
+    //   avatarNum: 2,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
+    // {
+    //   socketId: '',
+    //   username: 'Usernames',
+    //   avatarNum: 1,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
+    // {
+    //   socketId: '',
+    //   username: 'Username 2 sksbndkfjg skd fjgsdfgdjf lgskdjfnl',
+    //   avatarNum: 4,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
+    // {
+    //   socketId: '',
+    //   username: 'Username 2',
+    //   avatarNum: 2,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
+    // {
+    //   socketId: '',
+    //   username: 'Usernames',
+    //   avatarNum: 1,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
+    // {
+    //   socketId: '',
+    //   username: 'Username 2 sksbndkfjg skd fjgsdfgdjf lgskdjfnl',
+    //   avatarNum: 4,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
+    // {
+    //   socketId: '',
+    //   username: 'Username 2',
+    //   avatarNum: 2,
+    //   numCards: 2,
+    //   cards: [],
+    //   formattedCards: [],
+    // },
   ]; //!
   readyToStart = false;
 
@@ -68,13 +213,6 @@ export class LobbyHostComponent {
       .then((respose) => {
         this.gameService.gameCode = respose.data.gameCode;
       });
-  };
-
-  kickPlayer = async (socketId: string) => {
-    await axios.post(`${CONSTANTS.API_BASE_URL}/kick-player`, {
-      gameId: this.gameService.gameId,
-      socketId,
-    });
   };
 
   startGame = async () => {

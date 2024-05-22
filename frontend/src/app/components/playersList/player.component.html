@@ -1,8 +1,12 @@
-<div class="w-96 h-20 bg-secondary-700 flex gap-4 justify-start items-center px-3 group"
+<div
+  class="w-full sm:w-80 h-16 sm:h-20 bg-secondary-700 flex gap-4 justify-start items-center px-3 group relative sm:mx-14"
   style="border-radius: 40px 16px 16px 40px;">
-  <img [src]="'../../../assets/avatar' + avatarNum + '.svg'" class="size-14">
-  <app-label [text]="username" color="black"></app-label>
+  <img [src]="'../../../assets/avatar' + avatarNum + '.svg'" class="size-10 sm:size-14">
+  <img src="../../../assets/icons/crown.svg" *ngIf="index === 0"
+    class="absolute size-5 top-9 left-9 sm:size-6 sm:top-12 sm:left-12">
 
-  <app-button *ngIf="hostPermission" size="small" icon="close.svg" [fixedWidth]="false"
-    class="ml-auto hidden group-hover:block"></app-button>
+  <app-label [text]="username" color="black" class="text-nowrap w-32 sm:w-40" position="left"></app-label>
+
+  <app-button *ngIf="hostPermission && index !== 0" size="small" icon="close.svg" [fixedWidth]="false"
+    class="ml-auto sm:hidden group-hover:block" (click)="kickPlayer(socketId)"></app-button>
 </div>

@@ -1,0 +1,21 @@
+.listOpened {
+  transform: translateX(0px);
+}
+
+.listClosed {
+  transform: translateX(calc(-100% + 30px));
+}
+
+#listButton {
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 640px) {
+  .listClosed {
+    transform: translateX(calc(-100%));
+  }
+
+  .listClosed #listButton {
+    transform: translateX(40px);
+  }
+}

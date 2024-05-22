@@ -1,10 +1,12 @@
-<div class="p-16">
+<app-title></app-title>
+
+<app-players-list [players]="players" [hostPermission]="true"></app-players-list>
+
+<div class="bg-neutral-950 ml-auto 2xl:w-[70%] w-full mt-4">
   <p class="text-lg bg-slate-400 py-2 px-4">Codice: {{gameService.gameCode}}</p>
   <button (click)="regenerateGameCode()" class="text-bold border-black border-2">Rigenera codice</button>
 
-  <div>
-    <app-players-list [players]="players" [hostPermission]="true"></app-players-list>
-  </div>
-</div>
 
-<button (click)="startGame()" [disabled]="!readyToStart">START GAME!</button>
+  <button (click)="startGame()" [disabled]="!readyToStart">START GAME!</button>
+
+</div>

@@ -14,10 +14,18 @@ import { PlayerComponent } from './player.component';
   standalone: true,
   imports: [CommonModule, ButtonComponent, LabelComponent, PlayerComponent],
   templateUrl: './playersList.component.html',
+  styleUrl: './playersList.component.css',
 })
 export class PlayersListComponent {
+  @Input() isOpen = true;
+
   @Input() players: Player[] = [];
   @Input() hostPermission = false;
 
   constructor(public gameService: GameService) {}
+
+  windowResize = () => {
+    if (window?.innerWidth < 1536) this.isOpen = false;
+    else this.isOpen = true;
+  };
 }

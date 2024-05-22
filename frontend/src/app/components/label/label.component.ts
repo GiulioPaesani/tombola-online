@@ -11,4 +11,5 @@ export class LabelComponent {
   @Input() text = '';
   @Input() color = 'white';
   @Input() position = 'center';
+  @Input() size = 'big';
 }

@@ -17,6 +17,7 @@ export class PlayerComponent {
   @Input() socketId = '';
   @Input() username = '';
   @Input() avatarNum = 1;
+  @Input() numCards: null | number = null;
   @Input() hostPermission = false;
 
   constructor(public gameService: GameService) {}

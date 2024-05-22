@@ -25,6 +25,7 @@ selectNumCards.post('/select-num-cards', async (req, res) => {
 
 	if (!game) return res.sendStatus(404);
 
+	console.log('backend', game?.socketIds);
 	io.to(gameId).emit(EventType.PlayersUpdate, game?.socketIds, {
 		event: 'PlayerCardsSelect',
 		socketId

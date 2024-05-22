@@ -2,11 +2,29 @@
 
 <app-players-list [players]="players" [hostPermission]="true"></app-players-list>
 
-<div class="bg-neutral-950 ml-auto 2xl:w-[70%] w-full mt-4">
-  <p class="text-lg bg-slate-400 py-2 px-4">Codice: {{gameService.gameCode}}</p>
-  <button (click)="regenerateGameCode()" class="text-bold border-black border-2">Rigenera codice</button>
+<div class="ml-auto 2xl:w-[70%] w-full mt-4 h-[80vh] flex items-center justify-center flex-col">
+
+  <app-label text="Codice per entrare"></app-label>
+
+  <div class="flex items-center justify-center mt-2 mb-8">
+
+    <app-button icon="copy.svg" size="small" [fixedWidth]="false" (click)="copyGameCode()"></app-button>
+    <div class="bg-secondary-500 rounded-2xl py-4 w-40 font-medium text-center text-4xl mx-4">
+      {{isGameCodeVisible ? gameService.gameCode : '* * * * *'}}
+    </div>
+    <app-button [icon]="isGameCodeVisible ? 'hide.svg' : 'show.svg'" size="small" [fixedWidth]="false"
+      (click)="isGameCodeVisible = !isGameCodeVisible"></app-button>
+  </div>
+
+  <!-- <button (click)="regenerateGameCode()" class="text-bold border-black border-2">Rigenera codice</button> -->
 
 
-  <button (click)="startGame()" [disabled]="!readyToStart">START GAME!</button>
+  <!-- <button (click)="startGame()" [disabled]="!readyToStart">START GAME!</button> -->
+
+  <app-label *ngIf="!readyToStart"
+    [text]="this.players.length === 1 ? 'Nessun giocatore nella partita oltre a te' : 'Tutti i giocatori devono selezionare quante cartelle vogliono'"
+    size="small"></app-label>
+
+  <app-button label="INIZIA PARTITA" (click)="startGame()" [disabilitato]="!readyToStart" class="mt-2"></app-button>
 
 </div>

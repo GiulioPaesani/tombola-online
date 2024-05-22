@@ -12,4 +12,5 @@ export class ButtonComponent {
   @Input() fixedWidth = true;
   @Input() label = '';
   @Input() icon: string | undefined;
+  @Input() disabilitato = false;
 }

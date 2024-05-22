@@ -17,7 +17,7 @@ import { PlayerComponent } from './player.component';
   styleUrl: './playersList.component.css',
 })
 export class PlayersListComponent {
-  @Input() isOpen = true;
+  @Input() isOpen = window?.innerWidth >= 1536;
 
   @Input() players: Player[] = [];
   @Input() hostPermission = false;

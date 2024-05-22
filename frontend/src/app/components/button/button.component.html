@@ -1,6 +1,7 @@
-<button
-  class="shadow-offset bg-secondary-500 font-medium hover:bg-secondary-600 active:shadow-noOffset active:translate-y-2 ease-in-out duration-100"
-  [ngClass]="{
+<button [disabled]="disabilitato"
+  class="shadow-offset bg-secondary-500 font-medium hover:bg-secondary-600  ease-in-out duration-100" [ngClass]="{
+    'active:shadow-noOffset active:translate-y-2': !disabilitato,
+    'opacity-50 cursor-default': disabilitato,
     'rounded-2xl': size === 'big',
     'rounded-xl': size === 'small',
     'text-xl sm:text-2xl': size === 'big',

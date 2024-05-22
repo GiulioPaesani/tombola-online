@@ -18,6 +18,7 @@ export class JoinPopupComponent {
   @Input() gameCode = '';
   @Input() isVisible = false;
   username = '';
+  selectedAvatar = 1;
 
   constructor(public gameService: GameService) {}
 
@@ -26,6 +27,14 @@ export class JoinPopupComponent {
   };
 
   joinGame = async () => {
+    if (!this.username) {
+      this.gameService.showToast({
+        type: 'error',
+        text: `Inserisci un nickname da usare nella partita`,
+      });
+      return;
+    }
+
     await axios
       .post(`${CONSTANTS.API_BASE_URL}/is-game-code-correct`, {
         gameCode: this.gameCode,
@@ -54,6 +63,7 @@ export class JoinPopupComponent {
               gameId: respose.data.gameId,
               socketId: this.gameService.socket?.id,
               username: this.username,
+              avatarNum: this.selectedAvatar,
             });
 
             this.gameService.gameId = respose.data.gameId;

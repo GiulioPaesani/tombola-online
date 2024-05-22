@@ -1,4 +1,5 @@
-<app-create-game-popup *ngIf="isCreateGamePopupVisible"></app-create-game-popup>
+<app-create-game-popup [isVisible]="isCreateGamePopupVisible"
+  [closePopup]="closeCreateGamePopup"></app-create-game-popup>
 <app-join-popup [isVisible]="isJoinPopupVisible" [gameCode]="gameCode"></app-join-popup>
 
 

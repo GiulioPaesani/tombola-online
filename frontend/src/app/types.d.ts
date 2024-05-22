@@ -35,7 +35,7 @@ export type FormattedCard = number[][];
 export type Player = {
   socketId: string;
   username: string;
-  avatarUrl: string;
+  avatarNum: number;
   numCards: number | null;
   cards: Card[];
   formattedCards: FormattedCard[];

@@ -1,2 +1,7 @@
-<input type="text" (input)="inputValue($event)" [maxLength]="maxLength" [placeholder]="placeholder"
-  class="bg-secondary-500 font-medium rounded-2xl text-2xl py-4 px-10 w-60 sm:w-80 hover:bg-secondary-600 outline-none tracking-widest placeholder:font-normal placeholder:tracking-normal" />
+<input [type]="inputType" (input)="inputValue($event)" [maxLength]="maxLength" [placeholder]="placeholder"
+  [min]="minValue" [max]="maxValue" [ariaValueMin]="1" [value]="defaultValue"
+  class="bg-secondary-500 font-medium rounded-2xl text-2xl py-4 px-10  hover:bg-secondary-600 outline-none tracking-widest placeholder:font-normal placeholder:tracking-normal"
+  [ngClass]="{
+    'w-60 sm:w-80': size === 'big',
+    'w-40 sm:w-50': size === 'small'
+  }" />

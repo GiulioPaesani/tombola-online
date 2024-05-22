@@ -1,0 +1,17 @@
+input[type='checkbox'] {
+  appearance: none;
+}
+
+input[type='checkbox']::after {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+}
+
+input[type='checkbox']:checked::after {
+  content: url('../../../assets/icons/checked.svg');
+}

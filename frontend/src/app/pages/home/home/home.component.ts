@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreateGamePopupComponent } from '../create-game-popup/create-game-popup.component';
+import { CreateGamePopupComponent } from '../../../components/createGamePopup/createGamePopup.component';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
 import { GameService } from '../../../services/game.service';
@@ -11,19 +11,18 @@ import { LabelComponent } from '../../../components/label/label.component';
 import { ButtonComponent } from '../../../components/button/button.component';
 import { InputComponent } from '../../../components/input/input.component';
 import { JoinPopupComponent } from '../../../components/joinPopup/joinPopup.component';
-import e from 'express';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    CreateGamePopupComponent,
     TitleComponent,
     SubtitleComponent,
     LabelComponent,
     ButtonComponent,
     InputComponent,
     JoinPopupComponent,
+    CreateGamePopupComponent,
     CommonModule,
   ],
   templateUrl: './home.component.html',
@@ -32,7 +31,7 @@ export class HomeComponent {
   gameCode = '';
 
   isJoinPopupVisible = false;
-  isCreateGamePopupVisible = false;
+  isCreateGamePopupVisible = true;
 
   constructor(public gameService: GameService) {}
 
@@ -42,6 +41,10 @@ export class HomeComponent {
 
   openCreateGamePopup = () => {
     this.isCreateGamePopupVisible = true;
+  };
+
+  closeCreateGamePopup = () => {
+    this.isCreateGamePopupVisible = false;
   };
 
   openJoinPopup = async () => {

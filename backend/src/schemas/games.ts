@@ -53,7 +53,7 @@ const gameSchema = new Schema<Game>({
 		{
 			socketId: SchemaTypes.String,
 			username: SchemaTypes.String,
-			avatarUrl: SchemaTypes.String,
+			avatarNum: SchemaTypes.Number,
 			numCards: SchemaTypes.Number,
 			cards: [SchemaTypes.Mixed],
 			formattedCards: [SchemaTypes.Mixed]

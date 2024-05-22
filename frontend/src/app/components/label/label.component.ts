@@ -10,4 +10,5 @@ import { CommonModule } from '@angular/common';
 export class LabelComponent {
   @Input() text = '';
   @Input() color = 'white';
+  @Input() position = 'center';
 }

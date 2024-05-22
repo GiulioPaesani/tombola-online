@@ -1,0 +1,65 @@
+<div *ngIf="isVisible"
+  class="w-full h-full absolute top-0 left-0 z-40 bg-neutral-950/70 flex justify-center items-center">
+  <div class="p-6 bg-secondary-600 rounded-2xl relative max-w-[90%] w-[800px] max-h-[80%] overflow-y-auto">
+    <app-button class="absolute top-3 right-3" icon="close.svg" size="small" [fixedWidth]="false"
+      (click)="closePopup()"></app-button>
+
+    <div class="flex flex-wrap gap-8">
+      <div class="mr-10">
+        <app-label text="In cosa si vince?" color="red" position="left"></app-label>
+        <div class="flex gap-3 flex-col">
+          <div class="flex items-center gap-2 font-medium"
+            *ngFor="let winCase of ['Ambo', 'Terno', 'Quaterna', 'Cinquina', 'Decina', 'Tombola']">
+            <app-checkbox [checked]="winCase === 'Cinquina' || winCase === 'Decina' || winCase === 'Tombola'"
+              [disabilitato]="winCase === 'Tombola'" [inputValue]="inputWinCases"
+              [name]="winCase.toLowerCase()"></app-checkbox>
+            <app-label [text]='winCase' color="red" position="left"></app-label>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <app-label text="Giocatori massimi" color="red" position="left"></app-label>
+        <div class="mt-2">
+          <app-input [inputValue]="inputMaxPlayer" defaultValue="25" inputType="number" [minValue]="1" [maxValue]="1000"
+            size="small"></app-input>
+        </div>
+
+        <div class="mt-8">
+          <app-label text="Cartelle per giocatore" color="red" position="left"></app-label>
+          <div class="flex flex-row gap-2 items-center mt-2 flex-wrap">
+            <div class="flex items-center gap-2">
+              <app-label text="Da" color="red" position="left" class="font-medium"></app-label>
+              <app-input placeholder="MIN" [inputValue]="inputMinCards" defaultValue="1" inputType="number"
+                [minValue]="1" [maxValue]="10" size="small"></app-input>
+            </div>
+            <div class="flex items-center gap-2">
+              <app-label text="a" color="red" position="left" class="font-medium"></app-label>
+              <app-input placeholder="MAX" [inputValue]="inputMaxCards" defaultValue="10" inputType="number"
+                [minValue]="1" [maxValue]="10" size="small"></app-input>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <app-label text="Scegli il tuo avatar" color="red" position="left"></app-label>
+      <div class="flex mt-2 mb-10 w-[500px] max-w-full flex-wrap gap-3">
+        <button *ngFor="let avatarNum of [1, 2, 3, 4, 5]">
+          <img [src]="'../../../assets/avatar' + avatarNum + '.svg'" (click)="selectedAvatar = avatarNum"
+            [ngClass]="{ 'border-4 border-primary-950 rounded-full': selectedAvatar === avatarNum}">
+        </button>
+      </div>
+    </div>
+
+    <app-label text="Scegli il tuo nickname" color="red" position="left"></app-label>
+    <div class="flex mt-2 ">
+      <app-input placeholder="NICKNAME" [inputValue]="inputUsername" [maxLength]="50"></app-input>
+    </div>
+
+    <div class="flex justify-center mt-6 ">
+      <app-button label="CREA PARTITA" (click)="createGame()"></app-button>
+    </div>
+  </div>
+</div>

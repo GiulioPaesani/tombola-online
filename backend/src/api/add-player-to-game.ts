@@ -9,6 +9,7 @@ addPlayerToGame.post('/add-player-to-game', async (req, res) => {
 	const gameId = req.body.gameId;
 	const socketId = req.body.socketId;
 	const username = req.body.username;
+	const avatarNum = req.body.avatarNum;
 
 	const socket = sockets.find(x => x.id === socketId);
 	if (!socket) return res.sendStatus(404);
@@ -27,7 +28,7 @@ addPlayerToGame.post('/add-player-to-game', async (req, res) => {
 				socketIds: {
 					socketId,
 					username,
-					avatarUrl: '',
+					avatarNum,
 					numCards: minCards === maxCards ? minCards : null
 				}
 			}

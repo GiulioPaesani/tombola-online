@@ -12,7 +12,6 @@ import kickPlayer from './api/kick-player';
 import selectNumCards from './api/selectNumCards';
 import players from './api/players';
 import returnToLobby from './api/return-to-lobby';
-import rigenerateGameCode from './api/rigenerate-game-code';
 import startGame from './api/start-game';
 
 dotenv.config();
@@ -36,7 +35,6 @@ app.use('/', kickPlayer);
 app.use('/', selectNumCards);
 app.use('/', players);
 app.use('/', returnToLobby);
-app.use('/', rigenerateGameCode);
 app.use('/', startGame);
 
 app.listen(5000, async () => {

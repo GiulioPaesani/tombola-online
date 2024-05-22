@@ -1,13 +1,6 @@
 <div class="p-16">
   <div>
-    <h2>Players list:</h2>
-    <span>{{players.length}}/{{this.gameService.gameOptions?.maxPlayers|| 'Infiniti'}}</span>
-    <ul>
-      <li *ngFor="let player of players; index as i">{{player.username}} - <span *ngIf="i !== 0"> Cartelle:
-          {{player.numCards ?? 'Non ancora deciso'}}</span>
-      </li>
-    </ul>
-
+    <app-players-list [players]="players"></app-players-list>
 
     <div *ngIf="this.gameService.gameOptions?.minCards !== this.gameService.gameOptions?.maxCards">
       <h2>Segli quante cartelle vuoi</h2>

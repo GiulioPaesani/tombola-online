@@ -1,0 +1,8 @@
+<div class="w-96 h-20 bg-secondary-700 flex gap-4 justify-start items-center px-3 group"
+  style="border-radius: 40px 16px 16px 40px;">
+  <img [src]="'../../../assets/avatar' + avatarNum + '.svg'" class="size-14">
+  <app-label [text]="username" color="black"></app-label>
+
+  <app-button *ngIf="hostPermission" size="small" icon="close.svg" [fixedWidth]="false"
+    class="ml-auto hidden group-hover:block"></app-button>
+</div>

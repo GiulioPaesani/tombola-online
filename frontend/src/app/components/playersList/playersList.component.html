@@ -1,0 +1,11 @@
+<div class="bg-secondary-500 rounded-2xl w-fit p-4">
+  <app-label text="GIOCATORI" color="red" class="font-medium"></app-label>
+  <app-label [text]="players.length + '/' + gameService.gameOptions?.maxPlayers" color="red"></app-label>
+
+  <div class="flex flex-col gap-2 mx-8 mt-4">
+    <app-player *ngFor="let player of players; index as i" [username]="player.username" [avatarNum]="player.avatarNum"
+      [hostPermission]="hostPermission && i !== 0"></app-player>
+  </div>
+
+
+</div>

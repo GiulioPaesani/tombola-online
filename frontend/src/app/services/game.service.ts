@@ -9,7 +9,7 @@ import { GameOptions, EventType } from '../types';
 })
 export class GameService {
   gameId = '';
-  gameCode = '';
+  gameCode = '12345';
   view:
     | 'home'
     | 'create'

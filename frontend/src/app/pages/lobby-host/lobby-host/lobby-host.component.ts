@@ -4,15 +4,41 @@ import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
 import { EventType, Player } from '../../../types';
+import { PlayersListComponent } from '../../../components/playersList/playersList.component';
 
 @Component({
   selector: 'app-lobby-host',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PlayersListComponent],
   templateUrl: './lobby-host.component.html',
 })
 export class LobbyHostComponent {
-  players: Player[] = [];
+  players: Player[] = [
+    {
+      socketId: '',
+      username: 'Username',
+      avatarNum: 1,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    {
+      socketId: '',
+      username: 'Username 2',
+      avatarNum: 4,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+    {
+      socketId: '',
+      username: 'Username 2',
+      avatarNum: 2,
+      numCards: 2,
+      cards: [],
+      formattedCards: [],
+    },
+  ]; //!
   readyToStart = false;
 
   constructor(public gameService: GameService) {

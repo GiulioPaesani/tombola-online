@@ -30,7 +30,7 @@ import { JoinPopupComponent } from '../../../components/joinPopup/joinPopup.comp
 export class HomeComponent {
   gameCode = '';
 
-  isJoinPopupVisible = true;
+  isJoinPopupVisible = false;
   isCreateGamePopupVisible = false;
 
   constructor(public gameService: GameService) {}

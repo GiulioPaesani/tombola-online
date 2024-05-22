@@ -4,11 +4,12 @@ import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
 import { EventType, Player } from '../../../types';
+import { PlayersListComponent } from '../../../components/playersList/playersList.component';
 
 @Component({
   selector: 'app-lobby-player',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PlayersListComponent],
   templateUrl: './lobby-player.component.html',
 })
 export class LobbyPlayerComponent {

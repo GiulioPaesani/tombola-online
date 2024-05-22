@@ -54,6 +54,10 @@ export class GameService {
   showToast = (toast: Omit<Toast, 'toastId'>) => {
     const toastId = new Date().getTime().toString();
 
+    if (this.toasts.length >= 4) {
+      this.toasts = this.toasts.slice(1);
+    }
+
     this.toasts.push({
       toastId,
       ...toast,

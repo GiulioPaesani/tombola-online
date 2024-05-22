@@ -35,7 +35,7 @@ export class CreateGamePopupComponent {
   };
   maxPlayers = 25;
   minCards = 1;
-  maxCards = 10;
+  maxCards = 8;
 
   @Input() closePopup = () => {};
 
@@ -72,18 +72,18 @@ export class CreateGamePopupComponent {
       return;
     }
 
-    if (this.minCards <= 0 || this.minCards > 10) {
+    if (this.minCards <= 0 || this.minCards > 8) {
       this.gameService.showToast({
         type: 'error',
-        text: 'Il numero minimo di caselle per giocatore deve essere compreso tra 1 e 10',
+        text: 'Il numero minimo di cartelle per giocatore deve essere compreso tra 1 e 8',
       });
       return;
     }
 
-    if (this.maxCards <= 0 || this.maxCards > 10) {
+    if (this.maxCards <= 0 || this.maxCards > 8) {
       this.gameService.showToast({
         type: 'error',
-        text: 'Il numero massimo di caselle per giocatore deve essere compreso tra 1 e 10',
+        text: 'Il numero massimo di cartelle per giocatore deve essere compreso tra 1 e 8',
       });
       return;
     }
@@ -91,7 +91,7 @@ export class CreateGamePopupComponent {
     if (this.maxCards < this.minCards) {
       this.gameService.showToast({
         type: 'error',
-        text: 'Il numero massimo di caselle è maggiore del numero minimo',
+        text: 'Il numero massimo di cartelle è maggiore del numero minimo',
       });
       return;
     }

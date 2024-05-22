@@ -16,11 +16,6 @@
       (click)="isGameCodeVisible = !isGameCodeVisible"></app-button>
   </div>
 
-  <!-- <button (click)="regenerateGameCode()" class="text-bold border-black border-2">Rigenera codice</button> -->
-
-
-  <!-- <button (click)="startGame()" [disabled]="!readyToStart">START GAME!</button> -->
-
   <app-label *ngIf="!readyToStart"
     [text]="this.players.length === 1 ? 'Nessun giocatore nella partita oltre a te' : 'Tutti i giocatori devono selezionare quante cartelle vogliono'"
     size="small"></app-label>

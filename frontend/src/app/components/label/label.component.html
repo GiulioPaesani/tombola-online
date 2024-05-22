@@ -1,10 +1,10 @@
-<h4 class="text-2xl text-ellipsis overflow-hidden" [ngClass]="{
+<h4 class="text-ellipsis overflow-hidden" [ngClass]="{
   'text-secondary-500': color === 'white',
   'text-primary-950': color === 'red',
   'text-neutral-950': color === 'black',
   'text-center': position === 'center',
   'text-left': position === 'left',
-  'text-2xl': size === 'big',
+  'text-xl sm:text-2xl': size === 'big',
   'text-lg': size === 'small',
 }">{{text}}
 </h4>

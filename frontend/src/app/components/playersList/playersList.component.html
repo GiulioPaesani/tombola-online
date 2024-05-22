@@ -5,7 +5,7 @@
     class="absolute top-4 right-4 block 2xl:hidden" (click)="isOpen = !isOpen"></app-button>
 
   <app-label text="GIOCATORI" color="red" class="font-medium"></app-label>
-  <app-label [text]="players.length + '/' + gameService.gameOptions?.maxPlayers" color="red"></app-label>
+  <app-label [text]="players.length + '/' + gameService.gameOptions?.maxPlayers" color="red" size="small"></app-label>
 
   <div class="flex flex-col gap-2 mt-4 w-full h-[80%] sm:h-[90%] overflow-y-auto">
     <app-player *ngFor="let player of players; index as i" [socketId]="player.socketId" [username]="player.username"

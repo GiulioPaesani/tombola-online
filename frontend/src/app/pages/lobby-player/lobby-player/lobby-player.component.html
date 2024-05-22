@@ -1,11 +1,30 @@
-<div class="p-16">
-  <div>
-    <app-players-list [players]="players"></app-players-list>
+<app-title></app-title>
 
-    <div *ngIf="this.gameService.gameOptions?.minCards !== this.gameService.gameOptions?.maxCards">
-      <h2>Segli quante cartelle vuoi</h2>
+<app-players-list [players]="players"></app-players-list>
 
-      <button *ngFor="let num of numCardsToSelect" class="border-2 m-2" (click)="numCardsSelect(num)">{{num}}</button>
+<div class="ml-auto 2xl:w-[70%] w-full mt-4 h-[80vh] flex items-center justify-center flex-col">
+
+  <div *ngIf="gameService.gameOptions?.minCards !== gameService.gameOptions?.maxCards">
+    <div class="w-[70%] sm:w-full mx-auto">
+      <app-label text="Seleziona con quante cartelle vuoi giocare"></app-label>
+    </div>
+    <div class="flex flex-wrap gap-4 mt-2 items-center mx-auto justify-center" [ngClass]="{
+      'flex-col w-96': numCardsToSelect.length <= 5,
+      'flex-row w-[90%] sm:w-[62%]': numCardsToSelect.length > 5,
+      }">
+      <app-button [fixedWidth]="false" *ngFor="let numCard of numCardsToSelect"
+        [label]="numCard + (numCard === 1 ? ' cartella' : ' cartelle')" (click)="numCardsSelect(numCard)"
+        [ngClass]="{'opacity-50': numCards && numCards !== numCard}"></app-button>
     </div>
   </div>
+
+  <div *ngIf="gameService.gameOptions?.minCards === gameService.gameOptions?.maxCards">
+    <app-label text="Giocherai con"></app-label>
+    <div class="bg-secondary-500 min-w-80 sm:w-96 py-4 text-xl text-center sm:text-2xl rounded-2xl font-medium mt-2">
+      {{numCards}} {{numCards === 1 ? ' cartella' : ' cartelle'}}
+    </div>
+  </div>
+
+  <app-label text="Attendi che l'host avvii la partita..." size="small" class="mt-8"></app-label>
+
 </div>

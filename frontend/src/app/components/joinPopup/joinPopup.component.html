@@ -1,18 +1,18 @@
 <div *ngIf="isVisible"
   class="w-full h-full absolute top-0 left-0 z-40 bg-neutral-950/70 flex justify-center items-center">
-  <div class="p-6 bg-secondary-600 rounded-2xl relative">
+  <div class="p-6 bg-secondary-600 rounded-2xl relative max-w-[90%]">
     <app-button class="absolute top-3 right-3" icon="close.svg" size="small" [fixedWidth]="false"
       (click)="isVisible = false"></app-button>
 
     <app-label text="Scegli un avatar" color="red"></app-label>
-    <div class="flex justify-between mt-2 mx-4 mb-10">
+    <div class="flex mt-2 justify-center mx-4 mb-10 flex-wrap gap-4">
       <button *ngFor="let avatarNum of [1, 2, 3, 4, 5]">
         <img [src]="'../../../assets/avatar' + avatarNum + '.svg'" (click)="selectedAvatar = avatarNum"
           [ngClass]="{ 'border-4 border-primary-950 rounded-full': selectedAvatar === avatarNum}">
       </button>
     </div>
 
-    <div class="w-[500px] flex mt-6 ">
+    <div class="max-w-full w-[500px] flex mt-6 flex-wrap gap-4">
       <app-input placeholder="NICKNAME" [inputValue]="inputUsername" [maxLength]="50"></app-input>
       <app-button class="ml-auto" label="ENTRA" [fixedWidth]="false" (click)="joinGame()"></app-button>
     </div>

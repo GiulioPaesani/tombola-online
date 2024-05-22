@@ -48,15 +48,15 @@ export class CreateGamePopupComponent {
   };
 
   inputMaxPlayer = (event: Event) => {
-    this.maxPlayers = parseInt((event.target as HTMLInputElement).value) ?? 1;
+    this.maxPlayers = parseInt((event.target as HTMLInputElement).value) || 1;
   };
 
   inputMinCards = (event: Event) => {
-    this.minCards = parseInt((event.target as HTMLInputElement).value) ?? 1;
+    this.minCards = parseInt((event.target as HTMLInputElement).value) || 1;
   };
 
   inputMaxCards = (event: Event) => {
-    this.maxCards = parseInt((event.target as HTMLInputElement).value) ?? 1;
+    this.maxCards = parseInt((event.target as HTMLInputElement).value) || 1;
   };
 
   inputUsername = (event: Event) => {

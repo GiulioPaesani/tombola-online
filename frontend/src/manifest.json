@@ -4,22 +4,22 @@
   "description": "Tombola Online Gratis - Gioca con amici e familiari",
   "icons": [
     {
-      "src": "./assets/icon-16.jpg",
+      "src": "icon-16.jpg",
       "sizes": "16x16",
       "type": "image/jpg"
     },
     {
-      "src": "./assets/icon-32.jpg",
+      "src": "icon-32.jpg",
       "sizes": "32x32",
       "type": "image/jpg"
     },
     {
-      "src": "./assets/icon-64.jpg",
+      "src": "icon-64.jpg",
       "sizes": "64x64",
       "type": "image/jpg"
     },
     {
-      "src": "./assets/icon-512.jpg",
+      "src": "icon-512.jpg",
       "type": "image/jpg",
       "sizes": "512x512",
       "purpose": "any"

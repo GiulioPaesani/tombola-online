@@ -95,7 +95,12 @@ const formatCard = (card: Card) => {
 
 		const emptyRow = [formattedCard[0][decina], formattedCard[1][decina], formattedCard[2][decina]].findIndex(x => x === 0);
 
-		formattedCard[emptyRow][decina] = number;
+		try {
+			formattedCard[emptyRow][decina] = number;
+		} catch {
+			console.log(formattedCard, emptyRow, decina, number);
+			throw new Error('DI NUOVO!');
+		}
 	}
 
 	if (formattedCard.some(row => row.filter(number => number !== 0).length > 5)) {

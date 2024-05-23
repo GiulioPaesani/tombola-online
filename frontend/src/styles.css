@@ -40,6 +40,10 @@ body {
   background: transparent;
 }
 
+body::-webkit-scrollbar-track {
+  background: #E35B48;
+}
+
 ::-webkit-scrollbar-thumb {
   background: white;
   border-radius: 6px;

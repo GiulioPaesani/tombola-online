@@ -6,8 +6,10 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './number.component.html',
+  styleUrl: './number.component.css',
 })
 export class NumberComponent {
   @Input() number = 1;
   @Input() selected = false;
+  @Input() error = false;
 }

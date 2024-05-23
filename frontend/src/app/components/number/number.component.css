@@ -1,0 +1,27 @@
+.numError {
+  animation: numError 1s linear 5s infinite alternate;
+}
+
+.numErrorSelected {
+  animation: numErrorSelected 1s linear 5s infinite alternate;
+}
+
+@keyframes numError {
+  from {
+    background-color: #FFF1E6;
+  }
+
+  to {
+    background-color: rgb(215, 41, 41);
+  }
+}
+
+@keyframes numErrorSelected {
+  from {
+    background-color: #FFE5D1;
+  }
+
+  to {
+    background-color: rgb(215, 41, 41);
+  }
+}

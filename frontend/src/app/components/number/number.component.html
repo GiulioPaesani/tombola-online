@@ -1,7 +1,10 @@
-<div class="size-8 sm:size-12 xl:size-16 rounded-full text-lg sm:text-2xl xl:text-3xl flex justify-center items-center"
+<div
+  class="size-8 sm:size-12 xl:size-16 rounded-full text-lg sm:text-2xl xl:text-3xl flex justify-center items-center select-none"
   [ngClass]="{
   'bg-secondary-500 text-neutral-950': !selected,
-  'font-medium bg-secondary-700 text-primary-950 border-primary-950 border-2 xl:border-4': selected
+  'font-medium bg-secondary-700 text-primary-950 border-primary-950 border-2 xl:border-4': selected,
+  'numError': !selected && error,
+  'numErrorSelected': selected && error
 }"><span [ngClass]="{
   'opacity-50': !selected
-}">{{number}}</span></div>
+}">{{number || ''}}</span></div>

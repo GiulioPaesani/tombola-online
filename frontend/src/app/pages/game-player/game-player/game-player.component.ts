@@ -4,11 +4,25 @@ import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
 import { Card, EventType, FormattedCard, Player, Wins } from '../../../types';
+import { TitleComponent } from '../../../components/title/title.component';
+import { ButtonComponent } from '../../../components/button/button.component';
+import { LabelComponent } from '../../../components/label/label.component';
+import { PlayersListComponent } from '../../../components/playersList/playersList.component';
+import { NumberComponent } from '../../../components/number/number.component';
+import { CheckboxComponent } from '../../../components/checkbox/checkbox.component';
 
 @Component({
   selector: 'app-game-player',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    TitleComponent,
+    ButtonComponent,
+    LabelComponent,
+    PlayersListComponent,
+    NumberComponent,
+    CheckboxComponent,
+  ],
   templateUrl: './game-player.component.html',
 })
 export class GamePlayerComponent {
@@ -17,6 +31,7 @@ export class GamePlayerComponent {
   formattedCards: FormattedCard[] = [];
   automaticInsert = true;
   numbersCheck = true;
+  lastExtractedNumber: number | null = null;
 
   constructor(public gameService: GameService) {
     axios
@@ -37,12 +52,16 @@ export class GamePlayerComponent {
     this.gameService.socket?.on(
       EventType.ExtractedNumber,
       (randomNumber: number) => {
-        this.gameService.showToast({
-          type: 'success',
-          text: randomNumber.toString(),
-        });
+        this.lastExtractedNumber = randomNumber;
+        setTimeout(() => {
+          this.lastExtractedNumber = null;
+        }, 2000);
 
         this.gameService.extractedNumbers.push(randomNumber);
+        this.gameService.lastExtractedNumbers = [
+          randomNumber,
+          ...this.gameService.lastExtractedNumbers.slice(0, 3),
+        ];
 
         if (this.automaticInsert) {
           for (let i = 0; i < this.cards.length; i++) {
@@ -69,13 +88,12 @@ export class GamePlayerComponent {
     });
   }
 
-  toggleGameOptions = () => {
-    this.automaticInsert = (
-      document.getElementById('automaticInsert') as HTMLInputElement
-    ).checked;
-    this.numbersCheck = (
-      document.getElementById('numbersCheck') as HTMLInputElement
-    ).checked;
+  toggleGameOptions = (event: Event, name: string) => {
+    if (name === 'autoInsert') {
+      this.automaticInsert = (event.target as HTMLInputElement).checked;
+    } else {
+      this.numbersCheck = (event.target as HTMLInputElement).checked;
+    }
   };
 
   toggleNumber = (cardIndex: number, number: number) => {

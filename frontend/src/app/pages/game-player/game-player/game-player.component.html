@@ -1,32 +1,68 @@
-<div class="p-16">
-  <div>
-    <h2>Players list:</h2>
-    <span>{{players.length}}/{{this.gameService.gameOptions?.maxPlayers|| 'Infiniti'}}</span>
-    <ul>
-      <li *ngFor="let player of players; index as i">{{player.username}} - <span *ngIf="i !== 0"> Cartelle:
-          {{player.numCards ?? 'Non ancora deciso'}}</span>
-      </li>
-    </ul>
-  </div>
-</div>
+<app-title></app-title>
 
-<input type="checkbox" id="automaticInsert" checked (change)="toggleGameOptions()">
-<label class="text-medium">Inserimento automatico dei numeri</label>
-<br>
-<br>
-<input type="checkbox" id="numbersCheck" checked (change)="toggleGameOptions()">
-<label class="text-medium">Controllo dei numeri non messi/errati</label>
-<br>
-Se dopo 10s che è stato estratto un numero non lo hai inserito o se inserisci un numero non ancora estratto, ti verrà
-segnalato
+<app-players-list [players]="players" [largeScreen]="true"></app-players-list>
 
+<div class="ml-auto w-full mt-4 flex min-h-[80vh] items-center justify-center flex-row ">
+  <div class="flex-col mx-auto items-center hidden xl:flex ">
 
-<div class="p-16">
-  <div *ngFor="let formattedCard of formattedCards; index as i" class="border-4 text-center my-4 w-fit">
-    <div *ngFor="let row of formattedCard" class="flex gap-4">
-      <div *ngFor="let number of row" class="w-10 border-2" (click)="toggleNumber(i, number)"
-        [ngStyle]="{backgroundColor: cards[i][number] ? 'green' : 'orange'}">
-        {{number === 0 ? '' : number}}</div>
+    <div class="flex flex-col items-start gap-4">
+      <div class="flex gap-2 items-center justify-center">
+        <app-checkbox [checked]="true" [inputValue]="toggleGameOptions" name="autoInsert"></app-checkbox>
+        <app-label text="Inserimento automatico dei numeri"></app-label>
+      </div>
+
+      <div class="flex gap-2 items-center justify-center">
+        <app-checkbox [checked]="true" [inputValue]="toggleGameOptions" name="errorsCheck"></app-checkbox>
+        <app-label text="Controllo errori"></app-label>
+      </div>
+    </div>
+
+    <div class="mt-8" *ngIf="gameService.extractedNumbers.length > 0">
+      <app-label text="Ultimi numeri estratti"></app-label>
+      <div class="flex gap-2 mt-2 items-center justify-center">
+        <app-number
+          [ngClass]="{'opacity-100': i === 0, 'opacity-80': i === 1, 'opacity-60': i === 2, 'opacity-40': i === 3}"
+          *ngFor="let number of gameService.lastExtractedNumbers; index as i;" [number]="number"
+          [selected]="true"></app-number>
+        <div>
+        </div>
+
+      </div>
     </div>
   </div>
+
+  <div *ngIf="lastExtractedNumber"
+    class="absolute top-32 size-32 rounded-full text-5xl flex justify-center items-center font-medium bg-secondary-700 text-primary-950 border-primary-950 border-8 z-20 ease-in-out duration-200 scale-125"
+    style="left: calc(50% - 128px / 2)">
+    <div>{{lastExtractedNumber}}</div>
+  </div>
+
+  <div class="flex flex-col gap-1 sm:gap-2 xl:gap-3 relative">
+    <div *ngFor="let card of formattedCards; index as i"
+      class="flex flex-col gap-1 sm:gap-2 xl:gap-3 mb-4 items-center justify-center">
+      <app-label [text]="'Cartella ' + (i + 1)"></app-label>
+
+      <div *ngFor="let row of card" class="flex gap-1 sm:gap-2 xl:gap-3">
+        <app-number *ngFor="let number of row" [number]="number" [selected]="cards[i][number]"
+          [error]="numbersCheck && number !== 0 && cards[i][number] !== gameService.extractedNumbers.includes(number)"
+          (click)="number !== 0 ? cards[i][number] = !cards[i][number] : ''"
+          [ngClass]="{'cursor-pointer': number}"></app-number>
+      </div>
+
+    </div>
+
+    <div class="flex xl:hidden flex-col items-start gap-4 w-fit mx-auto">
+      <div class="flex gap-2 items-center justify-center">
+        <app-checkbox [checked]="true" [inputValue]="toggleGameOptions" name="autoInsert"></app-checkbox>
+        <app-label text="Inserimento automatico"></app-label>
+      </div>
+
+      <div class="flex gap-2 items-center justify-center">
+        <app-checkbox [checked]="true" [inputValue]="toggleGameOptions" name="errorsCheck"></app-checkbox>
+        <app-label text="Controllo errori"></app-label>
+      </div>
+    </div>
+
+  </div>
+
 </div>

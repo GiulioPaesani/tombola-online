@@ -17,17 +17,16 @@ import { PlayerComponent } from './player.component';
   styleUrl: './playersList.component.css',
 })
 export class PlayersListComponent {
-  @Input() isOpen = window?.innerWidth >= 1536;
-  @Input() forceClose = false;
+  @Input() isOpen = false;
+  @Input() largeScreen = false;
   @Input() players: Player[] = [];
   @Input() hostPermission = false;
 
-  constructor(public gameService: GameService) {}
+  constructor(public gameService: GameService) {
+    this.isOpen = window?.innerWidth >= (this.largeScreen ? 2300 : 1536);
+  }
 
   windowResize = () => {
-    if (this.forceClose) return;
-
-    if (window?.innerWidth < 1536) this.isOpen = false;
-    else this.isOpen = true;
+    this.isOpen = window?.innerWidth >= (this.largeScreen ? 2300 : 1536);
   };
 }

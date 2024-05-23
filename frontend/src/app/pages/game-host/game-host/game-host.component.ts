@@ -22,20 +22,18 @@ import { NumberComponent } from '../../../components/number/number.component';
     NumberComponent,
   ],
   templateUrl: './game-host.component.html',
+  styleUrl: './game-host.component.css',
 })
 export class GameHostComponent {
-  players: Player[] = [
-    {
-      socketId: '1',
-      username: 'sdfsdf',
-      avatarNum: 1,
-      cards: [],
-      numCards: 2,
-      formattedCards: [],
-    },
-  ];
+  players: Player[] = [];
   allBoardNumbers = new Array(90).fill(0).map((x, index) => index + 1);
   gameEnded = false;
+
+  extractedNumberPopup = 0;
+
+  extracting = false;
+  buttonLoading1 = false;
+  buttonLoading2 = false;
 
   constructor(public gameService: GameService) {
     axios
@@ -73,15 +71,42 @@ export class GameHostComponent {
     });
   };
 
+  sleep = async (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
   extractNumber = async () => {
+    this.buttonLoading1 = true;
+    this.extracting = true;
+
     await axios
       .post(`${CONSTANTS.API_BASE_URL}/extract-number`, {
         gameId: this.gameService.gameId,
       })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.data) return;
 
         const randomNumber = parseInt(response.data.randomNumber);
+
+        const randomNumbers = new Array(15)
+          .fill(0)
+          .map(() => Math.floor(Math.random() * 90) + 1);
+
+        randomNumbers.push(randomNumber);
+
+        let index = 0;
+        for (const number of randomNumbers) {
+          this.extractedNumberPopup = number;
+
+          if (index < 15) {
+            await this.sleep(100);
+          } else {
+            this.extracting = false;
+            await this.sleep(1500);
+          }
+
+          index++;
+        }
 
         this.gameService.extractedNumbers.push(randomNumber);
         this.gameService.lastExtractedNumbers = [
@@ -89,16 +114,15 @@ export class GameHostComponent {
           ...this.gameService.lastExtractedNumbers.slice(0, 3),
         ];
 
-        this.gameService.showToast({
-          type: 'success',
-          text: randomNumber.toString(),
-        });
+        this.buttonLoading1 = false;
       });
   };
 
   returnToLobby = async () => {
+    this.buttonLoading2 = true;
     await axios.post(`${CONSTANTS.API_BASE_URL}/return-to-lobby`, {
       gameId: this.gameService.gameId,
     });
+    this.buttonLoading2 = false;
   };
 }

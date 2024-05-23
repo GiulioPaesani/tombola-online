@@ -23,9 +23,11 @@ import { LabelComponent } from '../../../components/label/label.component';
 })
 export class LobbyHostComponent {
   players: Player[] = [];
-  isGameCodeVisible = true;
+  isGameCodeVisible = false;
 
   readyToStart = false;
+
+  buttonLoading = false;
 
   constructor(public gameService: GameService) {
     axios
@@ -58,8 +60,11 @@ export class LobbyHostComponent {
   startGame = async () => {
     if (!this.readyToStart) return;
 
+    this.buttonLoading = true;
     await axios.post(`${CONSTANTS.API_BASE_URL}/start-game`, {
       gameId: this.gameService.gameId,
     });
+
+    this.buttonLoading = false;
   };
 }

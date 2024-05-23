@@ -72,21 +72,23 @@ extractNumber.post('/extract-number', async (req, res) => {
 		}
 	}
 
-	if (wins.winners.length) {
-		await games.updateOne({ gameId }, { $push: { casesAlreadyWon: wins.type } });
-
-		io.to(gameId).emit(EventType.Wins, wins);
-	}
-
-	await games.updateOne({ gameId }, { $push: { extractedNumbers: randomNumber }, $set: querys });
-
-	io.to(gameId).emit(EventType.ExtractedNumber, randomNumber);
-
-	game.extractedNumbers.push(randomNumber);
-
 	res.send({
 		randomNumber
 	});
+
+	setTimeout(async () => {
+		if (wins.winners.length) {
+			await games.updateOne({ gameId }, { $push: { casesAlreadyWon: wins.type } });
+
+			io.to(gameId).emit(EventType.Wins, wins);
+		}
+
+		await games.updateOne({ gameId }, { $push: { extractedNumbers: randomNumber }, $set: querys });
+
+		io.to(gameId).emit(EventType.ExtractedNumber, randomNumber);
+
+		game.extractedNumbers.push(randomNumber);
+	}, 2000);
 });
 
 export default extractNumber;

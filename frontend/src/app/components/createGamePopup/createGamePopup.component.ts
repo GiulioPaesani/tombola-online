@@ -37,6 +37,8 @@ export class CreateGamePopupComponent {
   minCards = 1;
   maxCards = 8;
 
+  buttonLoading = false;
+
   @Input() closePopup = () => {};
 
   constructor(public gameService: GameService) {}
@@ -104,6 +106,7 @@ export class CreateGamePopupComponent {
       return;
     }
 
+    this.buttonLoading = true;
     await axios
       .post(`${CONSTANTS.API_BASE_URL}/create-game`, {
         winCases: this.winCases,
@@ -131,6 +134,7 @@ export class CreateGamePopupComponent {
                 minCards: this.minCards,
                 maxCards: this.maxCards,
               };
+              this.buttonLoading = false;
               this.gameService.view = 'lobby-host';
             });
         });

@@ -1,0 +1,8 @@
+#extractedNumber {
+  left: calc(50% - 128px / 2);
+  top: calc(50% - 128px /2 + 32px);
+}
+
+.extracting {
+  transform: scale(0.8);
+}

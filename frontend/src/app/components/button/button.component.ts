@@ -13,4 +13,6 @@ export class ButtonComponent {
   @Input() label = '';
   @Input() icon: string | undefined;
   @Input() disabilitato = false;
+
+  @Input() loading = false;
 }

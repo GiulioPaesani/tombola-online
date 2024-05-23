@@ -14,7 +14,8 @@
 
     <div class="max-w-full w-[500px] flex mt-6 flex-wrap gap-4">
       <app-input placeholder="NICKNAME" [inputValue]="inputUsername" [maxLength]="50"></app-input>
-      <app-button class="ml-auto" label="ENTRA" [fixedWidth]="false" (click)="joinGame()"></app-button>
+      <app-button class="ml-auto" label="ENTRA" [fixedWidth]="false" (click)="joinGame()"
+        [loading]="buttonLoading"></app-button>
     </div>
   </div>
 </div>

@@ -1,7 +1,8 @@
-<button [disabled]="disabilitato"
-  class="shadow-offset bg-secondary-500 font-medium hover:bg-secondary-600  ease-in-out duration-100" [ngClass]="{
-    'active:shadow-noOffset active:translate-y-2': !disabilitato,
-    'opacity-50 cursor-default': disabilitato,
+<button [disabled]="disabilitato || loading"
+  class="shadow-offset bg-secondary-500 font-medium hover:bg-secondary-600 ease-in-out duration-100 flex justify-center items-center gap-2"
+  [ngClass]="{
+    'active:shadow-noOffset active:translate-y-2': !disabilitato && !loading,
+    'opacity-50 cursor-default': disabilitato || loading,
     'rounded-2xl': size === 'big',
     'rounded-xl': size === 'small',
     'text-xl sm:text-2xl': size === 'big',
@@ -15,5 +16,5 @@
     'px-2': size === 'small' && icon,
     'min-w-80 sm:w-96': fixedWidth
   }">
-  <img [src]="'../../../assets/icons/'+ icon" *ngIf="icon" class="size-6">
+  <img [src]="'../../../assets/icons/'+ (loading ? 'loading.gif' : icon)" *ngIf="icon || loading" class="size-6">
   {{label}}</button>

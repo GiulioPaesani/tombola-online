@@ -20,6 +20,8 @@ export class JoinPopupComponent {
   username = '';
   selectedAvatar = 1;
 
+  buttonLoading = false;
+
   constructor(public gameService: GameService) {}
 
   inputUsername = (event: Event) => {
@@ -34,6 +36,8 @@ export class JoinPopupComponent {
       });
       return;
     }
+
+    this.buttonLoading = true;
 
     await axios
       .post(`${CONSTANTS.API_BASE_URL}/is-game-code-correct`, {
@@ -73,6 +77,9 @@ export class JoinPopupComponent {
               minCards: respose.data.minCards,
               maxCards: respose.data.maxCards,
             };
+
+            this.buttonLoading = false;
+
             this.gameService.view = 'lobby-player';
           });
         }

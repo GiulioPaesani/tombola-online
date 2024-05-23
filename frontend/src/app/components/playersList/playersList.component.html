@@ -3,7 +3,7 @@
   [ngClass]="isOpen ? 'listOpened' : 'listClosed'" (window:resize)="windowResize()">
   <app-button id="listButton" size="small" [icon]="isOpen ? 'left.svg' : 'right.svg'" [fixedWidth]="false"
     class="absolute top-4 right-4 block" [ngClass]="{
-      '2xl:hidden': !forceClose
+      '2xl:hidden': !largeScreen
     }" (click)="isOpen = !isOpen"></app-button>
 
   <app-label text="GIOCATORI" color="red" class="font-medium"></app-label>

@@ -64,8 +64,11 @@ export class GameService {
       ...toast,
     });
 
-    setTimeout(() => {
-      this.toasts = this.toasts.filter((toast) => toast.toastId !== toastId);
-    }, 3000);
+    setTimeout(
+      () => {
+        this.toasts = this.toasts.filter((toast) => toast.toastId !== toastId);
+      },
+      toast.type === 'party' ? 10000 : 3000
+    );
   };
 }

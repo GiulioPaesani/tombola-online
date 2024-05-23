@@ -49,6 +49,7 @@ export class GamePlayerComponent {
         this.formattedCards = response.data.formattedCards;
       });
 
+    this.gameService.socket?.off(EventType.ExtractedNumber);
     this.gameService.socket?.on(
       EventType.ExtractedNumber,
       (randomNumber: number) => {
@@ -73,17 +74,24 @@ export class GamePlayerComponent {
       }
     );
 
+    this.gameService.socket?.off(EventType.Wins);
     this.gameService.socket?.on(EventType.Wins, (wins: Wins) => {
       this.gameService.showToast({
-        type: 'success',
-        text: `${wins.winners
-          .map((player) => player.username)
-          .join(', ')} ha/hanno fatto ${wins.type}!!!`,
+        type: 'party',
+        text: wins.winners.find(
+          (x) => x.socketId === this.gameService.socket?.id
+        )
+          ? `Complimenti! Hai fatto ${wins.type}`
+          : `${wins.winners.map((player) => player.username).join(', ')} ${
+              wins.winners.length === 1 ? 'ha' : 'hanno'
+            } fatto ${wins.type}`,
       });
     });
 
+    this.gameService.socket?.off(EventType.ReturnToLobby);
     this.gameService.socket?.on(EventType.ReturnToLobby, () => {
       this.gameService.extractedNumbers = [];
+      this.gameService.lastExtractedNumbers = [];
       this.gameService.view = 'lobby-player';
     });
   }

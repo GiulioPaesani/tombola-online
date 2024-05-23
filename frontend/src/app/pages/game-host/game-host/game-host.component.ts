@@ -41,25 +41,29 @@ export class GameHostComponent {
       .then((response) => {
         this.players = response.data;
 
+        this.gameService.socket?.off(EventType.PlayersUpdate);
         this.gameService.socket?.on(EventType.PlayersUpdate, (socketIds) => {
           this.players = socketIds;
         });
       });
 
+    this.gameService.socket?.off(EventType.Wins);
     this.gameService.socket?.on(EventType.Wins, (wins: Wins) => {
       this.gameService.showToast({
-        type: 'success',
-        text: `${wins.winners
-          .map((player) => player.username)
-          .join(', ')} ha/hanno fatto ${wins.type}!!!`,
+        type: 'party',
+        text: `${wins.winners.map((player) => player.username).join(', ')} ${
+          wins.winners.length === 1 ? 'ha' : 'hanno'
+        } fatto ${wins.type}`,
       });
 
       if (wins.type === 'tombola') this.gameEnded = true;
     });
 
+    this.gameService.socket?.off(EventType.ReturnToLobby);
     this.gameService.socket?.on(EventType.ReturnToLobby, () => {
       this.gameEnded = false;
       this.gameService.extractedNumbers = [];
+      this.gameService.lastExtractedNumbers = [];
       this.gameService.view = 'lobby-host';
     });
   }
@@ -84,7 +88,10 @@ export class GameHostComponent {
         gameId: this.gameService.gameId,
       })
       .then(async (response) => {
-        if (!response.data) return;
+        if (!response.data) {
+          this.buttonLoading1 = false;
+          this.extracting = false;
+        }
 
         const randomNumber = parseInt(response.data.randomNumber);
 

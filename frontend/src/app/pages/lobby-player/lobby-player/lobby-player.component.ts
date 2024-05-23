@@ -32,6 +32,10 @@ export class LobbyPlayerComponent {
       .then((response) => {
         this.players = response.data;
 
+        this.numCards =
+          this.players.find((x) => x.socketId === this.gameService.socket?.id)
+            ?.numCards ?? null;
+
         this.numCardsToSelect = new Array(
           (this.gameService.gameOptions?.maxCards ?? 1) -
             (this.gameService.gameOptions?.minCards ?? 1) +
@@ -42,6 +46,7 @@ export class LobbyPlayerComponent {
             (x, index) => (this.gameService.gameOptions?.minCards ?? 1) + index
           );
 
+        this.gameService.socket?.off(EventType.PlayersUpdate);
         this.gameService.socket?.on(
           EventType.PlayersUpdate,
           (socketIds, { event, socketId }) => {

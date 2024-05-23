@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import axios from 'axios';
@@ -16,13 +16,15 @@ import { PlayerComponent } from './player.component';
   templateUrl: './playersList.component.html',
   styleUrl: './playersList.component.css',
 })
-export class PlayersListComponent {
+export class PlayersListComponent implements OnInit {
   @Input() isOpen = false;
   @Input() largeScreen = false;
   @Input() players: Player[] = [];
   @Input() hostPermission = false;
 
-  constructor(public gameService: GameService) {
+  constructor(public gameService: GameService) {}
+
+  ngOnInit(): void {
     this.isOpen = window?.innerWidth >= (this.largeScreen ? 2300 : 1536);
   }
 

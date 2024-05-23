@@ -1,11 +1,10 @@
-<div
-  class="absolute top-0 left-0 z-50 w-full lg:w-fit lg:px-6 pointer-events-none p-4 flex flex-col gap-4 items-center">
+<div class="fixed top-0 left-0 z-50 w-full lg:w-fit lg:px-6 pointer-events-none p-4 flex flex-col gap-4 items-center">
   <div
     class="group w-72 sm:w-96 h-20 p-4 rounded-2xl pointer-events-auto font-medium bg-secondary-700 flex gap-2 items-center"
     *ngFor="let toast of gameService.toasts">
 
     <img class="size-8"
-      [src]="'../../../assets/icons/' + (toast.type === 'success' ? 'correct.svg' : toast.type === 'warning' ? 'warn.svg' : 'error.svg')">
+      [src]="'../../../assets/icons/' + (toast.type === 'success' ? 'correct.svg' : toast.type === 'warning' ? 'warn.svg' :toast.type === 'error' ? 'error.svg' : 'party.svg')">
 
     {{toast.text}}
 

@@ -1,6 +1,6 @@
 export type Toast = {
   toastId: string;
-  type: 'success' | 'warning' | 'error';
+  type: 'success' | 'warning' | 'error' | 'party';
   text: string;
 };
 

@@ -38,6 +38,7 @@ export class LobbyHostComponent {
           this.players.length > 1 &&
           this.players.slice(1).every((x) => x.numCards);
 
+        this.gameService.socket?.off(EventType.PlayersUpdate);
         this.gameService.socket?.on(EventType.PlayersUpdate, (socketIds) => {
           this.players = socketIds;
 

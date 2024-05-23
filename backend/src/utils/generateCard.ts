@@ -13,7 +13,11 @@ const generateCard = () => {
 
 		do {
 			randomNumber = Math.floor(Math.random() * 90) + 1;
-		} while (rowNumbers.flat().includes(randomNumber) || rowNumbers[rowIndex].find(number => stessaDecina(number, randomNumber)));
+		} while (
+			rowNumbers.flat().includes(randomNumber) ||
+			rowNumbers[rowIndex].find(number => stessaDecina(number, randomNumber)) ||
+			(stessaDecina(randomNumber, 80) && rowNumbers.flat().filter(x => stessaDecina(x, 80)).length === 3)
+		);
 
 		rowNumbers[rowIndex].push(randomNumber);
 	}

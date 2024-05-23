@@ -1,5 +1,5 @@
 <input type="checkbox" [checked]="checked" [disabled]="disabilitato" (input)="inputValue($event, name)"
-  class="rounded-xl size-10 shadow-offset bg-secondary-500 relative" [ngClass]="{
+  class="rounded-xl size-8 sm:size-10 shadow-offset bg-secondary-500 relative" [ngClass]="{
     'hover:bg-secondary-600 active:shadow-noOffset active:translate-y-2 ease-in-out duration-100 cursor-pointer': !disabilitato,
     'opacity-50 cursor-default': disabilitato
   }">

@@ -2,6 +2,7 @@ input[type='checkbox'] {
   appearance: none;
 }
 
+
 input[type='checkbox']::after {
   width: 40px;
   height: 40px;
@@ -9,7 +10,16 @@ input[type='checkbox']::after {
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 0;
+  top: calc(50% - 40px / 2);
+}
+
+@media (max-width: 640px) {
+  input[type='checkbox']::after {
+    width: 32px;
+    height: 32px;
+    top: calc(50% - 32px / 2);
+
+  }
 }
 
 input[type='checkbox']:checked::after {

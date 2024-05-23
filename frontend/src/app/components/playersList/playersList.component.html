@@ -2,7 +2,9 @@
   class="bg-secondary-500 rounded-2xl w-full sm:w-fit p-4 ease-in-out duration-300 h-[80vh] absolute left-5 sm:left-10 top-24 max-w-[90%] z-30"
   [ngClass]="isOpen ? 'listOpened' : 'listClosed'" (window:resize)="windowResize()">
   <app-button id="listButton" size="small" [icon]="isOpen ? 'left.svg' : 'right.svg'" [fixedWidth]="false"
-    class="absolute top-4 right-4 block 2xl:hidden" (click)="isOpen = !isOpen"></app-button>
+    class="absolute top-4 right-4 block" [ngClass]="{
+      '2xl:hidden': !forceClose
+    }" (click)="isOpen = !isOpen"></app-button>
 
   <app-label text="GIOCATORI" color="red" class="font-medium"></app-label>
   <app-label [text]="players.length + '/' + gameService.gameOptions?.maxPlayers" color="red" size="small"></app-label>

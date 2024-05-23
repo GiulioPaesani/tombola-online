@@ -10,7 +10,7 @@
     "serve:ssr:frontend": "node dist/frontend/server/server.mjs"
   },
   "engines": {
-    "node": "18.13.x"
+    "node": "^18.13.x"
   },
   "private": true,
   "dependencies": {

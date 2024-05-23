@@ -4,15 +4,36 @@ import { GameService } from '../../../services/game.service';
 import axios from 'axios';
 import CONSTANTS from '../../../../assets/CONSTANTS';
 import { EventType, Player, Wins } from '../../../types';
+import { TitleComponent } from '../../../components/title/title.component';
+import { LabelComponent } from '../../../components/label/label.component';
+import { ButtonComponent } from '../../../components/button/button.component';
+import { PlayersListComponent } from '../../../components/playersList/playersList.component';
+import { NumberComponent } from '../../../components/number/number.component';
 
 @Component({
   selector: 'app-game-host',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    TitleComponent,
+    LabelComponent,
+    ButtonComponent,
+    PlayersListComponent,
+    NumberComponent,
+  ],
   templateUrl: './game-host.component.html',
 })
 export class GameHostComponent {
-  players: Player[] = [];
+  players: Player[] = [
+    {
+      socketId: '1',
+      username: 'sdfsdf',
+      avatarNum: 1,
+      cards: [],
+      numCards: 2,
+      formattedCards: [],
+    },
+  ];
   allBoardNumbers = new Array(90).fill(0).map((x, index) => index + 1);
   gameEnded = false;
 
@@ -63,6 +84,10 @@ export class GameHostComponent {
         const randomNumber = parseInt(response.data.randomNumber);
 
         this.gameService.extractedNumbers.push(randomNumber);
+        this.gameService.lastExtractedNumbers = [
+          randomNumber,
+          ...this.gameService.lastExtractedNumbers.slice(0, 3),
+        ];
 
         this.gameService.showToast({
           type: 'success',

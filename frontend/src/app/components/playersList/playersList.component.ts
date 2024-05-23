@@ -18,13 +18,15 @@ import { PlayerComponent } from './player.component';
 })
 export class PlayersListComponent {
   @Input() isOpen = window?.innerWidth >= 1536;
-
+  @Input() forceClose = false;
   @Input() players: Player[] = [];
   @Input() hostPermission = false;
 
   constructor(public gameService: GameService) {}
 
   windowResize = () => {
+    if (this.forceClose) return;
+
     if (window?.innerWidth < 1536) this.isOpen = false;
     else this.isOpen = true;
   };

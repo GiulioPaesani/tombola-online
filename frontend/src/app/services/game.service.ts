@@ -17,10 +17,11 @@ export class GameService {
     | 'lobby-host'
     | 'lobby-player'
     | 'game-host'
-    | 'game-player' = 'home';
+    | 'game-player' = 'game-host';
   toasts: Toast[] = [];
   gameOptions: GameOptions | null = null;
-  extractedNumbers: number[] = [];
+  extractedNumbers: number[] = [1, 2, 3];
+  lastExtractedNumbers: number[] = [1, 2, 3];
 
   socket: Socket | null = null;
 

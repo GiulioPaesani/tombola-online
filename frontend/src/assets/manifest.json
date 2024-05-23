@@ -1,0 +1,32 @@
+{
+  "short_name": "Tombola Online",
+  "name": "Tombola Online Gratis",
+  "description": "Tombola Online Gratis - Gioca con amici e familiari",
+  "icons": [
+    {
+      "src": "./assets/icon-16.jpg",
+      "sizes": "16x16",
+      "type": "image/jpg"
+    },
+    {
+      "src": "./assets/icon-32.jpg",
+      "sizes": "32x32",
+      "type": "image/jpg"
+    },
+    {
+      "src": "./assets/icon-64.jpg",
+      "sizes": "64x64",
+      "type": "image/jpg"
+    },
+    {
+      "src": "./assets/icon-512.jpg",
+      "type": "image/jpg",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#E35B48",
+  "background_color": "#E35B48"
+}

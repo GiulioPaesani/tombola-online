@@ -6,11 +6,33 @@
 <app-title size="big"></app-title>
 <app-subtitle></app-subtitle>
 
-<div class="mt-28 flex flex-col items-center">
+<div class="mt-20 flex flex-col items-center">
   <app-label text="Gioca in party"></app-label>
   <app-button class="mt-4" label="CREA PARTITA" (click)="openCreateGamePopup()"></app-button>
   <div class="min-w-80 sm:w-96 flex mt-6">
     <app-input placeholder="CODICE PARTITA" [inputValue]="inputGameCode" [maxLength]="5"></app-input>
     <app-button class="ml-auto" icon="enter.svg" [fixedWidth]='false' (click)="openJoinPopup()"></app-button>
+  </div>
+</div>
+
+<div class="mt-16 flex flex-col items-center ">
+  <app-label text="Gioca offline"></app-label>
+
+  <div class="flex justify-center gap-8 mt-4 flex-wrap">
+    <div (click)="gameService.view = 'scoreboard'"
+      class="w-60 cursor-pointer h-72 p-4 flex flex-col justify-between items-center gap-4 text-xl sm:text-2xl shadow-offset rounded-2xl bg-secondary-500 font-medium hover:bg-secondary-600 ease-in-out duration-100 active:shadow-noOffset active:translate-y-2">
+      <div class="h-full flex flex-col justify-center">
+        <img src="../../../assets/scoreboard.svg" class="w-full">
+      </div>
+      <div>TABELLONE</div>
+    </div>
+
+    <div (click)="gameService.view = 'cards'"
+      class="w-60 cursor-pointer h-72 p-4 flex flex-col justify-between items-center gap-4 text-xl sm:text-2xl shadow-offset rounded-2xl bg-secondary-500 font-medium hover:bg-secondary-600 ease-in-out duration-100 active:shadow-noOffset active:translate-y-2">
+      <div class="h-full flex flex-col justify-center">
+        <img src="../../../assets/cards.svg" class="w-full">
+      </div>
+      <div>CARTELLE</div>
+    </div>
   </div>
 </div>

@@ -7,6 +7,8 @@ import { LobbyPlayerComponent } from './pages/lobby-player/lobby-player.componen
 import { ToastComponent } from './components/toast/toast.component';
 import { GameHostComponent } from './pages/game-host/game-host.component';
 import { GamePlayerComponent } from './pages/game-player/game-player.component';
+import { ScoreboardComponent } from './pages/scoreboard/scoreboard.component';
+import { CardsComponent } from './pages/cards/cards.component';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,8 @@ import { GamePlayerComponent } from './pages/game-player/game-player.component';
     LobbyPlayerComponent,
     GameHostComponent,
     GamePlayerComponent,
+    ScoreboardComponent,
+    CardsComponent,
   ],
   templateUrl: './app.component.html',
 })

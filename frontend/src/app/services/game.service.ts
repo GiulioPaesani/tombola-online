@@ -17,7 +17,9 @@ export class GameService {
     | 'lobby-host'
     | 'lobby-player'
     | 'game-host'
-    | 'game-player' = 'home';
+    | 'game-player'
+    | 'scoreboard'
+    | 'cards' = 'home';
   toasts: Toast[] = [];
   gameOptions: GameOptions | null = null;
   extractedNumbers: number[] = [];
@@ -50,6 +52,7 @@ export class GameService {
     this.gameId = '';
     this.gameOptions = null;
     this.extractedNumbers = [];
+    this.lastExtractedNumbers = [];
   };
 
   showToast = (toast: Omit<Toast, 'toastId'>) => {

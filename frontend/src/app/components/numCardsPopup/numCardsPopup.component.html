@@ -1,0 +1,9 @@
+<div *ngIf="isVisible" class="w-full h-full fixed top-0 left-0 z-40 bg-neutral-950/70 flex justify-center items-center">
+  <div class="p-6 bg-secondary-600 rounded-2xl relative max-w-[90%] lg:max-w-[50%]">
+    <app-label text="Scegli con quante cartelle vuoi giocare" color="red"></app-label>
+    <div class="flex flex-wrap gap-4 mt-2 items-center mx-auto justify-center flex-row ">
+      <app-button [fixedWidth]="false" *ngFor="let numCard of [1, 2, 3, 4, 5, 6, 7, 8]"
+        [label]="numCard + (numCard === 1 ? ' cartella' : ' cartelle')" (click)="numCardsSelect(numCard)"></app-button>
+    </div>
+  </div>
+</div>

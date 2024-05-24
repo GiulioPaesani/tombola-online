@@ -5,7 +5,6 @@ import axios from 'axios';
 import CONSTANTS from '../../../assets/CONSTANTS';
 import { Card, EventType, FormattedCard, Player, Wins } from '../../types';
 import { TitleComponent } from '../../components/title/title.component';
-import { ButtonComponent } from '../../components/button/button.component';
 import { LabelComponent } from '../../components/label/label.component';
 import { PlayersListComponent } from '../../components/playersList/playersList.component';
 import { NumberComponent } from '../../components/number/number.component';
@@ -17,7 +16,6 @@ import { CheckboxComponent } from '../../components/checkbox/checkbox.component'
   imports: [
     CommonModule,
     TitleComponent,
-    ButtonComponent,
     LabelComponent,
     PlayersListComponent,
     NumberComponent,

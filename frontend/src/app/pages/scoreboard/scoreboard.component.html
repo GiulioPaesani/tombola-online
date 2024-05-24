@@ -1,0 +1,48 @@
+<app-title></app-title>
+
+<div class="ml-auto w-full mt-4 flex min-h-[80vh] items-center justify-center flex-row ">
+  <div class="flex-col mx-auto items-center hidden xl:flex ">
+    <app-button label="ESTRAI NUMERO" (click)="extractNumber()" [loading]="buttonLoading1"></app-button>
+
+    <div class="mt-4" *ngIf="gameService.extractedNumbers.length > 0">
+      <app-label text="Ultimi numeri estratti"></app-label>
+      <div class="flex gap-2 mt-2 items-center justify-center">
+        <app-number
+          [ngClass]="{'opacity-100': i === 0, 'opacity-80': i === 1, 'opacity-60': i === 2, 'opacity-40': i === 3}"
+          *ngFor="let number of gameService.lastExtractedNumbers; index as i;" [number]="number"
+          [selected]="true"></app-number>
+        <div>
+        </div>
+
+      </div>
+    </div>
+
+    <app-button class="mt-12" label="AZZERA TABELLONE" size="small" [fixedWidth]="false" (click)="restartScoreboard()"
+      [disabilitato]="!!extractedNumberPopup"></app-button>
+  </div>
+
+  <div class="flex flex-col gap-1 sm:gap-2 xl:gap-3 relative">
+    <app-button class="mb-5 mx-auto block xl:hidden" label="ESTRAI NUMERO" (click)="extractNumber()"
+      [loading]="buttonLoading1" [disabilitato]="this.gameService.extractedNumbers.length === 90"></app-button>
+
+    <app-label text="Tabellone"></app-label>
+
+    <div id="extractedNumber" [ngClass]="{'extracting': extracting}" *ngIf="buttonLoading1"
+      class="absolute size-32 rounded-full text-5xl flex justify-center items-center font-medium bg-secondary-700 text-primary-950 border-primary-950 border-8 z-20 ease-in-out duration-200 scale-125">
+      <div>{{extractedNumberPopup}}</div>
+    </div>
+
+    <div class="flex flex-row gap-1 sm:gap-2 xl:gap-3"
+      [ngClass]="{'mb-2 xl:mb-4': (row  + 1) % 3 === 0 && row !== 8, 'opacity-30': buttonLoading1}"
+      *ngFor="let row of [0, 1, 2, 3, 4, 5, 6, 7, 8]">
+      <app-number [ngClass]="{'mr-2 xl:mr-4': number % 5 === 0 && number % 10 !== 0}"
+        *ngFor="let number of allBoardNumbers.slice(row * 10,row === 8 ? undefined : (allBoardNumbers.length - (row + 1) * 10) * -1)"
+        [number]="number" [selected]="gameService.extractedNumbers.includes(number)"></app-number>
+    </div>
+
+    <app-button class="mt-5 mx-auto block xl:hidden" label="AZZERA TABELLONE" size="small" [fixedWidth]="false"
+      (click)="restartScoreboard()" [disabilitato]="!!extractedNumberPopup"></app-button>
+
+  </div>
+
+</div>

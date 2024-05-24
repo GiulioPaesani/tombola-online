@@ -13,6 +13,7 @@ import selectNumCards from './api/selectNumCards';
 import players from './api/players';
 import returnToLobby from './api/return-to-lobby';
 import startGame from './api/start-game';
+import generateCards from './api/generate-cards';
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.use('/', selectNumCards);
 app.use('/', players);
 app.use('/', returnToLobby);
 app.use('/', startGame);
+app.use('/', generateCards);
 
 app.listen(5000, async () => {
 	console.log('Backend start on port 5000');

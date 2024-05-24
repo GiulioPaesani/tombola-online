@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../services/game.service';
 import axios from 'axios';
-import CONSTANTS from '../../../../assets/CONSTANTS';
-import { EventType, Player, Wins } from '../../../types';
-import { TitleComponent } from '../../../components/title/title.component';
-import { LabelComponent } from '../../../components/label/label.component';
-import { ButtonComponent } from '../../../components/button/button.component';
-import { PlayersListComponent } from '../../../components/playersList/playersList.component';
-import { NumberComponent } from '../../../components/number/number.component';
+import CONSTANTS from '../../../assets/CONSTANTS';
+import { EventType, Player, Wins } from '../../types';
+import { TitleComponent } from '../../components/title/title.component';
+import { LabelComponent } from '../../components/label/label.component';
+import { ButtonComponent } from '../../components/button/button.component';
+import { PlayersListComponent } from '../../components/playersList/playersList.component';
+import { NumberComponent } from '../../components/number/number.component';
 
 @Component({
   selector: 'app-game-host',

@@ -1,16 +1,15 @@
 import { Component, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreateGamePopupComponent } from '../../../components/createGamePopup/createGamePopup.component';
+import { CreateGamePopupComponent } from '../../components/createGamePopup/createGamePopup.component';
 import axios from 'axios';
-import CONSTANTS from '../../../../assets/CONSTANTS';
-import { GameService } from '../../../services/game.service';
-import { EventType } from '../../../types';
-import { TitleComponent } from '../../../components/title/title.component';
-import { SubtitleComponent } from '../../../components/subtitle/subtitle.component';
-import { LabelComponent } from '../../../components/label/label.component';
-import { ButtonComponent } from '../../../components/button/button.component';
-import { InputComponent } from '../../../components/input/input.component';
-import { JoinPopupComponent } from '../../../components/joinPopup/joinPopup.component';
+import CONSTANTS from '../../../assets/CONSTANTS';
+import { GameService } from '../../services/game.service';
+import { TitleComponent } from '../../components/title/title.component';
+import { SubtitleComponent } from '../../components/subtitle/subtitle.component';
+import { LabelComponent } from '../../components/label/label.component';
+import { ButtonComponent } from '../../components/button/button.component';
+import { InputComponent } from '../../components/input/input.component';
+import { JoinPopupComponent } from '../../components/joinPopup/joinPopup.component';
 
 @Component({
   selector: 'app-home',

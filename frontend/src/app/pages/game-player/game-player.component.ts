@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../services/game.service';
 import axios from 'axios';
-import CONSTANTS from '../../../../assets/CONSTANTS';
-import { Card, EventType, FormattedCard, Player, Wins } from '../../../types';
-import { TitleComponent } from '../../../components/title/title.component';
-import { ButtonComponent } from '../../../components/button/button.component';
-import { LabelComponent } from '../../../components/label/label.component';
-import { PlayersListComponent } from '../../../components/playersList/playersList.component';
-import { NumberComponent } from '../../../components/number/number.component';
-import { CheckboxComponent } from '../../../components/checkbox/checkbox.component';
+import CONSTANTS from '../../../assets/CONSTANTS';
+import { Card, EventType, FormattedCard, Player, Wins } from '../../types';
+import { TitleComponent } from '../../components/title/title.component';
+import { ButtonComponent } from '../../components/button/button.component';
+import { LabelComponent } from '../../components/label/label.component';
+import { PlayersListComponent } from '../../components/playersList/playersList.component';
+import { NumberComponent } from '../../components/number/number.component';
+import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 
 @Component({
   selector: 'app-game-player',

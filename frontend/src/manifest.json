@@ -1,0 +1,32 @@
+{
+    "short_name": "Tombola Online",
+    "name": "Tombola Online Gratis",
+    "description": "Gioca gratis con amici e familiari al famoso e classico gioco della tombola. Gioca in party o offline",
+    "icons": [
+        {
+            "src": "icon-16.pnjpgg",
+            "sizes": "16x16",
+            "type": "image/jpg"
+        },
+        {
+            "src": "icon-32.jpg",
+            "sizes": "32x32",
+            "type": "image/jpg"
+        },
+        {
+            "src": "icon-64.pnjpgg",
+            "sizes": "64x64",
+            "type": "image/jpg"
+        },
+        {
+            "src": "icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#E35B48",
+    "background_color": "#E35B48"
+}

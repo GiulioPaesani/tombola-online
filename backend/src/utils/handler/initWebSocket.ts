@@ -6,7 +6,7 @@ export let io: Server;
 export const sockets: Socket[] = [];
 
 const initWebSocket = () => {
-	io = new Server(3000);
+	io = new Server(3030);
 
 	io.on('connect', socket => {
 		sockets.push(socket);

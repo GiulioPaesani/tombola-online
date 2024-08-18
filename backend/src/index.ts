@@ -39,8 +39,8 @@ app.use('/', returnToLobby);
 app.use('/', startGame);
 app.use('/', generateCards);
 
-app.listen(5000, async () => {
-	console.log('Backend start on port 5000');
+app.listen(5050, async () => {
+	console.log('Backend start on port 5050');
 
 	await connectToDB();
 	initWebSocket();

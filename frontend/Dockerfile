@@ -12,4 +12,4 @@ RUN pnpm build
 
 CMD ["pnpm", "serve:ssr:frontend"]
 
-EXPOSE 4000
+EXPOSE 4040
